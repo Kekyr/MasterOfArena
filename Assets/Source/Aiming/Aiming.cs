@@ -1,0 +1,92 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Aiming : MonoBehaviour
+{
+    private readonly float _distanceFromCamera = 19.8f;
+    private readonly float _rotationX = 90;
+
+    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private uint _speed;
+
+    private Player _player;
+
+    private bool canAim;
+
+    public event Action Aimed;
+
+    private void OnEnable()
+    {
+        if (_canvasGroup == null)
+            throw new ArgumentNullException(nameof(_canvasGroup));
+
+        Aimed += _player.OnAimed;
+    }
+
+    private void OnDisable()
+    {
+        Aimed -= _player.OnAimed;
+    }
+
+    public void Init(Player player)
+    {
+        if (player == null)
+            throw new ArgumentNullException(nameof(player));
+
+        _player = player;
+        enabled = true;
+    }
+
+    public void OnAimingStarted()
+    {
+        _canvasGroup.alpha = 1f;
+        canAim = true;
+        StartCoroutine(Aim());
+    }
+
+    public void OnAimingCanceled()
+    {
+        canAim = false;
+    }
+
+    private IEnumerator Aim()
+    {
+        while (canAim)
+        {
+            Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, _distanceFromCamera));
+
+            mousePosition = new Vector3(mousePosition.x, transform.position.y, mousePosition.z);
+
+            Vector3 mouseDirection = -(mousePosition - transform.position).normalized;
+            Quaternion newRotation = Quaternion.LookRotation(mouseDirection, Vector3.up);
+
+            _player.transform.rotation = newRotation;
+
+            Vector3 eulerAngles = newRotation.eulerAngles;
+            eulerAngles.x = _rotationX;
+
+            transform.eulerAngles = eulerAngles;
+
+            yield return null;
+        }
+
+        StartCoroutine(LerpAlpha(_canvasGroup, 0));
+
+        Aimed?.Invoke();
+    }
+
+    private IEnumerator LerpAlpha(CanvasGroup canvasGroup, float alpha)
+    {
+        float newAlpha = canvasGroup.alpha;
+
+        while (canvasGroup.alpha != alpha)
+        {
+            newAlpha = Mathf.MoveTowards(newAlpha, alpha, _speed * Time.deltaTime);
+            canvasGroup.alpha = newAlpha;
+            yield return null;
+        }
+    }
+}
