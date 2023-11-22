@@ -1,308 +1,11 @@
 fileFormatVersion: 2
-guid: 4bf76148838cc484cacc30fdcc22121c
+guid: 2d5345428e0277640af10b9710833db3
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: calf_l
-  - first:
-      1: 100002
-    second: calf_r
-  - first:
-      1: 100004
-    second: clavicle_l
-  - first:
-      1: 100006
-    second: clavicle_r
-  - first:
-      1: 100008
-    second: foot_l
-  - first:
-      1: 100010
-    second: foot_r
-  - first:
-      1: 100012
-    second: hand_l
-  - first:
-      1: 100014
-    second: hand_r
-  - first:
-      1: 100016
-    second: head
-  - first:
-      1: 100018
-    second: index_01_l
-  - first:
-      1: 100020
-    second: index_01_r
-  - first:
-      1: 100022
-    second: index_02_l
-  - first:
-      1: 100024
-    second: index_02_r
-  - first:
-      1: 100026
-    second: Jacket
-  - first:
-      1: 100028
-    second: lowerarm_l
-  - first:
-      1: 100030
-    second: lowerarm_r
-  - first:
-      1: 100032
-    second: neck_01
-  - first:
-      1: 100034
-    second: pelvis
-  - first:
-      1: 100036
-    second: root
-  - first:
-      1: 100038
-    second: Shoes
-  - first:
-      1: 100040
-    second: //RootNode
-  - first:
-      1: 100042
-    second: Skelet.c
-  - first:
-      1: 100044
-    second: spine_01
-  - first:
-      1: 100046
-    second: spine_02
-  - first:
-      1: 100048
-    second: spine_03
-  - first:
-      1: 100050
-    second: Stickman_heads_sphere.010
-  - first:
-      1: 100052
-    second: Sunglasses
-  - first:
-      1: 100054
-    second: thigh_l
-  - first:
-      1: 100056
-    second: thigh_r
-  - first:
-      1: 100058
-    second: thumb_01_l
-  - first:
-      1: 100060
-    second: thumb_01_r
-  - first:
-      1: 100062
-    second: thumb_02_l
-  - first:
-      1: 100064
-    second: thumb_02_r
-  - first:
-      1: 100066
-    second: Tie
-  - first:
-      1: 100068
-    second: Trousers
-  - first:
-      1: 100070
-    second: upperarm_l
-  - first:
-      1: 100072
-    second: upperarm_r
-  - first:
-      4: 400000
-    second: calf_l
-  - first:
-      4: 400002
-    second: calf_r
-  - first:
-      4: 400004
-    second: clavicle_l
-  - first:
-      4: 400006
-    second: clavicle_r
-  - first:
-      4: 400008
-    second: foot_l
-  - first:
-      4: 400010
-    second: foot_r
-  - first:
-      4: 400012
-    second: hand_l
-  - first:
-      4: 400014
-    second: hand_r
-  - first:
-      4: 400016
-    second: head
-  - first:
-      4: 400018
-    second: index_01_l
-  - first:
-      4: 400020
-    second: index_01_r
-  - first:
-      4: 400022
-    second: index_02_l
-  - first:
-      4: 400024
-    second: index_02_r
-  - first:
-      4: 400026
-    second: Jacket
-  - first:
-      4: 400028
-    second: lowerarm_l
-  - first:
-      4: 400030
-    second: lowerarm_r
-  - first:
-      4: 400032
-    second: neck_01
-  - first:
-      4: 400034
-    second: pelvis
-  - first:
-      4: 400036
-    second: root
-  - first:
-      4: 400038
-    second: Shoes
-  - first:
-      4: 400040
-    second: //RootNode
-  - first:
-      4: 400042
-    second: Skelet.c
-  - first:
-      4: 400044
-    second: spine_01
-  - first:
-      4: 400046
-    second: spine_02
-  - first:
-      4: 400048
-    second: spine_03
-  - first:
-      4: 400050
-    second: Stickman_heads_sphere.010
-  - first:
-      4: 400052
-    second: Sunglasses
-  - first:
-      4: 400054
-    second: thigh_l
-  - first:
-      4: 400056
-    second: thigh_r
-  - first:
-      4: 400058
-    second: thumb_01_l
-  - first:
-      4: 400060
-    second: thumb_01_r
-  - first:
-      4: 400062
-    second: thumb_02_l
-  - first:
-      4: 400064
-    second: thumb_02_r
-  - first:
-      4: 400066
-    second: Tie
-  - first:
-      4: 400068
-    second: Trousers
-  - first:
-      4: 400070
-    second: upperarm_l
-  - first:
-      4: 400072
-    second: upperarm_r
-  - first:
-      21: 2100000
-    second: Material.007
-  - first:
-      21: 2100002
-    second: Material.016
-  - first:
-      21: 2100004
-    second: Material.015
-  - first:
-      21: 2100006
-    second: Material.017
-  - first:
-      21: 2100008
-    second: Material.024
-  - first:
-      21: 2100010
-    second: Material.021
-  - first:
-      21: 2100012
-    second: Material.019
-  - first:
-      21: 2100014
-    second: Material.092
-  - first:
-      21: 2100016
-    second: Material.018
-  - first:
-      21: 2100018
-    second: Material.026
-  - first:
-      21: 2100020
-    second: Material.006
-  - first:
-      21: 2100022
-    second: Material.005
-  - first:
-      43: 4300000
-    second: Trousers
-  - first:
-      43: 4300002
-    second: Shoes
-  - first:
-      43: 4300004
-    second: Sunglasses
-  - first:
-      43: 4300006
-    second: Jacket
-  - first:
-      43: 4300008
-    second: Tie
-  - first:
-      43: 4300010
-    second: Stickman_heads_sphere.010
-  - first:
-      95: 9500000
-    second: //RootNode
-  - first:
-      137: 13700000
-    second: Jacket
-  - first:
-      137: 13700002
-    second: Shoes
-  - first:
-      137: 13700004
-    second: Stickman_heads_sphere.010
-  - first:
-      137: 13700006
-    second: Sunglasses
-  - first:
-      137: 13700008
-    second: Tie
-  - first:
-      137: 13700010
-    second: Trousers
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -329,7 +32,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -342,8 +45,8 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -360,7 +63,7 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
@@ -374,13 +77,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 0f88963f0fd47f84d895a0c544f2a84b
-  - 689fe7622f8ab1748ae2965d60e26348
-  - 3ed5f32f3c4bd644fb60171ca6987fc3
-  - 2d5345428e0277640af10b9710833db3
-  - 4f71929173f8621418408a87b7801b74
-  - 61e0678436f09834bb640a4853b4f8a7
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
@@ -807,14 +504,14 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 4bf76148838cc484cacc30fdcc22121c, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

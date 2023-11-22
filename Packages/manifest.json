@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "com.agava.yandexgames": "https://github.com/forcepusher/com.agava.yandexgames.git#15.1.0",
+    "com.agava.webutility": "https://github.com/forcepusher/com.agava.webutility.git#3.1.0",
+    "com.agava.yandexgames": "https://github.com/forcepusher/com.agava.yandexgames.git#16.0.0",
+    "com.bovinelabs.analyzers": "https://github.com/tertle/com.bovinelabs.analyzers.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.0.5",
     "com.unity.feature.development": "1.0.1",

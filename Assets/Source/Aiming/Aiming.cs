@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Aiming : MonoBehaviour
 {
-    private readonly float _distanceFromCamera = 19.8f;
-    private readonly float _rotationX = 90;
+    private readonly float DistanceFromCamera = 19.8f;
+    private readonly float RotationX = 90;
 
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private uint _speed;
@@ -15,7 +15,7 @@ public class Aiming : MonoBehaviour
 
     private bool canAim;
 
-    public event Action Aimed;
+    public event Action<Vector3> Aimed;
 
     private void OnEnable()
     {
@@ -53,20 +53,22 @@ public class Aiming : MonoBehaviour
 
     private IEnumerator Aim()
     {
+        Vector3 throwDirection = Vector3.zero;
+
         while (canAim)
         {
             Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, _distanceFromCamera));
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, DistanceFromCamera));
 
             mousePosition = new Vector3(mousePosition.x, transform.position.y, mousePosition.z);
 
-            Vector3 mouseDirection = -(mousePosition - transform.position).normalized;
-            Quaternion newRotation = Quaternion.LookRotation(mouseDirection, Vector3.up);
+            throwDirection = -(mousePosition - transform.position).normalized;
+            Quaternion newRotation = Quaternion.LookRotation(throwDirection, Vector3.up);
 
             _player.transform.rotation = newRotation;
 
             Vector3 eulerAngles = newRotation.eulerAngles;
-            eulerAngles.x = _rotationX;
+            eulerAngles.x = RotationX;
 
             transform.eulerAngles = eulerAngles;
 
@@ -75,7 +77,7 @@ public class Aiming : MonoBehaviour
 
         StartCoroutine(LerpAlpha(_canvasGroup, 0));
 
-        Aimed?.Invoke();
+        Aimed?.Invoke(throwDirection);
     }
 
     private IEnumerator LerpAlpha(CanvasGroup canvasGroup, float alpha)

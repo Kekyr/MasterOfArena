@@ -9,7 +9,7 @@ public class Root : MonoBehaviour
 
     private PlayerInputRouter _inputRouter;
 
-    private void Awake()
+    private void Validate()
     {
         if (_aiming == null)
             throw new ArgumentNullException(nameof(_aiming));
@@ -17,9 +17,17 @@ public class Root : MonoBehaviour
         if (_player == null)
             throw new ArgumentNullException(nameof(_player));
 
+        if (_projectile == null)
+            throw new ArgumentNullException(nameof(_projectile));
+    }
+
+    private void Awake()
+    {
+        Validate();
+
         _inputRouter = new PlayerInputRouter(_aiming);
 
-        _projectile.Init();
+        _projectile.Init(_player);
 
         _player.Init(_projectile);
 

@@ -1,11 +1,25 @@
 {
   "dependencies": {
-    "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#15.1.0",
+    "com.agava.webutility": {
+      "version": "https://github.com/forcepusher/com.agava.webutility.git#3.1.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ac2abaee4101c1c2c7b88cb0865c730b7d533047"
+      "hash": "32d39130ea78dce0c3ea0ed83ec5f022efefde42"
+    },
+    "com.agava.yandexgames": {
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "faf20595c0f18f4a471e6b27fbd5fbf5fd05d7a2"
+    },
+    "com.bovinelabs.analyzers": {
+      "version": "https://github.com/tertle/com.bovinelabs.analyzers.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "708fb1939a2f0e510354eb3faec76d936915da6f"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

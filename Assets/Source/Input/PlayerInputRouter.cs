@@ -2,29 +2,29 @@ using System;
 
 public class PlayerInputRouter
 {
-    private readonly PlayerInput _input;
-    private readonly Aiming _aimPresenter;
+    private readonly PlayerInput Input;
+    private readonly Aiming Aiming;
 
-    public PlayerInputRouter(Aiming aimPresenter)
+    public PlayerInputRouter(Aiming aiming)
     {
-        if (aimPresenter == null)
-            throw new ArgumentNullException(nameof(aimPresenter));
+        if (aiming == null)
+            throw new ArgumentNullException(nameof(aiming));
 
-        _input = new PlayerInput();
-        _aimPresenter = aimPresenter;
+        Input = new PlayerInput();
+        Aiming = aiming;
     }
 
     public void OnEnable()
     {
-        _input.Enable();
-        _input.Player.Aiming.started += ctx => _aimPresenter.OnAimingStarted();
-        _input.Player.Aiming.canceled += ctx => _aimPresenter.OnAimingCanceled();
+        Input.Enable();
+        Input.Player.Aiming.started += ctx => Aiming.OnAimingStarted();
+        Input.Player.Aiming.canceled += ctx => Aiming.OnAimingCanceled();
     }
 
     public void OnDisable()
     {
-        _input.Player.Aiming.started -= ctx => _aimPresenter.OnAimingStarted();
-        _input.Player.Aiming.canceled -= ctx => _aimPresenter.OnAimingCanceled();
-        _input.Disable();
+        Input.Player.Aiming.started -= ctx => Aiming.OnAimingStarted();
+        Input.Player.Aiming.canceled -= ctx => Aiming.OnAimingCanceled();
+        Input.Disable();
     }
 }
