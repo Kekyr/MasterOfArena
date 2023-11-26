@@ -17,13 +17,13 @@ public class PlayerInputRouter
     public void OnEnable()
     {
         Input.Enable();
-        Input.Player.Aiming.started += ctx => Aiming.OnAimingStarted();
+        Input.Player.Aiming.performed += ctx => Aiming.OnAimingStarted();
         Input.Player.Aiming.canceled += ctx => Aiming.OnAimingCanceled();
     }
 
     public void OnDisable()
     {
-        Input.Player.Aiming.started -= ctx => Aiming.OnAimingStarted();
+        Input.Player.Aiming.performed -= ctx => Aiming.OnAimingStarted();
         Input.Player.Aiming.canceled -= ctx => Aiming.OnAimingCanceled();
         Input.Disable();
     }

@@ -14,8 +14,9 @@ public class ProjectileMovement : MonoBehaviour
 
     private Projectile _projectile;
 
-    private bool _isReturning;
     private Vector3 _flyDirection;
+
+    public bool IsReturning { get; private set; }
 
     private void OnEnable()
     {
@@ -39,14 +40,14 @@ public class ProjectileMovement : MonoBehaviour
 
     public IEnumerator Fly(Vector3 startPosition)
     {
-        while (_projectile.CanFly)
+        while (_projectile.IsFlying)
         {
             float distance = Vector3.Distance(startPosition, transform.position);
 
-            if (distance >= _maxDistance && !_isReturning)
+            if (distance >= _maxDistance && !IsReturning)
             {
                 _flyDirection = -_flyDirection;
-                _isReturning = true;
+                IsReturning = true;
             }
 
             _rigidbody.velocity = _acceleration * _flyDirection;
@@ -54,7 +55,7 @@ public class ProjectileMovement : MonoBehaviour
             yield return null;
         }
 
-        _isReturning = false;
+        IsReturning = false;
         _rigidbody.velocity = Vector3.zero;
     }
 
@@ -62,7 +63,7 @@ public class ProjectileMovement : MonoBehaviour
     {
         _flyDirection.z = -_flyDirection.z;
         _flyDirection.x = Random.Range(_minRandomX, _maxRandomX);
-        _isReturning = true;
+        IsReturning = true;
         return _flyDirection;
     }
 }

@@ -20,20 +20,9 @@
                     "name": "",
                     "id": "945f424f-61ed-4857-ae68-cb29253e1bfa",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=0.2)",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Aiming",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9e700e40-b827-42e1-9aa5-3339ea7797a3",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mobile",
                     "action": "Aiming",
                     "isComposite": false,
                     "isPartOfComposite": false

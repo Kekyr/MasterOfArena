@@ -8,8 +8,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private ProjectileMovement _movement;
     [SerializeField] private Animator _animator;
 
-    [SerializeField] private Vector3 _rotation;
-    [SerializeField] private float _positionY;
+    [SerializeField] private Transform _startFlyPosition;
 
     private Player _player;
 
@@ -19,7 +18,7 @@ public class Projectile : MonoBehaviour
 
     public event Action<Vector3> Ricocheted;
 
-    public bool CanFly => transform.parent != _startParent;
+    public bool IsFlying => transform.parent != _startParent;
 
     private void OnEnable()
     {
@@ -28,6 +27,9 @@ public class Projectile : MonoBehaviour
 
         if (_movement == null)
             throw new ArgumentNullException(nameof(_movement));
+
+        if (_startFlyPosition == null)
+            throw new ArgumentNullException(nameof(_startFlyPosition));
 
         Ricocheted += _player.OnRicochet;
 
@@ -62,9 +64,9 @@ public class Projectile : MonoBehaviour
 
     public void OnThrow(Transform newParent)
     {
+        transform.position = _startFlyPosition.transform.position;
+        transform.eulerAngles = _startFlyPosition.transform.rotation.eulerAngles;
         transform.parent = newParent;
-        transform.position = new Vector3(transform.position.x, _positionY, transform.position.z);
-        transform.eulerAngles = _rotation;
 
         _animator.enabled = true;
 
@@ -73,7 +75,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player) && CanFly)
+        if (other.gameObject.TryGetComponent<Player>(out Player player) && IsFlying)
         {
             _animator.enabled = false;
 
@@ -85,9 +87,11 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Cube>(out Cube cube))
+        if (collision.gameObject.TryGetComponent<Cube>(out Cube cube) && _movement.IsReturning == false)
         {
-            Physics.Raycast(transform.position, _movement.Ricochet(), out RaycastHit hit, RayDistance);
+            Vector3 direction = _movement.Ricochet();
+            Physics.Raycast(transform.position, direction, out RaycastHit hit, RayDistance);
+            Debug.DrawRay(transform.position, direction * RayDistance, Color.red, 3f);
             Ricocheted?.Invoke(hit.point);
         }
     }

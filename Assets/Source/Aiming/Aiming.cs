@@ -12,6 +12,7 @@ public class Aiming : MonoBehaviour
     [SerializeField] private uint _speed;
 
     private Player _player;
+    private Projectile _projectile;
 
     private bool canAim;
 
@@ -30,20 +31,27 @@ public class Aiming : MonoBehaviour
         Aimed -= _player.OnAimed;
     }
 
-    public void Init(Player player)
+    public void Init(Player player, Projectile projectile)
     {
         if (player == null)
             throw new ArgumentNullException(nameof(player));
 
+        if (projectile == null)
+            throw new ArgumentNullException(nameof(projectile));
+
         _player = player;
+        _projectile = projectile;
         enabled = true;
     }
 
     public void OnAimingStarted()
     {
-        _canvasGroup.alpha = 1f;
-        canAim = true;
-        StartCoroutine(Aim());
+        if (_projectile.IsFlying == false)
+        {
+            _canvasGroup.alpha = 1f;
+            canAim = true;
+            StartCoroutine(Aim());
+        }
     }
 
     public void OnAimingCanceled()

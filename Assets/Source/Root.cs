@@ -31,7 +31,7 @@ public class Root : MonoBehaviour
 
         _player.Init(_projectile);
 
-        _aiming.Init(_player);
+        _aiming.Init(_player, _projectile);
     }
 
     private void OnEnable()
