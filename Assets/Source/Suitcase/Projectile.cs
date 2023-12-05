@@ -10,13 +10,15 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private Transform _startFlyPosition;
 
-    private Player _player;
+    private Catcher _catcher;
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
     private Transform _startParent;
 
     public event Action<Vector3> Ricocheted;
+
+    public event Action Catched;
 
     public bool IsFlying => transform.parent != _startParent;
 
@@ -31,14 +33,14 @@ public class Projectile : MonoBehaviour
         if (_startFlyPosition == null)
             throw new ArgumentNullException(nameof(_startFlyPosition));
 
-        Ricocheted += _player.OnRicochet;
+        Ricocheted += _catcher.OnRicochet;
 
         _movement.Init(this);
     }
 
     private void OnDisable()
     {
-        Ricocheted -= _player.OnRicochet;
+        Ricocheted -= _catcher.OnRicochet;
     }
 
     private void Start()
@@ -46,12 +48,12 @@ public class Projectile : MonoBehaviour
         _startParent = transform.parent;
     }
 
-    public void Init(Player player)
+    public void Init(Catcher catcher)
     {
-        if (player == null)
-            throw new ArgumentNullException(nameof(player));
+        if (catcher == null)
+            throw new ArgumentNullException(nameof(catcher));
 
-        _player = player;
+        _catcher = catcher;
         enabled = true;
     }
 
@@ -70,18 +72,18 @@ public class Projectile : MonoBehaviour
 
         _animator.enabled = true;
 
-        StartCoroutine(_movement.Fly(_startPosition));
+        StartCoroutine(_movement.Fly(transform.position));
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player) && IsFlying)
+        if (other.gameObject.TryGetComponent<Catcher>(out Catcher catcher) && IsFlying)
         {
             _animator.enabled = false;
-
             transform.parent = _startParent;
             transform.localPosition = _startPosition;
             transform.localRotation = _startRotation;
+            Catched?.Invoke();
         }
     }
 

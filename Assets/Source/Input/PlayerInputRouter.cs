@@ -3,9 +3,9 @@ using System;
 public class PlayerInputRouter
 {
     private readonly PlayerInput Input;
-    private readonly Aiming Aiming;
+    private readonly PlayerAiming Aiming;
 
-    public PlayerInputRouter(Aiming aiming)
+    public PlayerInputRouter(PlayerAiming aiming)
     {
         if (aiming == null)
             throw new ArgumentNullException(nameof(aiming));

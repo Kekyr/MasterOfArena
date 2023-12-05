@@ -168,8 +168,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2232000638296627128}
   - component: {fileID: 3868310791416362344}
-  - component: {fileID: 8199902887997001571}
+  - component: {fileID: 1848513956732809274}
+  - component: {fileID: 7930052554609427163}
   - component: {fileID: 2180906360911046271}
+  - component: {fileID: 3083014211641864689}
   - component: {fileID: 7441869199228754491}
   - component: {fileID: 7546145350480564307}
   m_Layer: 0
@@ -201,7 +203,7 @@ Transform:
   - {fileID: 7501448264769313689}
   - {fileID: 6131831629896115520}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3868310791416362344
 Animator:
@@ -224,7 +226,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8199902887997001571
+--- !u!114 &1848513956732809274
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,11 +235,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200193294667011374}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f0ccfec6e354e041bace0508c7ab0c9, type: 3}
+  m_Script: {fileID: 11500000, guid: fc87fa2c9a70bc046b82716d0da13ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animationTriggers:
+  - Throw
   _animator: {fileID: 3868310791416362344}
   _movement: {fileID: 2180906360911046271}
+  _aiming: {fileID: 7930052554609427163}
+--- !u!114 &7930052554609427163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200193294667011374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bab528bf1a115b4dabb6ed83a61be50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catcher: {fileID: 1848513956732809274}
+  _aim: {fileID: 8418757539118965618}
+  _canvasGroup: {fileID: 5179327300111317593}
+  _speed: 1
 --- !u!114 &2180906360911046271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +274,19 @@ MonoBehaviour:
   _rigidbody: {fileID: 7441869199228754491}
   _animator: {fileID: 3868310791416362344}
   _acceleration: 2
+--- !u!114 &3083014211641864689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200193294667011374}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5d525448957c64da30b545d92c1aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _start: 100
 --- !u!54 &7441869199228754491
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -466,8 +500,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 7987967861923845250}
   _maxDistance: 8
   _acceleration: 2
-  _minRandomX: -0.5
-  _maxRandomX: 0.5
+  _minRandomX: -0.3
+  _maxRandomX: 0.3
 --- !u!95 &2928209839521268164
 Animator:
   serializedVersion: 5
@@ -512,7 +546,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1282,7 +1316,7 @@ GameObject:
   - component: {fileID: 4601172197257324976}
   - component: {fileID: 6082797237033401724}
   - component: {fileID: 7465060379735394799}
-  - component: {fileID: 298825623768171954}
+  - component: {fileID: 8418757539118965618}
   m_Layer: 5
   m_Name: Aim
   m_TagString: Untagged
@@ -1348,20 +1382,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &298825623768171954
+--- !u!114 &8418757539118965618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5797023090318263773}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ec4793142cee749abf949b8d0f277e, type: 3}
+  m_Script: {fileID: 11500000, guid: 741fbe2a8ecae15449f8976ef0750397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 5179327300111317593}
-  _speed: 1
 --- !u!1 &5805476690819534524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1517,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
