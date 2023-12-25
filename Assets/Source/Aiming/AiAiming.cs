@@ -6,10 +6,13 @@ public class AiAiming : Aiming
 {
     private CubeSpawner _cubeSpawner;
     private Projectile[] _projectiles;
+    private WaitForSeconds _waitForSeconds;
 
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        _waitForSeconds = new WaitForSeconds(1f);
 
         foreach (Projectile projectile in _projectiles)
             projectile.Catched += OnCatch;
@@ -28,10 +31,13 @@ public class AiAiming : Aiming
         OnCatch();
     }
 
-    public IEnumerator Aim()
+    public IEnumerator Aiming()
     {
-        yield return StartCoroutine(LerpAlpha(1));
-        Vector3 throwDirection = TakeAim();
+        Circle.ChangeScale(0.02f);
+        yield return _waitForSeconds;
+        Aim.ChangeScale(0.05f);
+        yield return _waitForSeconds;
+        Vector3 throwDirection = (_cubeSpawner.GetRandomCubePosition() - transform.position).normalized;
         RotateTo(throwDirection);
         InvokeAimed(throwDirection);
     }
@@ -51,14 +57,8 @@ public class AiAiming : Aiming
         enabled = true;
     }
 
-    protected override Vector3 TakeAim()
-    {
-        Vector3 throwDirection = (_cubeSpawner.GetRandomCubePosition() - transform.position).normalized;
-        return throwDirection;
-    }
-
     private void OnCatch()
     {
-        StartCoroutine(Aim());
+        StartCoroutine(Aiming());
     }
 }

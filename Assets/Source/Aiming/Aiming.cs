@@ -1,17 +1,22 @@
 using System;
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public abstract class Aiming : MonoBehaviour
 {
     [SerializeField] private Catcher _catcher;
     [SerializeField] private Aim _aim;
-    [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private uint _speed;
+    [SerializeField] private Circle _circle;
+
+    private Sequence _sequence;
 
     public event Action<Vector3> Aimed;
 
     public Catcher Catcher => _catcher;
+
+    public Aim Aim => _aim;
+
+    public Circle Circle => _circle;
 
     protected virtual void OnEnable()
     {
@@ -21,10 +26,15 @@ public abstract class Aiming : MonoBehaviour
         if (_aim == null)
             throw new ArgumentNullException(nameof(_aim));
 
-        if (_canvasGroup == null)
-            throw new ArgumentNullException(nameof(_canvasGroup));
+        if (_circle == null)
+            throw new ArgumentNullException(nameof(_circle));
 
         Aimed += _catcher.OnAimed;
+
+        _circle.transform.localScale = Vector3.zero;
+
+        _sequence.Append(_circle.transform.DOScale(0.02f, 0.1f)
+            .SetEase(Ease.InBounce));
     }
 
     protected virtual void OnDisable()
@@ -32,16 +42,12 @@ public abstract class Aiming : MonoBehaviour
         Aimed -= _catcher.OnAimed;
     }
 
-    public IEnumerator LerpAlpha(float alpha)
+    public void Init(Sequence sequence)
     {
-        float newAlpha = _canvasGroup.alpha;
+        if (sequence == null)
+            throw new ArgumentNullException();
 
-        while (_canvasGroup.alpha != alpha)
-        {
-            newAlpha = Mathf.MoveTowards(newAlpha, alpha, _speed * Time.deltaTime);
-            _canvasGroup.alpha = newAlpha;
-            yield return null;
-        }
+        _sequence = sequence;
     }
 
     public void RotateTo(Vector3 direction)
@@ -51,8 +57,6 @@ public abstract class Aiming : MonoBehaviour
         transform.rotation = newRotation;
         _aim.RotateTo(newRotation);
     }
-
-    protected abstract Vector3 TakeAim();
 
     protected void InvokeAimed(Vector3 value)
     {

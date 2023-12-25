@@ -12,17 +12,28 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "945f424f-61ed-4857-ae68-cb29253e1bfa",
+                    "id": "6a14b53d-b9a6-4bbc-a7e3-3887192c56be",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Hold(duration=0.2)",
                     "processors": "",
                     "groups": "PC",
+                    "action": "Aiming",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "657e4b30-5185-405f-946a-07122e98fb0c",
+                    "path": "<Touchscreen>/touch0/press",
+                    "interactions": "Hold(duration=0.2)",
+                    "processors": "",
+                    "groups": "Mobile",
                     "action": "Aiming",
                     "isComposite": false,
                     "isPartOfComposite": false

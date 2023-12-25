@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class Catcher : MonoBehaviour
     [SerializeField] private Aiming _aiming;
 
     private Projectile[] _projectiles;
+    private Sequence _sequence;
     private int _currentProjectileIndex;
 
     public Projectile CurrentProjectile => _projectiles[_currentProjectileIndex];
@@ -28,15 +30,24 @@ public class Catcher : MonoBehaviour
 
         if (_aiming == null)
             throw new ArgumentNullException(nameof(_aiming));
+
+        transform.localScale = Vector3.zero;
+        _sequence.Append(transform.DOScale(0.8f, 0.05f)
+            .SetEase(Ease.InOutSine)
+            .SetDelay(0.05f));
     }
 
-    public void Init(Projectile[] projectiles)
+    public void Init(Projectile[] projectiles, Sequence sequence)
     {
         int maxLength = 2;
 
         if (projectiles.Length == 0 || projectiles.Length > maxLength)
             throw new ArgumentOutOfRangeException(nameof(projectiles));
 
+        if (sequence == null)
+            throw new ArgumentNullException(nameof(sequence));
+
+        _sequence = sequence;
         _projectiles = projectiles;
         enabled = true;
     }
@@ -62,6 +73,7 @@ public class Catcher : MonoBehaviour
         if (_currentProjectileIndex == _projectiles.Length)
             _currentProjectileIndex = 0;
 
-        StartCoroutine(_aiming.LerpAlpha(0f));
+        _aiming.Aim.ChangeScale(0f);
+        _aiming.Circle.ChangeScale(0f);
     }
 }

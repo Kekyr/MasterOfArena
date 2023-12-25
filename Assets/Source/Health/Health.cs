@@ -8,14 +8,16 @@ public class Health : MonoBehaviour
     private HealthView _view;
     private float _current;
 
-    public bool IsDead => _current <= 0;
-
     public event Action<float> HealthChanged;
+
     public event Action Died;
+
+    public bool IsDead => _current <= 0;
 
     private void OnEnable()
     {
-        _view.Init(_start.ToString());
+        _current = _start;
+        _view.OnHealthChanged(_current);
         HealthChanged += _view.OnHealthChanged;
     }
 
@@ -33,11 +35,8 @@ public class Health : MonoBehaviour
         enabled = true;
     }
 
-    public void ApplyDamage(int damage)
+    public void ApplyDamage(uint damage)
     {
-        if (damage < 0)
-            throw new ArgumentOutOfRangeException(nameof(damage));
-
         _current -= damage;
 
         HealthChanged?.Invoke(_current);

@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _acceleration;
 
     private Quaternion _startRotation;
-    private float _minDistance = 0.02f;
+    private float _minDistance = 0.1f;
 
     private void OnEnable()
     {
@@ -35,8 +35,8 @@ public class Movement : MonoBehaviour
 
     private IEnumerator Move(Vector3 endPosition)
     {
-        Vector3 direction = (endPosition - transform.position).normalized;
         float distance = 1;
+        Vector3 direction = (endPosition - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(direction);
         _animator.SetBool(IsRunning, true);
@@ -44,9 +44,7 @@ public class Movement : MonoBehaviour
         while (distance > _minDistance)
         {
             _rigidbody.velocity = _acceleration * direction;
-
             distance = Vector3.Distance(endPosition, transform.position);
-
             yield return null;
         }
 
