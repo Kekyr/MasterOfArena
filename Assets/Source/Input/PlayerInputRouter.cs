@@ -1,30 +1,23 @@
-using System;
+using UnityEngine.InputSystem;
 
 public class PlayerInputRouter
 {
-    private readonly PlayerInput Input;
-    private readonly PlayerAiming Aiming;
+    private PlayerInput _input;
 
-    public PlayerInputRouter(PlayerAiming aiming)
+    public InputAction Aiming => _input.Player.Aiming;
+
+    public PlayerInputRouter()
     {
-        if (aiming == null)
-            throw new ArgumentNullException(nameof(aiming));
-
-        Input = new PlayerInput();
-        Aiming = aiming;
+        _input = new PlayerInput();
     }
 
     public void OnEnable()
     {
-        Input.Enable();
-        Input.Player.Aiming.performed += ctx => Aiming.OnAimingStarted();
-        Input.Player.Aiming.canceled += ctx => Aiming.OnAimingCanceled();
+        _input.Enable();
     }
 
     public void OnDisable()
     {
-        Input.Player.Aiming.performed -= ctx => Aiming.OnAimingStarted();
-        Input.Player.Aiming.canceled -= ctx => Aiming.OnAimingCanceled();
-        Input.Disable();
+        _input.Disable();
     }
 }

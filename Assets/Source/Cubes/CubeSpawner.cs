@@ -27,9 +27,9 @@ public class CubeSpawner : MonoBehaviour
 
         _wait = new WaitForSeconds(_delay);
 
-        for (int i = 0; i < _spawnPositions.Count; i++)
+        foreach (SpawnPosition spawnPosition in _spawnPositions)
         {
-            Spawn(_spawnPositions[i]);
+            Spawn(spawnPosition);
         }
     }
 
@@ -84,12 +84,12 @@ public class CubeSpawner : MonoBehaviour
         Spawn(spawnPosition);
     }
 
-    public void OnCollision(Collision collision, Cube cube)
+    private void OnCollision(Collision collision, Cube cube)
     {
-        if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile) == false)
+        if (collision.gameObject.TryGetComponent(out Projectile projectile) == false)
             return;
 
-        if (projectile.Catcher.gameObject.TryGetComponent<AiAiming>(out AiAiming aiAiming))
+        if (projectile.Catcher.gameObject.TryGetComponent(out AiAiming aiAiming))
         {
             _playerHealth.ApplyDamage(cube.Damage);
         }

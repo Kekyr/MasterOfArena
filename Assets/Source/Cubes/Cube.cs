@@ -1,9 +1,13 @@
-using DG.Tweening;
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+    private readonly float NewScale = 1f;
+    private readonly float Duration = 0.05f;
+    private readonly float Delay = 0.05f;
+
     [SerializeField] private uint _damage;
     [SerializeField] private CubeView _view;
 
@@ -18,9 +22,10 @@ public class Cube : MonoBehaviour
 
         _view.Init(_damage.ToString());
 
-        transform.DOScale(1f, 0.05f)
+        transform.localScale = Vector3.zero;
+        transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InOutSine)
-            .SetDelay(0.05f);
+            .SetDelay(Delay);
     }
 
     private void OnCollisionEnter(Collision collision)

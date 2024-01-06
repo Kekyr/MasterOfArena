@@ -7,6 +7,7 @@ public class HealthView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textMesh;
 
     private string _text;
+    private Health _health;
 
     private void OnEnable()
     {
@@ -14,9 +15,25 @@ public class HealthView : MonoBehaviour
             throw new ArgumentNullException(nameof(_textMesh));
 
         _text = _textMesh.text;
+
+        _health.HealthChanged += OnHealthChanged;
     }
 
-    public void OnHealthChanged(float health)
+    private void OnDisable()
+    {
+        _health.HealthChanged -= OnHealthChanged;
+    }
+
+    public void Init(Health health)
+    {
+        if (health == null)
+            throw new ArgumentNullException(nameof(health));
+
+        _health = health;
+        enabled = true;
+    }
+
+    private void OnHealthChanged(float health)
     {
         _textMesh.text = $"{_text} {health.ToString()}";
     }

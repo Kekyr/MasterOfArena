@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    [SerializeField] private Movement _playerMovement;
+    [SerializeField] private Movement _enemyMovement;
+
     [SerializeField] private PlayerAiming _playerAiming;
     [SerializeField] private AiAiming _enemyAiming;
 
-    [SerializeField] private CameraShake _cameraShake;
+    [SerializeField] private ArenaSide _playerSide;
+    [SerializeField] private ArenaSide _enemySide;
+
+    [SerializeField] private BombPlatform _playerPlatform;
+    [SerializeField] private BombPlatform _enemyPlatform;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
@@ -29,14 +36,29 @@ public class Root : MonoBehaviour
     {
         int maxProjectiles = 2;
 
+        if (_playerMovement == null)
+            throw new ArgumentNullException(nameof(_playerMovement));
+
+        if (_enemyMovement == null)
+            throw new ArgumentNullException(nameof(_enemyMovement));
+
         if (_playerAiming == null)
             throw new ArgumentNullException(nameof(_playerAiming));
 
         if (_enemyAiming == null)
             throw new ArgumentNullException(nameof(_enemyAiming));
 
-        if (_cameraShake == null)
-            throw new ArgumentNullException(nameof(_cameraShake));
+        if (_playerSide == null)
+            throw new ArgumentNullException(nameof(_playerSide));
+
+        if (_enemySide == null)
+            throw new ArgumentNullException(nameof(_enemySide));
+
+        if (_playerPlatform == null)
+            throw new ArgumentNullException(nameof(_playerPlatform));
+
+        if (_enemyPlatform == null)
+            throw new ArgumentNullException(nameof(_enemyPlatform));
 
         if (_player == null)
             throw new ArgumentNullException(nameof(_player));
@@ -72,29 +94,39 @@ public class Root : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        _inputRouter = new PlayerInputRouter(_playerAiming);
+        _inputRouter = new PlayerInputRouter();
 
         for (int i = 0; i < _playerProjectiles.Length; i++)
-            _playerProjectiles[i].Init(_player, _cameraShake);
+            _playerProjectiles[i].Init(_player);
 
         _player.Init(_playerProjectiles, sequence);
+        _playerMovement.Init(_playerProjectiles);
 
         for (int i = 0; i < _enemyProjectiles.Length; i++)
-            _enemyProjectiles[i].Init(_enemy, _cameraShake);
+            _enemyProjectiles[i].Init(_enemy);
 
         _enemy.Init(_enemyProjectiles, sequence);
+        _enemyMovement.Init(_enemyProjectiles);
 
-        _playerHealth.Init(_playerHealthView);
+        _playerSide.Init(_playerHealth);
+        _enemySide.Init(_enemyHealth);
 
-        _enemyHealth.Init(_enemyHealthView);
+        _playerHealthView.Init(_playerHealth);
+        _enemyHealthView.Init(_enemyHealth);
 
         _cubeSpawner.Init(_playerHealth, _enemyHealth);
 
+        _playerHealth.Init();
+        _enemyHealth.Init();
+
+        _playerPlatform.Init(sequence, _playerHealth);
+        _enemyPlatform.Init(sequence, _enemyHealth);
+
         _playerAiming.Init(sequence);
-        _playerAiming.Init(_playerProjectiles);
+        _playerAiming.Init(_inputRouter.Aiming);
 
         _enemyAiming.Init(sequence);
-        _enemyAiming.Init(_cubeSpawner, _enemyProjectiles);
+        _enemyAiming.Init(_cubeSpawner);
     }
 
     private void OnEnable()

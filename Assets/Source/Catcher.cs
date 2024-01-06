@@ -1,11 +1,15 @@
-using DG.Tweening;
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class Catcher : MonoBehaviour
 {
-    [SerializeField] private string[] _animationTriggers;
-    [SerializeField] private Animator _animator;
+    private readonly float NewScale = 0.8f;
+    private readonly float NewAimScale = 0f;
+    private readonly float NewCircleScale = 0f;
+    private readonly float Duration = 0.05f;
+    private readonly float Delay = 0.05f;
+
     [SerializeField] private Movement _movement;
     [SerializeField] private Aiming _aiming;
 
@@ -19,22 +23,16 @@ public class Catcher : MonoBehaviour
     {
         int maxLength = 2;
 
-        if (_animationTriggers.Length == 0 || _animationTriggers.Length > maxLength)
-            throw new ArgumentOutOfRangeException(nameof(_animationTriggers));
-
         if (_movement == null)
             throw new ArgumentNullException(nameof(_movement));
-
-        if (_animator == null)
-            throw new ArgumentNullException(nameof(_animator));
 
         if (_aiming == null)
             throw new ArgumentNullException(nameof(_aiming));
 
         transform.localScale = Vector3.zero;
-        _sequence.Append(transform.DOScale(0.8f, 0.05f)
+        _sequence.Append(transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InOutSine)
-            .SetDelay(0.05f));
+            .SetDelay(Delay));
     }
 
     public void Init(Projectile[] projectiles, Sequence sequence)
@@ -52,19 +50,7 @@ public class Catcher : MonoBehaviour
         enabled = true;
     }
 
-    public void OnRicochet(Vector3 endPoint)
-    {
-        endPoint = new Vector3(endPoint.x, transform.position.y, transform.position.z);
-        _movement.OnRicochet(endPoint);
-    }
-
-    public void OnAimed(Vector3 flyDirection)
-    {
-        _projectiles[_currentProjectileIndex].OnAimed(flyDirection);
-        _animator.SetTrigger(_animationTriggers[_currentProjectileIndex]);
-    }
-
-    public void OnThrow()
+    private void OnThrow()
     {
         _projectiles[_currentProjectileIndex].OnThrow(transform.parent);
 
@@ -73,7 +59,7 @@ public class Catcher : MonoBehaviour
         if (_currentProjectileIndex == _projectiles.Length)
             _currentProjectileIndex = 0;
 
-        _aiming.Aim.ChangeScale(0f);
-        _aiming.Circle.ChangeScale(0f);
+        _aiming.Aim.ChangeScale(NewAimScale);
+        _aiming.Circle.ChangeScale(NewCircleScale);
     }
 }

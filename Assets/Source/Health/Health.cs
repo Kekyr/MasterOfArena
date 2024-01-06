@@ -5,7 +5,6 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private uint _start;
 
-    private HealthView _view;
     private float _current;
 
     public event Action<float> HealthChanged;
@@ -17,21 +16,11 @@ public class Health : MonoBehaviour
     private void OnEnable()
     {
         _current = _start;
-        _view.OnHealthChanged(_current);
-        HealthChanged += _view.OnHealthChanged;
+        HealthChanged?.Invoke(_current);
     }
 
-    private void OnDisable()
+    public void Init()
     {
-        HealthChanged -= _view.OnHealthChanged;
-    }
-
-    public void Init(HealthView view)
-    {
-        if (view == null)
-            throw new ArgumentNullException(nameof(view));
-
-        _view = view;
         enabled = true;
     }
 

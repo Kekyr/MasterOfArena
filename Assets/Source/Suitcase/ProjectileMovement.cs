@@ -8,12 +8,15 @@ public class ProjectileMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private float _maxDistance;
-    [SerializeField] private float _acceleration;
+    [SerializeField] private float _flySpeed;
+    [SerializeField] private float _returnSpeed;
     [SerializeField] private float _minRandomX;
     [SerializeField] private float _maxRandomX;
 
     private Projectile _projectile;
+    private Aiming _aiming;
 
+    private float _acceleration;
     private Vector3 _flyDirection;
 
     public bool IsReturning { get; private set; }
@@ -22,6 +25,15 @@ public class ProjectileMovement : MonoBehaviour
     {
         if (_rigidbody == null)
             throw new ArgumentNullException(nameof(_rigidbody));
+
+        _acceleration = _flySpeed;
+        _aiming = _projectile.Catcher.GetComponent<Aiming>();
+        _aiming.Aimed += OnAimed;
+    }
+
+    private void OnDisable()
+    {
+        _aiming.Aimed -= OnAimed;
     }
 
     public void Init(Projectile projectile)
@@ -41,34 +53,43 @@ public class ProjectileMovement : MonoBehaviour
         {
             float distance = Vector3.Distance(startPosition, transform.position);
 
-            if (distance >= _maxDistance && !IsReturning)
-            {
-                _flyDirection = -_flyDirection;
-                IsReturning = true;
-            }
+            if (distance >= _maxDistance && IsReturning == false)
+                Return();
 
             _rigidbody.velocity = _acceleration * _flyDirection;
 
             yield return null;
         }
 
+        _acceleration = _flySpeed;
         IsReturning = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
     }
 
+    public void Miss()
+    {
+        _acceleration = _returnSpeed;
+        Return();
+    }
+
     public Vector3 Ricochet()
     {
-        _flyDirection.z = -_flyDirection.z;
+        if (IsReturning == false)
+            Return();
+
         _flyDirection.x = Random.Range(_minRandomX, _maxRandomX);
-
-        RotateTo(_flyDirection);
-
-        IsReturning = true;
+        Rotate();
         return _flyDirection;
     }
 
-    private void RotateTo(Vector3 flyDirection)
+    private void Return()
+    {
+        _flyDirection = -_flyDirection;
+        IsReturning = true;
+    }
+
+    private void Rotate()
     {
         Quaternion newRotation = Quaternion.LookRotation(_flyDirection);
         Vector3 eulerAngles = newRotation.eulerAngles;
@@ -76,7 +97,7 @@ public class ProjectileMovement : MonoBehaviour
         transform.eulerAngles = eulerAngles;
     }
 
-    public void OnAimed(Vector3 flyDirection)
+    private void OnAimed(Vector3 flyDirection)
     {
         _flyDirection = flyDirection;
     }

@@ -6,36 +6,35 @@ using UnityEngine.InputSystem;
 public class PlayerAiming : Aiming
 {
     private readonly float DistanceFromCamera = 19.8f;
+    private readonly float NewAimScale = 0.05f;
+    private readonly float NewCircleScale = 0.02f;
 
     [SerializeField] private float _multiplierZ;
 
-    private bool canAim;
-    private Projectile[] _projectiles;
+    private InputAction _inputAction;
+
+    private bool _canAim;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-
-        foreach (Projectile projectile in _projectiles)
-            projectile.Catched += OnCatch;
+        _inputAction.performed += ctx => OnAimingStarted();
+        _inputAction.canceled += ctx => OnAimingCanceled();
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-
-        foreach (Projectile projectile in _projectiles)
-            projectile.Catched -= OnCatch;
+        _inputAction.performed -= ctx => OnAimingStarted();
+        _inputAction.canceled -= ctx => OnAimingCanceled();
     }
 
-    public void Init(Projectile[] projectiles)
+    public void Init(InputAction inputAction)
     {
-        int maxLength = 2;
+        if (inputAction == null)
+            throw new ArgumentNullException(nameof(inputAction));
 
-        if (projectiles.Length == 0 || projectiles.Length > maxLength)
-            throw new ArgumentOutOfRangeException(nameof(projectiles));
-
-        _projectiles = projectiles;
+        _inputAction = inputAction;
         enabled = true;
     }
 
@@ -43,7 +42,7 @@ public class PlayerAiming : Aiming
     {
         Vector3 throwDirection = Vector3.zero;
 
-        while (canAim)
+        while (_canAim)
         {
             throwDirection = TakeAim();
             RotateTo(throwDirection);
@@ -62,23 +61,23 @@ public class PlayerAiming : Aiming
         return throwDirection;
     }
 
-    public void OnAimingStarted()
+    protected override void OnCatch()
+    {
+        Circle.ChangeScale(NewCircleScale);
+    }
+
+    private void OnAimingStarted()
     {
         if (Catcher.CurrentProjectile.IsFlying == false)
         {
-            Aim.ChangeScale(0.05f);
-            canAim = true;
+            Aim.ChangeScale(NewAimScale);
+            _canAim = true;
             StartCoroutine(Aiming());
         }
     }
 
-    public void OnAimingCanceled()
+    private void OnAimingCanceled()
     {
-        canAim = false;
-    }
-
-    private void OnCatch()
-    {
-        Circle.ChangeScale(0.02f);
+        _canAim = false;
     }
 }
