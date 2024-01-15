@@ -5,6 +5,9 @@ using Random = UnityEngine.Random;
 
 public class ProjectileMovement : MonoBehaviour
 {
+    private readonly float RayDistance = 7;
+    private readonly Vector3 HalfExtents = new Vector3(0.05f, 0.05f, 0.05f);
+
     [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private float _maxDistance;
@@ -19,6 +22,8 @@ public class ProjectileMovement : MonoBehaviour
     private float _acceleration;
     private Vector3 _flyDirection;
 
+    public event Action<Vector3> Ricocheted;
+
     public bool IsReturning { get; private set; }
 
     private void OnEnable()
@@ -28,12 +33,15 @@ public class ProjectileMovement : MonoBehaviour
 
         _acceleration = _flySpeed;
         _aiming = _projectile.Catcher.GetComponent<Aiming>();
+
         _aiming.Aimed += OnAimed;
+        _projectile.Ricocheting += OnRicocheting;
     }
 
     private void OnDisable()
     {
         _aiming.Aimed -= OnAimed;
+        _projectile.Ricocheting -= OnRicocheting;
     }
 
     public void Init(Projectile projectile)
@@ -73,13 +81,14 @@ public class ProjectileMovement : MonoBehaviour
         Return();
     }
 
-    public Vector3 Ricochet()
+    private Vector3 GenerateNewDirection()
     {
         if (IsReturning == false)
             Return();
 
         _flyDirection.x = Random.Range(_minRandomX, _maxRandomX);
         Rotate();
+
         return _flyDirection;
     }
 
@@ -100,5 +109,23 @@ public class ProjectileMovement : MonoBehaviour
     private void OnAimed(Vector3 flyDirection)
     {
         _flyDirection = flyDirection;
+    }
+
+    private void OnRicocheting()
+    {
+        bool canRicochet = false;
+        RaycastHit hit = default(RaycastHit);
+
+        do
+        {
+            Vector3 direction = GenerateNewDirection();
+            Physics.BoxCast(transform.position, HalfExtents, direction, out hit, transform.rotation, RayDistance);
+
+            if (hit.point != Vector3.zero && hit.collider.gameObject.TryGetComponent<CatchZone>(out CatchZone catchZone))
+                canRicochet = true;
+        }
+        while (canRicochet == false);
+
+        Ricocheted?.Invoke(hit.point);
     }
 }

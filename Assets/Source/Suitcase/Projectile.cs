@@ -1,23 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Cinemachine;
-using DG.Tweening;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private readonly float RayDistance = 7;
-    private readonly float ScaleModifier = 1.3f;
-    private readonly Vector3 HalfExtents = new Vector3(0.05f, 0.05f, 0.05f);
-    private readonly float ScaleDuration = 0.05f;
-    private readonly float ColorDuration = 0.02f;
-
+    [SerializeField] private ProjectileHelper _helper;
     [SerializeField] private string _animationTrigger;
     [SerializeField] private ProjectileMovement _movement;
     [SerializeField] private Animator _animator;
     [SerializeField] private CinemachineImpulseSource _impulseSource;
     [SerializeField] private Transform _startFlyPosition;
-    [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private float _shakeForce;
 
     private Catcher _catcher;
@@ -25,13 +17,11 @@ public class Projectile : MonoBehaviour
     private Aiming _aiming;
 
     private Vector3 _startPosition;
-    private Vector3 _originalScale;
     private Quaternion _startRotation;
     private Transform _startParent;
 
-    public event Action<Vector3> Ricocheted;
-
     public event Action Catched;
+    public event Action Ricocheting;
 
     public bool IsFlying => transform.parent != _startParent;
 
@@ -54,25 +44,24 @@ public class Projectile : MonoBehaviour
         if (_startFlyPosition == null)
             throw new ArgumentNullException(nameof(_startFlyPosition));
 
-        if (_meshRenderer == null)
-            throw new ArgumentNullException(nameof(_meshRenderer));
-
         _catcherAnimator = _catcher.GetComponent<Animator>();
         _aiming = _catcher.GetComponent<Aiming>();
-        _originalScale = transform.localScale;
 
         _movement.Init(this);
+
         _aiming.Aimed += OnAimed;
+        _catcher.Throwed += OnThrow;
+
+        _helper.Init(_catcher);
+
+        _startParent = transform.parent;
     }
 
     private void OnDisable()
     {
         _aiming.Aimed -= OnAimed;
-    }
-
-    private void Start()
-    {
-        _startParent = transform.parent;
+        _catcher.Throwed -= OnThrow;
+        _helper.enabled = false;
     }
 
     public void Init(Catcher catcher)
@@ -84,61 +73,6 @@ public class Projectile : MonoBehaviour
         enabled = true;
     }
 
-    private void ChangeScale()
-    {
-        Vector3 newScale = _originalScale * ScaleModifier;
-
-        transform.DOScale(newScale, ScaleDuration)
-            .SetEase(Ease.InOutSine)
-            .OnComplete(() =>
-            {
-                transform.DOScale(_originalScale, ScaleDuration)
-                    .SetEase(Ease.InOutSine);
-            });
-    }
-
-    private void ChangeColor()
-    {
-        Sequence sequence = DOTween.Sequence();
-        List<Color> startColors = new List<Color>();
-
-        for (int i = 0; i < _meshRenderer.materials.Length; i++)
-        {
-            Material material = _meshRenderer.materials[i];
-            startColors.Add(material.color);
-            sequence.Append(material.DOColor(Color.white, ColorDuration)
-                .SetEase(Ease.InOutSine));
-        }
-
-        sequence.OnComplete(() =>
-        {
-            for (int i = 0; i < _meshRenderer.materials.Length; i++)
-            {
-                Material material = _meshRenderer.materials[i];
-                material.DOColor(startColors[i], ColorDuration)
-                    .SetEase(Ease.InOutSine);
-            }
-        });
-    }
-
-    private void Ricochet()
-    {
-        bool canRicochet = false;
-        RaycastHit hit = default(RaycastHit);
-
-        do
-        {
-            Vector3 direction = _movement.Ricochet();
-            Physics.BoxCast(transform.position, HalfExtents, direction, out hit, transform.rotation, RayDistance);
-
-            if (hit.point != Vector3.zero &&
-                hit.collider.gameObject.TryGetComponent<CatchZone>(out CatchZone catchZone))
-                canRicochet = true;
-        } while (canRicochet == false);
-
-        Ricocheted?.Invoke(hit.point);
-    }
-
     private void OnAimed(Vector3 flyDirection)
     {
         _startPosition = transform.localPosition;
@@ -146,13 +80,11 @@ public class Projectile : MonoBehaviour
         _catcherAnimator.SetTrigger(_animationTrigger);
     }
 
-    public void OnThrow(Transform newParent)
+    private void OnThrow(Transform newParent)
     {
         transform.position = _startFlyPosition.transform.position;
         transform.eulerAngles = _startFlyPosition.transform.rotation.eulerAngles;
         transform.parent = newParent;
-
-        _originalScale = transform.localScale;
 
         _animator.enabled = true;
 
@@ -180,9 +112,9 @@ public class Projectile : MonoBehaviour
             || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
         {
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
-            ChangeScale();
-            ChangeColor();
-            Ricochet();
+            _helper.ChangeScale();
+            _helper.ChangeColor();
+            Ricocheting?.Invoke();
         }
         else if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))
         {

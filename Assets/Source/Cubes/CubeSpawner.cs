@@ -28,17 +28,19 @@ public class CubeSpawner : MonoBehaviour
         _wait = new WaitForSeconds(_delay);
 
         foreach (SpawnPosition spawnPosition in _spawnPositions)
-        {
             Spawn(spawnPosition);
-        }
+
+        _playerHealth.Died += OnDead;
+        _enemyHealth.Died += OnDead;
     }
 
     private void OnDisable()
     {
         foreach (Cube cube in _cubes)
-        {
             cube.Collided -= OnCollision;
-        }
+
+        _playerHealth.Died -= OnDead;
+        _enemyHealth.Died -= OnDead;
     }
 
     public void Init(Health playerHealth, Health enemyHealth)
@@ -70,7 +72,8 @@ public class CubeSpawner : MonoBehaviour
     private void Spawn(SpawnPosition spawnPosition)
     {
         int randomCubeIndex = Random.Range(0, _cubesPrefab.Count);
-        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position, Quaternion.identity, spawnPosition.transform);
+        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position, Quaternion.identity,
+            spawnPosition.transform);
         cube.Collided += OnCollision;
         _cubes.Add(cube);
     }
@@ -99,5 +102,10 @@ public class CubeSpawner : MonoBehaviour
         }
 
         StartCoroutine(Replace(cube));
+    }
+
+    private void OnDead()
+    {
+        gameObject.SetActive(false);
     }
 }

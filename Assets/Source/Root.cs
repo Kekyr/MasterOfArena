@@ -7,6 +7,7 @@ public class Root : MonoBehaviour
     [SerializeField] private Movement _playerMovement;
     [SerializeField] private Movement _enemyMovement;
 
+    [SerializeField] private PlayerInputRouter _inputRouter;
     [SerializeField] private PlayerAiming _playerAiming;
     [SerializeField] private AiAiming _enemyAiming;
 
@@ -30,8 +31,6 @@ public class Root : MonoBehaviour
     [SerializeField] private Projectile[] _playerProjectiles;
     [SerializeField] private Projectile[] _enemyProjectiles;
 
-    private PlayerInputRouter _inputRouter;
-
     private void Validate()
     {
         int maxProjectiles = 2;
@@ -41,6 +40,9 @@ public class Root : MonoBehaviour
 
         if (_enemyMovement == null)
             throw new ArgumentNullException(nameof(_enemyMovement));
+
+        if (_inputRouter == null)
+            throw new ArgumentNullException(nameof(_inputRouter));
 
         if (_playerAiming == null)
             throw new ArgumentNullException(nameof(_playerAiming));
@@ -94,19 +96,18 @@ public class Root : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        _inputRouter = new PlayerInputRouter();
 
         for (int i = 0; i < _playerProjectiles.Length; i++)
             _playerProjectiles[i].Init(_player);
 
-        _player.Init(_playerProjectiles, sequence);
-        _playerMovement.Init(_playerProjectiles);
+        _player.Init(_playerProjectiles, sequence, _enemyHealth);
+        _playerMovement.Init(_playerProjectiles, _playerHealth);
 
         for (int i = 0; i < _enemyProjectiles.Length; i++)
             _enemyProjectiles[i].Init(_enemy);
 
-        _enemy.Init(_enemyProjectiles, sequence);
-        _enemyMovement.Init(_enemyProjectiles);
+        _enemy.Init(_enemyProjectiles, sequence, _playerHealth);
+        _enemyMovement.Init(_enemyProjectiles, _enemyHealth);
 
         _playerSide.Init(_playerHealth);
         _enemySide.Init(_enemyHealth);
@@ -119,23 +120,15 @@ public class Root : MonoBehaviour
         _playerHealth.Init();
         _enemyHealth.Init();
 
+        _inputRouter.Init(_playerHealth, _enemyHealth);
+
         _playerPlatform.Init(sequence, _playerHealth);
         _enemyPlatform.Init(sequence, _enemyHealth);
 
-        _playerAiming.Init(sequence);
-        _playerAiming.Init(_inputRouter.Aiming);
+        _playerAiming.Init(sequence, _playerHealth, _enemyHealth);
+        _playerAiming.Init(_inputRouter);
 
-        _enemyAiming.Init(sequence);
+        _enemyAiming.Init(sequence, _enemyHealth, _playerHealth);
         _enemyAiming.Init(_cubeSpawner);
-    }
-
-    private void OnEnable()
-    {
-        _inputRouter.OnEnable();
-    }
-
-    private void OnDisable()
-    {
-        _inputRouter.OnDisable();
     }
 }

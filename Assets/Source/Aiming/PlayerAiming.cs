@@ -11,30 +11,30 @@ public class PlayerAiming : Aiming
 
     [SerializeField] private float _multiplierZ;
 
-    private InputAction _inputAction;
+    private PlayerInputRouter _inputRouter;
 
     private bool _canAim;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        _inputAction.performed += ctx => OnAimingStarted();
-        _inputAction.canceled += ctx => OnAimingCanceled();
+        _inputRouter.Aiming.performed += ctx => OnAimingStarted();
+        _inputRouter.Aiming.canceled += ctx => OnAimingCanceled();
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _inputAction.performed -= ctx => OnAimingStarted();
-        _inputAction.canceled -= ctx => OnAimingCanceled();
+        _inputRouter.Aiming.performed -= ctx => OnAimingStarted();
+        _inputRouter.Aiming.canceled -= ctx => OnAimingCanceled();
     }
 
-    public void Init(InputAction inputAction)
+    public void Init(PlayerInputRouter playerInputRouter)
     {
-        if (inputAction == null)
-            throw new ArgumentNullException(nameof(inputAction));
+        if (playerInputRouter == null)
+            throw new ArgumentNullException(nameof(playerInputRouter));
 
-        _inputAction = inputAction;
+        _inputRouter = playerInputRouter;
         enabled = true;
     }
 
@@ -55,8 +55,11 @@ public class PlayerAiming : Aiming
     private Vector3 TakeAim()
     {
         Vector3 pointerScreenPosition = Pointer.current.position.ReadValue();
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(pointerScreenPosition.x, pointerScreenPosition.y, DistanceFromCamera));
-        mouseWorldPosition = new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * _multiplierZ);
+        Vector3 mouseWorldPosition =
+            Camera.main.ScreenToWorldPoint(new Vector3(pointerScreenPosition.x, pointerScreenPosition.y,
+                DistanceFromCamera));
+        mouseWorldPosition =
+            new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * _multiplierZ);
         Vector3 throwDirection = -(mouseWorldPosition - transform.position).normalized;
         return throwDirection;
     }
@@ -64,6 +67,12 @@ public class PlayerAiming : Aiming
     protected override void OnCatch()
     {
         Circle.ChangeScale(NewCircleScale);
+    }
+
+    protected override void OnDead()
+    {
+        enabled = false;
+        Circle.ChangeScale(0f);
     }
 
     private void OnAimingStarted()

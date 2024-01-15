@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -12,7 +13,12 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private float _acceleration;
 
+    [SerializeField] private float _yModifier;
+    [SerializeField] private float _duration;
+
     private Projectile[] _projectiles;
+    private Health _health;
+
     private Quaternion _startRotation;
 
     private void OnEnable()
@@ -24,13 +30,17 @@ public class Movement : MonoBehaviour
             throw new ArgumentNullException(nameof(_animator));
 
         foreach (Projectile projectile in _projectiles)
-            projectile.Ricocheted += OnRicochet;
+            projectile.GetComponent<ProjectileMovement>().Ricocheted += OnRicochet;
+
+        _health.Died += OnDead;
     }
 
     private void OnDisable()
     {
         foreach (Projectile projectile in _projectiles)
-            projectile.Ricocheted -= OnRicochet;
+            projectile.GetComponent<ProjectileMovement>().Ricocheted -= OnRicochet;
+
+        _health.Died -= OnDead;
     }
 
     private void Awake()
@@ -38,14 +48,18 @@ public class Movement : MonoBehaviour
         _startRotation = transform.rotation;
     }
 
-    public void Init(Projectile[] projectiles)
+    public void Init(Projectile[] projectiles, Health health)
     {
         int maxLength = 2;
 
         if (projectiles.Length == 0 || projectiles.Length > maxLength)
             throw new ArgumentOutOfRangeException(nameof(projectiles));
 
+        if (health == null)
+            throw new ArgumentNullException(nameof(health));
+
         _projectiles = projectiles;
+        _health = health;
         enabled = true;
     }
 
@@ -73,5 +87,11 @@ public class Movement : MonoBehaviour
     {
         endPosition = new Vector3(endPosition.x, transform.position.y, transform.position.z);
         StartCoroutine(Move(endPosition));
+    }
+
+    private void OnDead()
+    {
+        transform.DOMoveY(transform.position.y + _yModifier, _duration)
+            .SetEase(Ease.OutQuad);
     }
 }

@@ -9,6 +9,7 @@ public class AiAiming : Aiming
     private readonly float Delay = 1f;
 
     private CubeSpawner _cubeSpawner;
+
     private WaitForSeconds _waitForSeconds;
 
     private void Start()
@@ -42,5 +43,10 @@ public class AiAiming : Aiming
     protected override void OnCatch()
     {
         StartCoroutine(Aiming());
+    }
+
+    protected override void OnDead()
+    {
+        enabled = false;
     }
 }

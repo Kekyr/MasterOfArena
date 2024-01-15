@@ -13,6 +13,8 @@ public abstract class Aiming : MonoBehaviour
     [SerializeField] private Projectile[] _projectiles;
 
     private Sequence _sequence;
+    private Health _health;
+    private Health _enemyHealth;
 
     public event Action<Vector3> Aimed;
 
@@ -45,19 +47,33 @@ public abstract class Aiming : MonoBehaviour
 
         _sequence.Append(_circle.transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InBounce));
+
+        _health.Died += OnDead;
+        _enemyHealth.Died += OnDead;
     }
 
     protected virtual void OnDisable()
     {
         foreach (Projectile projectile in _projectiles)
             projectile.Catched -= OnCatch;
+
+        _health.Died -= OnDead;
+        _enemyHealth.Died -= OnDead;
     }
 
-    public void Init(Sequence sequence)
+    public void Init(Sequence sequence, Health health, Health enemyHealth)
     {
         if (sequence == null)
             throw new ArgumentNullException(nameof(sequence));
 
+        if (health == null)
+            throw new ArgumentNullException(nameof(health));
+
+        if (enemyHealth == null)
+            throw new ArgumentNullException(nameof(enemyHealth));
+
+        _health = health;
+        _enemyHealth = enemyHealth;
         _sequence = sequence;
     }
 
@@ -75,4 +91,6 @@ public abstract class Aiming : MonoBehaviour
     }
 
     protected abstract void OnCatch();
+
+    protected abstract void OnDead();
 }
