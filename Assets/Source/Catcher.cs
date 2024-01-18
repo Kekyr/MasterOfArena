@@ -10,19 +10,26 @@ public class Catcher : MonoBehaviour
     private readonly float NewCircleScale = 0f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
+    private readonly int IsDancing = Animator.StringToHash("IsDancing");
 
+    [SerializeField] private Color _damageMarkColor;
     [SerializeField] private CinemachineVirtualCamera _winCamera;
     [SerializeField] private Movement _movement;
     [SerializeField] private Aiming _aiming;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _confettiVFX;
 
     private Projectile[] _projectiles;
     private Sequence _sequence;
-    private Health _enemyHealth;
+    private Health _enemyHeath;
     private int _currentProjectileIndex;
 
+    public event Action<Cube> Attacking;
     public event Action<Transform> Throwed;
 
     public Projectile CurrentProjectile => _projectiles[_currentProjectileIndex];
+
+    public Color DamageMarkColor => _damageMarkColor;
 
     private void OnEnable()
     {
@@ -34,6 +41,9 @@ public class Catcher : MonoBehaviour
 
         if (_aiming == null)
             throw new ArgumentNullException(nameof(_aiming));
+
+        if (_animator == null)
+            throw new ArgumentNullException(nameof(_animator));
 
         transform.localScale = Vector3.zero;
         _sequence.Append(transform.DOScale(NewScale, Duration)
@@ -48,7 +58,7 @@ public class Catcher : MonoBehaviour
                 _projectiles[i].enabled = false;
         }
 
-        _enemyHealth.Died += OnEnemyDead;
+        _enemyHeath.Died += OnEnemyDead;
     }
 
     private void OnDisable()
@@ -58,7 +68,7 @@ public class Catcher : MonoBehaviour
             _projectiles[i].Catched -= OnCatch;
         }
 
-        _enemyHealth.Died -= OnEnemyDead;
+        _enemyHeath.Died -= OnEnemyDead;
     }
 
     public void Init(Projectile[] projectiles, Sequence sequence, Health enemyHealth)
@@ -76,8 +86,13 @@ public class Catcher : MonoBehaviour
 
         _sequence = sequence;
         _projectiles = projectiles;
-        _enemyHealth = enemyHealth;
+        _enemyHeath = enemyHealth;
         enabled = true;
+    }
+
+    public void Attack(Cube cube)
+    {
+        Attacking?.Invoke(cube);
     }
 
     private void OnThrow()
@@ -101,6 +116,10 @@ public class Catcher : MonoBehaviour
 
     private void OnEnemyDead()
     {
+        foreach (Projectile projectile in _projectiles)
+            projectile.gameObject.SetActive(false);
+        _confettiVFX.Play();
+        _animator.SetBool(IsDancing, true);
         _winCamera.gameObject.SetActive(true);
     }
 }

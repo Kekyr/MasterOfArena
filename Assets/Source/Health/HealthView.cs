@@ -6,8 +6,8 @@ public class HealthView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textMesh;
 
-    private string _text;
     private Health _health;
+    private string _text;
 
     private void OnEnable()
     {
@@ -35,6 +35,6 @@ public class HealthView : MonoBehaviour
 
     private void OnHealthChanged(float health)
     {
-        _textMesh.text = $"{_text} {health.ToString()}";
+        _textMesh.text = $"{_text}  {health.ToString()}";
     }
 }

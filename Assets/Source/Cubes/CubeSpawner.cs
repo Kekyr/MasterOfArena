@@ -9,13 +9,14 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private List<Cube> _cubesPrefab = new List<Cube>();
     [SerializeField] private List<SpawnPosition> _spawnPositions = new List<SpawnPosition>();
 
-    [SerializeField] private uint _delay;
+    [SerializeField] private uint _interval;
 
     private List<Cube> _cubes = new List<Cube>();
 
     private Health _playerHealth;
     private Health _enemyHealth;
-    private WaitForSeconds _wait;
+
+    private WaitForSeconds _waitInterval;
 
     private void OnEnable()
     {
@@ -25,10 +26,10 @@ public class CubeSpawner : MonoBehaviour
         if (_spawnPositions.Count == 0)
             throw new ArgumentOutOfRangeException(nameof(_spawnPositions));
 
-        _wait = new WaitForSeconds(_delay);
+        _waitInterval = new WaitForSeconds(_interval);
 
         foreach (SpawnPosition spawnPosition in _spawnPositions)
-            Spawn(spawnPosition);
+            Spawn(spawnPosition.transform);
 
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
@@ -69,7 +70,7 @@ public class CubeSpawner : MonoBehaviour
         return _spawnPositions[randomPositionIndex].transform.position;
     }
 
-    private void Spawn(SpawnPosition spawnPosition)
+    private void Spawn(Transform spawnPosition)
     {
         int randomCubeIndex = Random.Range(0, _cubesPrefab.Count);
         Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position, Quaternion.identity,
@@ -80,27 +81,15 @@ public class CubeSpawner : MonoBehaviour
 
     private IEnumerator Replace(Cube cube)
     {
+        yield return _waitInterval;
         _cubes.Remove(cube);
-        SpawnPosition spawnPosition = cube.transform.parent.gameObject.GetComponent<SpawnPosition>();
+        Transform spawnPosition = cube.transform.parent;
         Destroy(cube.gameObject);
-        yield return _wait;
         Spawn(spawnPosition);
     }
 
-    private void OnCollision(Collision collision, Cube cube)
+    private void OnCollision(Cube cube)
     {
-        if (collision.gameObject.TryGetComponent(out Projectile projectile) == false)
-            return;
-
-        if (projectile.Catcher.gameObject.TryGetComponent(out AiAiming aiAiming))
-        {
-            _playerHealth.ApplyDamage(cube.Damage);
-        }
-        else
-        {
-            _enemyHealth.ApplyDamage(cube.Damage);
-        }
-
         StartCoroutine(Replace(cube));
     }
 

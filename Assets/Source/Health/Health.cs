@@ -7,6 +7,8 @@ public class Health : MonoBehaviour
 
     private float _current;
 
+    private BombPlatform _platform;
+
     public event Action<float> HealthChanged;
 
     public event Action Died;
@@ -17,14 +19,25 @@ public class Health : MonoBehaviour
     {
         _current = _start;
         HealthChanged?.Invoke(_current);
+
+        _platform.Attacked += OnAttacked;
     }
 
-    public void Init()
+    private void OnDisable()
     {
+        _platform.Attacked -= OnAttacked;
+    }
+
+    public void Init(BombPlatform platform)
+    {
+        if (platform == null)
+            throw new ArgumentNullException(nameof(platform));
+
+        _platform = platform;
         enabled = true;
     }
 
-    public void ApplyDamage(uint damage)
+    private void OnAttacked(uint damage)
     {
         _current -= damage;
 

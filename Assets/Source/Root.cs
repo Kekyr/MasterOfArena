@@ -96,17 +96,17 @@ public class Root : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-
         for (int i = 0; i < _playerProjectiles.Length; i++)
             _playerProjectiles[i].Init(_player);
 
         _player.Init(_playerProjectiles, sequence, _enemyHealth);
-        _playerMovement.Init(_playerProjectiles, _playerHealth);
 
         for (int i = 0; i < _enemyProjectiles.Length; i++)
             _enemyProjectiles[i].Init(_enemy);
 
         _enemy.Init(_enemyProjectiles, sequence, _playerHealth);
+
+        _playerMovement.Init(_playerProjectiles, _playerHealth);
         _enemyMovement.Init(_enemyProjectiles, _enemyHealth);
 
         _playerSide.Init(_playerHealth);
@@ -117,13 +117,13 @@ public class Root : MonoBehaviour
 
         _cubeSpawner.Init(_playerHealth, _enemyHealth);
 
-        _playerHealth.Init();
-        _enemyHealth.Init();
+        _playerHealth.Init(_playerPlatform);
+        _enemyHealth.Init(_enemyPlatform);
 
         _inputRouter.Init(_playerHealth, _enemyHealth);
 
-        _playerPlatform.Init(sequence, _playerHealth);
-        _enemyPlatform.Init(sequence, _enemyHealth);
+        _playerPlatform.Init(sequence, _playerHealth, _enemy);
+        _enemyPlatform.Init(sequence, _enemyHealth, _player);
 
         _playerAiming.Init(sequence, _playerHealth, _enemyHealth);
         _playerAiming.Init(_inputRouter);

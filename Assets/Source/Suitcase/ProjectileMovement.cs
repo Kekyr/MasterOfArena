@@ -108,6 +108,7 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnAimed(Vector3 flyDirection)
     {
+        flyDirection.y = 0;
         _flyDirection = flyDirection;
     }
 

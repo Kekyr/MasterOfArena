@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class Movement : MonoBehaviour
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly float MinDistance = 0.1f;
 
+    [SerializeField] private CinemachineVirtualCamera _camera;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Animator _animator;
 
@@ -91,6 +93,7 @@ public class Movement : MonoBehaviour
 
     private void OnDead()
     {
+        _camera.Follow = null;
         transform.DOMoveY(transform.position.y + _yModifier, _duration)
             .SetEase(Ease.OutQuad);
     }

@@ -5,12 +5,14 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileHelper _helper;
-    [SerializeField] private string _animationTrigger;
     [SerializeField] private ProjectileMovement _movement;
+
     [SerializeField] private Animator _animator;
     [SerializeField] private CinemachineImpulseSource _impulseSource;
     [SerializeField] private Transform _startFlyPosition;
+
     [SerializeField] private float _shakeForce;
+    [SerializeField] private string _animationTrigger;
 
     private Catcher _catcher;
     private Animator _catcherAnimator;
