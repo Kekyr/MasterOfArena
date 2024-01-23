@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerAiming : Aiming
 {
-    private readonly float DistanceFromCamera = 19.8f;
     private readonly float NewAimScale = 0.05f;
     private readonly float NewCircleScale = 0.02f;
 
+    [SerializeField]private float DistanceFromCamera;
     [SerializeField] private float _multiplierZ;
 
     private PlayerInputRouter _inputRouter;
@@ -55,11 +55,8 @@ public class PlayerAiming : Aiming
     private Vector3 TakeAim()
     {
         Vector3 pointerScreenPosition = Pointer.current.position.ReadValue();
-        Vector3 mouseWorldPosition =
-            Camera.main.ScreenToWorldPoint(new Vector3(pointerScreenPosition.x, pointerScreenPosition.y,
-                DistanceFromCamera));
-        mouseWorldPosition =
-            new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * _multiplierZ);
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(pointerScreenPosition.x, pointerScreenPosition.y, DistanceFromCamera));
+        mouseWorldPosition = new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * _multiplierZ);
         Vector3 throwDirection = -(mouseWorldPosition - transform.position).normalized;
         return throwDirection;
     }
