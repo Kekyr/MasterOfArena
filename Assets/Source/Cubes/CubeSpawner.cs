@@ -64,7 +64,8 @@ public class CubeSpawner : MonoBehaviour
         do
         {
             randomPositionIndex = Random.Range(0, _spawnPositions.Count);
-        } while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
+        }
+        while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
 
         return _spawnPositions[randomPositionIndex].transform.position;
     }
@@ -72,8 +73,7 @@ public class CubeSpawner : MonoBehaviour
     private void Spawn(Transform spawnPosition)
     {
         int randomCubeIndex = Random.Range(0, _cubesPrefab.Count);
-        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position,
-            _cubesPrefab[randomCubeIndex].transform.rotation,
+        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position, _cubesPrefab[randomCubeIndex].transform.rotation,
             spawnPosition.transform);
         cube.Collided += OnCollision;
         _cubes.Add(cube);

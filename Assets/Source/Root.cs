@@ -19,8 +19,8 @@ public class Root : MonoBehaviour
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
-    [SerializeField] private Catcher _player;
-    [SerializeField] private Catcher _enemy;
+    [SerializeField] private Character _player;
+    [SerializeField] private Character _enemy;
 
     [SerializeField] private Health _playerHealth;
     [SerializeField] private HealthView _playerHealthView;

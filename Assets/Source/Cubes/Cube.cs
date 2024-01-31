@@ -49,8 +49,8 @@ public class Cube : MonoBehaviour
                 .OnComplete(() =>
                 {
                     _explosionVFX.Play();
-                    _view.OnCollision(projectile.Catcher.DamageMarkColor);
-                    projectile.Catcher.Attack(this);
+                    _view.OnCollision(projectile.Character.DamageMarkColor);
+                    projectile.Character.Attack(this);
                     _collider.enabled = false;
                 });
         }

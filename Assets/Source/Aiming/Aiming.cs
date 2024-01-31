@@ -9,7 +9,7 @@ public abstract class Aiming : MonoBehaviour
 
     [SerializeField] private Aim _aim;
     [SerializeField] private Circle _circle;
-    [SerializeField] private Catcher _catcher;
+    [SerializeField] private Character _character;
     [SerializeField] private Projectile[] _projectiles;
 
     private Sequence _sequence;
@@ -18,7 +18,7 @@ public abstract class Aiming : MonoBehaviour
 
     public event Action<Vector3> Aimed;
 
-    protected Catcher Catcher => _catcher;
+    protected Character Character => _character;
 
     public Aim Aim => _aim;
 
@@ -34,8 +34,8 @@ public abstract class Aiming : MonoBehaviour
         if (_circle == null)
             throw new ArgumentNullException(nameof(_circle));
 
-        if (_catcher == null)
-            throw new ArgumentNullException(nameof(_catcher));
+        if (_character == null)
+            throw new ArgumentNullException(nameof(_character));
 
         if (_projectiles.Length == 0 || _projectiles.Length > maxLength)
             throw new ArgumentOutOfRangeException(nameof(_projectiles));

@@ -56,6 +56,6 @@ public class CubeView : MonoBehaviour
         _markImage.color = newColor;
         _mark.gameObject.SetActive(true);
         _mark.gameObject.transform.DOMoveY(_mark.gameObject.transform.position.y + YModifier, MoveYDuration)
-            .SetEase(Ease.InSine);
+            .SetEase(Ease.Linear);
     }
 }

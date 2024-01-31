@@ -16,7 +16,7 @@ public class BombPlatform : MonoBehaviour
 
     private Sequence _sequence;
     private Health _health;
-    private Catcher _enemy;
+    private Character _enemy;
 
     private float _startPlatformScaleY;
     private float _startBombY;
@@ -51,7 +51,7 @@ public class BombPlatform : MonoBehaviour
         _enemy.Attacking -= OnAttacking;
     }
 
-    public void Init(Sequence sequence, Health health, Catcher enemy)
+    public void Init(Sequence sequence, Health health, Character enemy)
     {
         if (sequence == null)
             throw new ArgumentNullException(nameof(sequence));
