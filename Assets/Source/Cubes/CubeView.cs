@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class CubeView : MonoBehaviour
 {
-    private readonly float NewScale = 1f;
     private readonly float YModifier = 0.5f;
     private readonly float Delay = 0.05f;
     private readonly float Duration = 0.05f;
@@ -19,6 +18,7 @@ public class CubeView : MonoBehaviour
     private Image _markImage;
 
     private string _text;
+    private Vector3 _startScale;
 
     private void OnEnable()
     {
@@ -34,8 +34,9 @@ public class CubeView : MonoBehaviour
         _textMesh.text = _text;
         _markTextMesh.text = _text;
 
+        _startScale = transform.localScale;
         transform.localScale = Vector3.zero;
-        transform.DOScale(NewScale, Duration)
+        transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay);
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    private readonly float NewScale = 1f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
 
@@ -14,6 +13,7 @@ public class Cube : MonoBehaviour
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private Collider _collider;
 
+    private Vector3 _startScale;
     public event Action<Cube> Collided;
 
     public uint Damage => _damage;
@@ -34,8 +34,9 @@ public class Cube : MonoBehaviour
 
         _view.Init(_damage.ToString());
 
+        _startScale = _mesh.transform.localScale;
         _mesh.transform.localScale = Vector3.zero;
-        _mesh.transform.DOScale(NewScale, Duration)
+        _mesh.transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay);
     }

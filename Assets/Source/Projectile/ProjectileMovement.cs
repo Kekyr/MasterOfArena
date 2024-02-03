@@ -7,13 +7,12 @@ using Random = UnityEngine.Random;
 public class ProjectileMovement : MonoBehaviour
 {
     private readonly float RayDistance = 7;
+    private readonly float ReturnSpeed = 10;
 
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Vector3 _halfExtents;
 
-    [SerializeField] private float _maxDistance;
     [SerializeField] private float _flySpeed;
-    [SerializeField] private float _returnSpeed;
     [SerializeField] private float _minRandomX;
     [SerializeField] private float _maxRandomX;
 
@@ -62,9 +61,6 @@ public class ProjectileMovement : MonoBehaviour
         {
             float distance = Vector3.Distance(startPosition, transform.position);
 
-            if (distance >= _maxDistance && IsReturning == false)
-                Return();
-
             _rigidbody.velocity = _acceleration * _flyDirection;
 
             yield return null;
@@ -78,7 +74,7 @@ public class ProjectileMovement : MonoBehaviour
 
     public void Miss()
     {
-        _acceleration = _returnSpeed;
+        _acceleration = ReturnSpeed;
         Return();
     }
 

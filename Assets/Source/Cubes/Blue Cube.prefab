@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102153116839978737, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.887
+      value: 3.492
       objectReference: {fileID: 0}
     - target: {fileID: 4102153116839978737, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102153116839978737, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.433
+      value: 3.705
       objectReference: {fileID: 0}
     - target: {fileID: 4102153116839978737, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60,17 +60,25 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5657521773121884375, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
+      propertyPath: m_fontSize
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657521773121884375, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 71
+      objectReference: {fileID: 0}
     - target: {fileID: 5667396516981384576, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.148
+      value: -0.104
       objectReference: {fileID: 0}
     - target: {fileID: 5667396516981384576, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.008
+      value: -0.011
       objectReference: {fileID: 0}
     - target: {fileID: 5667396516981384576, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.068
+      value: 0.961
       objectReference: {fileID: 0}
     - target: {fileID: 7514800402070886572, guid: 531be3061fc56df40b5ff84ca38cc014, type: 3}
       propertyPath: _damage
