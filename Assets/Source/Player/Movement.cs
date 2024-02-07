@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _camera;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Animator _animator;
+    [SerializeField] private SFX _sfx;
+    [SerializeField] private SFXSO _footsteps;
 
     [SerializeField] private float _acceleration;
 
@@ -83,6 +85,11 @@ public class Movement : MonoBehaviour
         _animator.SetBool(IsRunning, false);
         _rigidbody.velocity = Vector3.zero;
         transform.rotation = _startRotation;
+    }
+
+    private void OnStep()
+    {
+        _sfx.Play(_footsteps);
     }
 
     private void OnRicochet(Vector3 endPosition)

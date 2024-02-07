@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    [SerializeField] private Music _music;
+
     [SerializeField] private Movement _playerMovement;
     [SerializeField] private Movement _enemyMovement;
 
@@ -34,6 +36,9 @@ public class Root : MonoBehaviour
     private void Validate()
     {
         int maxProjectiles = 2;
+
+        if (_music == null)
+            throw new ArgumentNullException(nameof(_music));
 
         if (_playerMovement == null)
             throw new ArgumentNullException(nameof(_playerMovement));
@@ -119,6 +124,8 @@ public class Root : MonoBehaviour
 
         _playerHealth.Init(_playerPlatform);
         _enemyHealth.Init(_enemyPlatform);
+
+        _music.Init(_playerHealth, _enemyHealth);
 
         _inputRouter.Init(_playerHealth, _enemyHealth);
 

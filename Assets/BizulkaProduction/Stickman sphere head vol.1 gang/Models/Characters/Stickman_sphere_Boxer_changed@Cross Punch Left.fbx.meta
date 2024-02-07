@@ -58,7 +58,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.54989386
-        functionName: OnThrow
+        functionName: OnThrowEnded
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.43824703
+        functionName: OnThrowStarted
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -7,11 +7,12 @@ public class BombPlatform : MonoBehaviour
     private readonly float NewScale = 1f;
     private readonly float ScaleDuration = 0.05f;
     private readonly float PlatformScaleYDuration = 0.1f;
-    private readonly float BombMoveYDuration = 0.1f;
+    private readonly float MoveYDuration = 0.1f;
     private readonly float LightningMoveDuraion = 0.7f;
 
     [SerializeField] private Platform _platform;
     [SerializeField] private Bomb _bomb;
+    [SerializeField] private HealthView _view;
     [SerializeField] private ParticleSystem _lightningTrail;
 
     private Sequence _sequence;
@@ -20,6 +21,7 @@ public class BombPlatform : MonoBehaviour
 
     private float _startPlatformScaleY;
     private float _startBombY;
+    private float _startViewY;
 
     public event Action<uint> Attacked;
 
@@ -31,11 +33,15 @@ public class BombPlatform : MonoBehaviour
         if (_bomb == null)
             throw new ArgumentNullException(nameof(_bomb));
 
+        if (_view == null)
+            throw new ArgumentNullException(nameof(_view));
+
         if (_lightningTrail == null)
             throw new ArgumentNullException(nameof(_lightningTrail));
 
         _startPlatformScaleY = _platform.transform.localScale.y;
         _startBombY = _bomb.transform.position.y;
+        _startViewY = _view.transform.position.y;
 
         transform.localScale = Vector3.zero;
         _sequence.Append(transform.DOScale(NewScale, ScaleDuration)
@@ -77,7 +83,7 @@ public class BombPlatform : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .OnComplete(() =>
             {
-                _bomb.transform.DOMoveY(_startBombY * percent, BombMoveYDuration)
+                _bomb.transform.DOMoveY(_startBombY * percent, MoveYDuration)
                     .SetEase(Ease.OutBounce);
             });
     }

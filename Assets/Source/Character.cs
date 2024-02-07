@@ -1,7 +1,10 @@
 using System;
 using Cinemachine;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Sequence = DG.Tweening.Sequence;
 
 public class Character : MonoBehaviour
 {
@@ -18,6 +21,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Aiming _aiming;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _confettiVFX;
+    [SerializeField] private SFX _sfx;
+    [SerializeField] private SFXSO _throw;
 
     private Projectile[] _projectiles;
     private Sequence _sequence;
@@ -44,6 +49,12 @@ public class Character : MonoBehaviour
 
         if (_animator == null)
             throw new ArgumentNullException(nameof(_animator));
+
+        if (_sfx == null)
+            throw new ArgumentNullException(nameof(_sfx));
+
+        if (_throw == null)
+            throw new ArgumentNullException(nameof(_throw));
 
         transform.localScale = Vector3.zero;
         _sequence.Append(transform.DOScale(NewScale, Duration)
@@ -95,7 +106,12 @@ public class Character : MonoBehaviour
         Attacking?.Invoke(cube);
     }
 
-    private void OnThrow()
+    private void OnThrowStarted()
+    {
+        _sfx.Play(_throw);
+    }
+
+    private void OnThrowEnded()
     {
         Throwed?.Invoke(transform.parent);
         _aiming.Aim.ChangeScale(NewAimScale);
