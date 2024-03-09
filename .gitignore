@@ -4,6 +4,11 @@
 /Logs/
 /UserSettings/
 /Builds/
+/Build/
+/.idea/
+/RoslynAnalyzers/
+GlobalSuppressions.cs
+GlobalSuppressions2.cs
 /*.sln
 /*.csproj
 /.vscode/
