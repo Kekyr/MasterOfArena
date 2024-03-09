@@ -10,6 +10,8 @@ public class ProjectileMovement : MonoBehaviour
     private readonly float ReturnSpeed = 10;
 
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private SFX _sfx;
+    [SerializeField] private SFXSO _miss;
     [SerializeField] private Vector3 _halfExtents;
 
     [SerializeField] private float _flySpeed;
@@ -30,6 +32,12 @@ public class ProjectileMovement : MonoBehaviour
     {
         if (_rigidbody == null)
             throw new ArgumentNullException(nameof(_rigidbody));
+
+        if (_sfx == null)
+            throw new ArgumentNullException(nameof(_sfx));
+
+        if (_miss == null)
+            throw new ArgumentNullException(nameof(_miss));
 
         _acceleration = _flySpeed;
         _aiming = _projectile.Character.GetComponent<Aiming>();
@@ -74,6 +82,7 @@ public class ProjectileMovement : MonoBehaviour
 
     public void Miss()
     {
+        _sfx.Play(_miss);
         _acceleration = ReturnSpeed;
         Return();
     }

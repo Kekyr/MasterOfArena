@@ -21,21 +21,27 @@ public class Music : MonoBehaviour
             throw new ArgumentNullException(nameof(_audioSource));
 
         if (Instance != null)
+        {
             Destroy(gameObject);
+            return;
+        }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
-
-        StartCoroutine(Play());
     }
 
     private void OnDisable()
     {
         _playerHealth.Died -= OnDead;
         _enemyHealth.Died -= OnDead;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Play());
     }
 
     public void Init(Health playerHealth, Health enemyHealth)
@@ -76,8 +82,8 @@ public class Music : MonoBehaviour
         _audioSource.Stop();
     }
 
-    private void OnSceneLoaded()
+    private void OnDestroy()
     {
-        _canPlay = true;
+        Debug.Log($"{gameObject.GetInstanceID()} is destroyed");
     }
 }

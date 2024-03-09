@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private CinemachineImpulseSource _impulseSource;
     [SerializeField] private StartFlyPosition _startFlyPosition;
+    [SerializeField] private SFX _sfx;
+    [SerializeField] private SFXSO _punch;
 
     [SerializeField] private float _shakeForce;
     [SerializeField] private string _animationTrigger;
@@ -48,6 +50,12 @@ public class Projectile : MonoBehaviour
 
         if (_startFlyPosition == null)
             throw new ArgumentNullException(nameof(_startFlyPosition));
+
+        if (_sfx == null)
+            throw new ArgumentNullException(nameof(_sfx));
+
+        if (_punch == null)
+            throw new ArgumentNullException(nameof(_punch));
 
         _catcherAnimator = _character.GetComponent<Animator>();
         _aiming = _character.GetComponent<Aiming>();
@@ -116,6 +124,7 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Cube>(out Cube cube)
             || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
         {
+            _sfx.Play(_punch);
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
             modifier.ChangeScale();
             modifier.ChangeColor();
