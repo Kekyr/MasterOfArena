@@ -10,6 +10,7 @@ public class SFX : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
 
     private float _defaultVolume;
+    private float _defaultPitch;
 
     private void OnEnable()
     {
@@ -20,6 +21,7 @@ public class SFX : MonoBehaviour
     private void Start()
     {
         _defaultVolume = _audioSource.volume;
+        _defaultPitch = _audioSource.pitch;
     }
 
     public void Play(SFXSO sfx)
@@ -33,7 +35,11 @@ public class SFX : MonoBehaviour
         else
             _audioSource.volume = sfx.Volume;
 
-        _audioSource.pitch = randomPitch;
+        if (sfx.CanPitch)
+            _audioSource.pitch = randomPitch;
+        else
+            _audioSource.pitch = _defaultPitch;
+
         _audioSource.PlayOneShot(sfx.Clips[randomIndex]);
     }
 }

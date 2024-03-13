@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Music : MonoBehaviour
 {
-    private static Music Instance;
-
-    [SerializeField] private AudioClip[] _tracks;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private MusicSO _music;
 
     private bool _canPlay = true;
 
@@ -20,14 +16,8 @@ public class Music : MonoBehaviour
         if (_audioSource == null)
             throw new ArgumentNullException(nameof(_audioSource));
 
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (_music == null)
+            throw new ArgumentNullException(nameof(_music));
 
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
@@ -41,7 +31,8 @@ public class Music : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Play());
+        Debug.Log("Start");
+        Play(_music.GetRandomClip());
     }
 
     public void Init(Health playerHealth, Health enemyHealth)
@@ -57,33 +48,15 @@ public class Music : MonoBehaviour
         enabled = true;
     }
 
-    private IEnumerator Play()
+    private void Play(AudioClip clip)
     {
-        int currentTrackIndex = Random.Range(0, _tracks.Length);
-        int nextTrackIndex = currentTrackIndex;
-
-        while (_canPlay)
-        {
-            _audioSource.clip = _tracks[currentTrackIndex];
-            _audioSource.Play();
-
-            yield return new WaitForSeconds(_tracks[currentTrackIndex].length);
-
-            while (currentTrackIndex == nextTrackIndex)
-                nextTrackIndex = Random.Range(0, _tracks.Length);
-
-            currentTrackIndex = nextTrackIndex;
-        }
+        _audioSource.clip = clip;
+        _audioSource.Play();
     }
 
     private void OnDead()
     {
-        _canPlay = false;
         _audioSource.Stop();
-    }
-
-    private void OnDestroy()
-    {
-        Debug.Log($"{gameObject.GetInstanceID()} is destroyed");
+        enabled = false;
     }
 }

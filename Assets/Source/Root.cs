@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    private readonly string ExplosionVFX = "ExplosionVFX";
+
     [SerializeField] private Music _music;
 
     [SerializeField] private Movement _playerMovement;
@@ -32,6 +34,8 @@ public class Root : MonoBehaviour
 
     [SerializeField] private Projectile[] _playerProjectiles;
     [SerializeField] private Projectile[] _enemyProjectiles;
+
+    private GameObject _explosion;
 
     private void Validate()
     {
@@ -101,6 +105,9 @@ public class Root : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
+        _explosion = Resources.Load<GameObject>(ExplosionVFX);
+        Debug.Log($"VFX: {_explosion == null}");
+
         for (int i = 0; i < _playerProjectiles.Length; i++)
             _playerProjectiles[i].Init(_player);
 
@@ -120,7 +127,7 @@ public class Root : MonoBehaviour
         _playerHealthView.Init(_playerHealth);
         _enemyHealthView.Init(_enemyHealth);
 
-        _cubeSpawner.Init(_playerHealth, _enemyHealth);
+        _cubeSpawner.Init(_playerHealth, _enemyHealth, _explosion);
 
         _playerHealth.Init(_playerPlatform);
         _enemyHealth.Init(_enemyPlatform);

@@ -1,9 +1,8 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 public class Character : MonoBehaviour
@@ -13,6 +12,7 @@ public class Character : MonoBehaviour
     private readonly float NewCircleScale = 0f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
+    private readonly float WaitTime = 1.5f;
     private readonly int IsDancing = Animator.StringToHash("IsDancing");
 
     [SerializeField] private Color _damageMarkColor;
@@ -23,10 +23,13 @@ public class Character : MonoBehaviour
     [SerializeField] private ParticleSystem _confettiVFX;
     [SerializeField] private SFX _sfx;
     [SerializeField] private SFXSO _throw;
+    [SerializeField] private SFXSO _win;
 
     private Projectile[] _projectiles;
     private Sequence _sequence;
     private Health _enemyHeath;
+    private WaitForSeconds _wait;
+
     private int _currentProjectileIndex;
 
     public event Action<Cube> Attacking;
@@ -56,7 +59,13 @@ public class Character : MonoBehaviour
         if (_throw == null)
             throw new ArgumentNullException(nameof(_throw));
 
+        if (_win == null)
+            throw new ArgumentNullException(nameof(_throw));
+
+        _wait = new WaitForSeconds(WaitTime);
+
         transform.localScale = Vector3.zero;
+
         _sequence.Append(transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay));
@@ -137,8 +146,15 @@ public class Character : MonoBehaviour
         foreach (Projectile projectile in _projectiles)
             projectile.gameObject.SetActive(false);
 
-        _confettiVFX.Play();
-        _animator.SetBool(IsDancing, true);
+        StartCoroutine(Win());
+    }
+
+    private IEnumerator Win()
+    {
         _winCamera.gameObject.SetActive(true);
+        _confettiVFX.Play();
+        yield return _wait;
+        _animator.SetBool(IsDancing, true);
+        _sfx.Play(_win);
     }
 }

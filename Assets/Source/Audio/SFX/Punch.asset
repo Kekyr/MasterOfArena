@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67a4c8995f8e642c598369ca97426bdb, type: 3}
   - {fileID: 8300000, guid: 3ff392d22e400488885566f71693c592, type: 3}
   _volume: 0.5
+  _canPitch: 1

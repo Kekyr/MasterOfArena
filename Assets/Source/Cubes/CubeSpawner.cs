@@ -15,6 +15,7 @@ public class CubeSpawner : MonoBehaviour
 
     private Health _playerHealth;
     private Health _enemyHealth;
+    private GameObject _explosion;
 
     private WaitForSeconds _waitInterval;
 
@@ -44,7 +45,7 @@ public class CubeSpawner : MonoBehaviour
         _enemyHealth.Died -= OnDead;
     }
 
-    public void Init(Health playerHealth, Health enemyHealth)
+    public void Init(Health playerHealth, Health enemyHealth, GameObject explosion)
     {
         if (playerHealth == null)
             throw new ArgumentNullException(nameof(playerHealth));
@@ -52,8 +53,12 @@ public class CubeSpawner : MonoBehaviour
         if (enemyHealth == null)
             throw new ArgumentNullException(nameof(enemyHealth));
 
+        if (explosion == null)
+            throw new ArgumentNullException(nameof(explosion));
+
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
+        _explosion = explosion;
         enabled = true;
     }
 
@@ -64,8 +69,7 @@ public class CubeSpawner : MonoBehaviour
         do
         {
             randomPositionIndex = Random.Range(0, _spawnPositions.Count);
-        }
-        while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
+        } while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
 
         return _spawnPositions[randomPositionIndex].transform.position;
     }
@@ -73,9 +77,11 @@ public class CubeSpawner : MonoBehaviour
     private void Spawn(Transform spawnPosition)
     {
         int randomCubeIndex = Random.Range(0, _cubesPrefab.Count);
-        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position, _cubesPrefab[randomCubeIndex].transform.rotation,
+        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position,
+            _cubesPrefab[randomCubeIndex].transform.rotation,
             spawnPosition.transform);
         cube.Collided += OnCollision;
+        cube.Init(_explosion);
         _cubes.Add(cube);
     }
 
