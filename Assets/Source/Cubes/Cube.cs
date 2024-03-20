@@ -6,16 +6,13 @@ public class Cube : MonoBehaviour
 {
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
-    private readonly string VFX = "ExplosionVFX";
 
     [SerializeField] private uint _damage;
     [SerializeField] private CubeView _view;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private Collider _collider;
+    [SerializeField] private ParticleSystem _particleSystem;
 
-    private GameObject _explosion;
-    private VFX _explosionVFX;
-    private ParticleSystem _explosionParticleSystem;
     private Vector3 _startScale;
     public event Action<Cube> Collided;
 
@@ -32,6 +29,9 @@ public class Cube : MonoBehaviour
         if (_collider == null)
             throw new ArgumentNullException(nameof(_collider));
 
+        if (_particleSystem == null)
+            throw new ArgumentNullException(nameof(_particleSystem));
+
         _view.Init(_damage.ToString());
 
         _startScale = _mesh.transform.localScale;
@@ -39,30 +39,6 @@ public class Cube : MonoBehaviour
         _mesh.transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay);
-    }
-
-    private void OnDisable()
-    {
-        _explosionVFX.Stopped -= OnParticleSystemStopped;
-    }
-
-    private void Start()
-    {
-        GameObject vfx = Instantiate(_explosion, transform.position, transform.rotation, transform);
-        _explosionParticleSystem = vfx.GetComponent<ParticleSystem>();
-        _explosionVFX = vfx.GetComponent<VFX>();
-        _explosionVFX.Stopped += OnParticleSystemStopped;
-    }
-
-    public void Init(GameObject explosion)
-    {
-        if (explosion == null)
-            throw new ArgumentNullException(nameof(explosion));
-
-        Debug.Log($"Cube: {explosion == null}");
-
-        _explosion = explosion;
-        enabled = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -73,7 +49,7 @@ public class Cube : MonoBehaviour
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
                 {
-                    _explosionParticleSystem.Play();
+                    _particleSystem.Play();
                     _view.OnCollision(projectile.Character.DamageMarkColor);
                     projectile.Character.Attack(this);
                     _collider.enabled = false;

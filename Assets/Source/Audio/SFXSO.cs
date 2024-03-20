@@ -8,7 +8,12 @@ public class SFXSO : ScriptableObject
     [SerializeField] private float _volume;
     [SerializeField] private bool _canPitch;
 
-    public IReadOnlyList<AudioClip> Clips => _clips;
     public float Volume => _volume;
     public bool CanPitch => _canPitch;
+
+    public AudioClip GetRandomClip()
+    {
+        int randomIndex = Random.Range(0, _clips.Count - 1);
+        return _clips[randomIndex];
+    }
 }

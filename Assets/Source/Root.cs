@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
-    private readonly string ExplosionVFX = "ExplosionVFX";
-
     [SerializeField] private Music _music;
+    [SerializeField] private AudioSettingsSO _audioSettings;
+
+    [SerializeField] private MusicButton _musicButton;
+    [SerializeField] private SFXButton _sfxButton;
 
     [SerializeField] private Movement _playerMovement;
     [SerializeField] private Movement _enemyMovement;
@@ -35,14 +37,21 @@ public class Root : MonoBehaviour
     [SerializeField] private Projectile[] _playerProjectiles;
     [SerializeField] private Projectile[] _enemyProjectiles;
 
-    private GameObject _explosion;
-
     private void Validate()
     {
         int maxProjectiles = 2;
 
         if (_music == null)
             throw new ArgumentNullException(nameof(_music));
+
+        if (_audioSettings == null)
+            throw new ArgumentNullException(nameof(_audioSettings));
+
+        if (_musicButton == null)
+            throw new ArgumentNullException(nameof(_musicButton));
+
+        if (_sfxButton == null)
+            throw new ArgumentNullException(nameof(_sfxButton));
 
         if (_playerMovement == null)
             throw new ArgumentNullException(nameof(_playerMovement));
@@ -105,34 +114,45 @@ public class Root : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        _explosion = Resources.Load<GameObject>(ExplosionVFX);
-        Debug.Log($"VFX: {_explosion == null}");
+        _musicButton.Init(_audioSettings);
+        _sfxButton.Init(_audioSettings);
 
         for (int i = 0; i < _playerProjectiles.Length; i++)
+        {
             _playerProjectiles[i].Init(_player);
+            _playerProjectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
+        }
 
         _player.Init(_playerProjectiles, sequence, _enemyHealth);
+        _player.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
         for (int i = 0; i < _enemyProjectiles.Length; i++)
+        {
             _enemyProjectiles[i].Init(_enemy);
+            _enemyProjectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
+        }
 
         _enemy.Init(_enemyProjectiles, sequence, _playerHealth);
+        _enemy.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
         _playerMovement.Init(_playerProjectiles, _playerHealth);
         _enemyMovement.Init(_enemyProjectiles, _enemyHealth);
 
         _playerSide.Init(_playerHealth);
+        _playerSide.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
+
         _enemySide.Init(_enemyHealth);
+        _enemySide.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
         _playerHealthView.Init(_playerHealth);
         _enemyHealthView.Init(_enemyHealth);
 
-        _cubeSpawner.Init(_playerHealth, _enemyHealth, _explosion);
+        _cubeSpawner.Init(_playerHealth, _enemyHealth);
 
         _playerHealth.Init(_playerPlatform);
         _enemyHealth.Init(_enemyPlatform);
 
-        _music.Init(_playerHealth, _enemyHealth);
+        _music.Init(_playerHealth, _enemyHealth, _musicButton, _audioSettings);
 
         _inputRouter.Init(_playerHealth, _enemyHealth);
 

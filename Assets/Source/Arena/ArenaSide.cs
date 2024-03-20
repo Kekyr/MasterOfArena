@@ -9,6 +9,8 @@ public class ArenaSide : MonoBehaviour
 
     [SerializeField] private Environment _environment;
     [SerializeField] private Explosion _explosion;
+    [SerializeField] private SFX _sfx;
+    [SerializeField] private SFXSO _blast;
 
     private Health _health;
 
@@ -19,6 +21,12 @@ public class ArenaSide : MonoBehaviour
 
         if (_explosion == null)
             throw new ArgumentNullException(nameof(_explosion));
+
+        if (_sfx == null)
+            throw new ArgumentNullException(nameof(_sfx));
+
+        if (_blast == null)
+            throw new ArgumentNullException(nameof(_blast));
 
         _health.Died += OnDead;
     }
@@ -44,9 +52,9 @@ public class ArenaSide : MonoBehaviour
             .OnComplete(() =>
             {
                 for (int i = 0; i < _explosion.transform.childCount; i++)
-                {
                     _explosion.transform.GetChild(i).gameObject.SetActive(true);
-                }
+                
+                _sfx.Play(_blast);
             });
     }
 }

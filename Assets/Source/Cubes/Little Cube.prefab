@@ -180,6 +180,7 @@ MonoBehaviour:
   _view: {fileID: 6846438703058630909}
   _mesh: {fileID: 2747253608075971197}
   _collider: {fileID: 1601124983395839699}
+  _particleSystem: {fileID: 2552104146741800699}
 --- !u!114 &3844751987448212674
 MonoBehaviour:
   m_ObjectHideFlags: 0

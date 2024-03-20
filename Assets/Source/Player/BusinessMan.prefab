@@ -173,6 +173,8 @@ GameObject:
   - component: {fileID: 6557570692264104143}
   - component: {fileID: 2513462876749229117}
   - component: {fileID: 7764836383014546001}
+  - component: {fileID: 392300695773011895}
+  - component: {fileID: 3364448663209887402}
   - component: {fileID: 7060164044928495196}
   - component: {fileID: 5538526355287533188}
   m_Layer: 0
@@ -216,6 +218,8 @@ MonoBehaviour:
   _animator: {fileID: 2513462876749229117}
   _impulseSource: {fileID: 7060164044928495196}
   _startFlyPosition: {fileID: 7647987501291583142}
+  _sfx: {fileID: 392300695773011895}
+  _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
   _shakeForce: 0.2
   _animationTrigger: Throw
 --- !u!114 &8039540795345452159
@@ -231,6 +235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 7764836383014546001}
+  _sfx: {fileID: 392300695773011895}
+  _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
   _flySpeed: 2.5
   _minRandomX: -0.5
@@ -296,6 +302,115 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &392300695773011895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862089463768831084}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0240db46dfe9ef649b2b92b94414162f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 3364448663209887402}
+--- !u!82 &3364448663209887402
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862089463768831084}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &7060164044928495196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6311,6 +6426,7 @@ MonoBehaviour:
   _confettiVFX: {fileID: 7227301190202973229}
   _sfx: {fileID: 3621117653902208921}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
+  _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
 --- !u!114 &8503544473101439533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6380,7 +6496,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5678666094662696787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0240db46dfe9ef649b2b92b94414162f, type: 3}
   m_Name: 

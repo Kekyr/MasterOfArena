@@ -15,7 +15,6 @@ public class CubeSpawner : MonoBehaviour
 
     private Health _playerHealth;
     private Health _enemyHealth;
-    private GameObject _explosion;
 
     private WaitForSeconds _waitInterval;
 
@@ -45,7 +44,7 @@ public class CubeSpawner : MonoBehaviour
         _enemyHealth.Died -= OnDead;
     }
 
-    public void Init(Health playerHealth, Health enemyHealth, GameObject explosion)
+    public void Init(Health playerHealth, Health enemyHealth)
     {
         if (playerHealth == null)
             throw new ArgumentNullException(nameof(playerHealth));
@@ -53,12 +52,8 @@ public class CubeSpawner : MonoBehaviour
         if (enemyHealth == null)
             throw new ArgumentNullException(nameof(enemyHealth));
 
-        if (explosion == null)
-            throw new ArgumentNullException(nameof(explosion));
-
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
-        _explosion = explosion;
         enabled = true;
     }
 
@@ -81,7 +76,6 @@ public class CubeSpawner : MonoBehaviour
             _cubesPrefab[randomCubeIndex].transform.rotation,
             spawnPosition.transform);
         cube.Collided += OnCollision;
-        cube.Init(_explosion);
         _cubes.Add(cube);
     }
 
