@@ -19,7 +19,7 @@ public class ProjectileMovement : MonoBehaviour
     [SerializeField] private float _maxRandomX;
 
     private Projectile _projectile;
-    private Aiming _aiming;
+    private Targeting _targeting;
 
     private float _acceleration;
     private Vector3 _flyDirection;
@@ -40,15 +40,15 @@ public class ProjectileMovement : MonoBehaviour
             throw new ArgumentNullException(nameof(_miss));
 
         _acceleration = _flySpeed;
-        _aiming = _projectile.Character.GetComponent<Aiming>();
+        _targeting = _projectile.Character.GetComponent<Targeting>();
 
-        _aiming.Aimed += OnAimed;
+        _targeting.Aimed += OnAimed;
         _projectile.Ricocheting += OnRicocheting;
     }
 
     private void OnDisable()
     {
-        _aiming.Aimed -= OnAimed;
+        _targeting.Aimed -= OnAimed;
         _projectile.Ricocheting -= OnRicocheting;
     }
 

@@ -3,12 +3,12 @@ using System.Collections;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 public class Character : MonoBehaviour
 {
     private readonly float NewScale = 0.8f;
-    private readonly float NewAimScale = 0f;
     private readonly float NewCircleScale = 0f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Color _damageMarkColor;
     [SerializeField] private CinemachineVirtualCamera _winCamera;
     [SerializeField] private Movement _movement;
-    [SerializeField] private Aiming _aiming;
+    [FormerlySerializedAs("_aiming")] [SerializeField] private Targeting targeting;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _confettiVFX;
     [SerializeField] private SFX _sfx;
@@ -47,8 +47,8 @@ public class Character : MonoBehaviour
         if (_movement == null)
             throw new ArgumentNullException(nameof(_movement));
 
-        if (_aiming == null)
-            throw new ArgumentNullException(nameof(_aiming));
+        if (targeting == null)
+            throw new ArgumentNullException(nameof(targeting));
 
         if (_animator == null)
             throw new ArgumentNullException(nameof(_animator));
@@ -123,8 +123,7 @@ public class Character : MonoBehaviour
     private void OnThrowEnded()
     {
         Throwed?.Invoke(transform.parent);
-        _aiming.Aim.ChangeScale(NewAimScale);
-        _aiming.Circle.ChangeScale(NewCircleScale);
+        targeting.Circle.ChangeScale(NewCircleScale);
     }
 
     private void OnCatch()

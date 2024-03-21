@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
 
     private Character _character;
     private Animator _catcherAnimator;
-    private Aiming _aiming;
+    private Targeting _targeting;
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
@@ -58,11 +58,11 @@ public class Projectile : MonoBehaviour
             throw new ArgumentNullException(nameof(_punch));
 
         _catcherAnimator = _character.GetComponent<Animator>();
-        _aiming = _character.GetComponent<Aiming>();
+        _targeting = _character.GetComponent<Targeting>();
 
         _movement.Init(this);
 
-        _aiming.Aimed += OnAimed;
+        _targeting.Aimed += OnAimed;
         _character.Throwed += OnThrow;
 
         modifier.Init(_character);
@@ -72,7 +72,7 @@ public class Projectile : MonoBehaviour
 
     private void OnDisable()
     {
-        _aiming.Aimed -= OnAimed;
+        _targeting.Aimed -= OnAimed;
         _character.Throwed -= OnThrow;
         modifier.enabled = false;
     }

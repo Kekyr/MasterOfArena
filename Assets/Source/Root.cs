@@ -14,8 +14,8 @@ public class Root : MonoBehaviour
     [SerializeField] private Movement _enemyMovement;
 
     [SerializeField] private PlayerInputRouter _inputRouter;
-    [SerializeField] private PlayerAiming _playerAiming;
-    [SerializeField] private AiAiming _enemyAiming;
+    [SerializeField] private PlayerTargeting playerTargeting;
+    [SerializeField] private AiTargeting enemyTargeting;
 
     [SerializeField] private ArenaSide _playerSide;
     [SerializeField] private ArenaSide _enemySide;
@@ -62,11 +62,11 @@ public class Root : MonoBehaviour
         if (_inputRouter == null)
             throw new ArgumentNullException(nameof(_inputRouter));
 
-        if (_playerAiming == null)
-            throw new ArgumentNullException(nameof(_playerAiming));
+        if (playerTargeting == null)
+            throw new ArgumentNullException(nameof(playerTargeting));
 
-        if (_enemyAiming == null)
-            throw new ArgumentNullException(nameof(_enemyAiming));
+        if (enemyTargeting == null)
+            throw new ArgumentNullException(nameof(enemyTargeting));
 
         if (_playerSide == null)
             throw new ArgumentNullException(nameof(_playerSide));
@@ -159,10 +159,10 @@ public class Root : MonoBehaviour
         _playerPlatform.Init(sequence, _playerHealth, _enemy);
         _enemyPlatform.Init(sequence, _enemyHealth, _player);
 
-        _playerAiming.Init(sequence, _playerHealth, _enemyHealth);
-        _playerAiming.Init(_inputRouter);
+        playerTargeting.Init(sequence, _playerHealth, _enemyHealth);
+        playerTargeting.Init(_inputRouter);
 
-        _enemyAiming.Init(sequence, _enemyHealth, _playerHealth);
-        _enemyAiming.Init(_cubeSpawner);
+        enemyTargeting.Init(sequence, _enemyHealth, _playerHealth);
+        enemyTargeting.Init(_cubeSpawner);
     }
 }

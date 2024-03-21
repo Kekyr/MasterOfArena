@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class AiAiming : Aiming
+public class AiTargeting : Targeting
 {
     private readonly float CircleNewScale = 0.02f;
-    private readonly float AimNewScale = 0.05f;
     private readonly float Delay = 1f;
 
     private CubeSpawner _cubeSpawner;
@@ -27,12 +26,12 @@ public class AiAiming : Aiming
         enabled = true;
     }
 
-    private IEnumerator Aiming()
+    private IEnumerator FindingTarget()
     {
         Circle.ChangeScale(CircleNewScale);
         yield return _waitForSeconds;
 
-        Aim.ChangeScale(AimNewScale);
+        InvokeAiming();
         yield return _waitForSeconds;
 
         Vector3 throwDirection = (_cubeSpawner.GetRandomCubePosition() - transform.position).normalized;
@@ -42,7 +41,7 @@ public class AiAiming : Aiming
 
     protected override void OnCatch()
     {
-        StartCoroutine(Aiming());
+        StartCoroutine(FindingTarget());
     }
 
     protected override void OnDead()

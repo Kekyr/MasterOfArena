@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-public abstract class Aiming : MonoBehaviour
+public abstract class Targeting : MonoBehaviour
 {
     private readonly float NewScale = 0.02f;
     private readonly float Duration = 0.1f;
@@ -17,6 +17,8 @@ public abstract class Aiming : MonoBehaviour
     private Health _enemyHealth;
 
     public event Action<Vector3> Aimed;
+
+    public event Action Aiming;
 
     protected Character Character => _character;
 
@@ -88,6 +90,11 @@ public abstract class Aiming : MonoBehaviour
     protected void InvokeAimed(Vector3 value)
     {
         Aimed?.Invoke(value);
+    }
+
+    protected void InvokeAiming()
+    {
+        Aiming?.Invoke();
     }
 
     protected abstract void OnCatch();

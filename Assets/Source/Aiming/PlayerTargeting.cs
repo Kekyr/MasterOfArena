@@ -3,9 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAiming : Aiming
+public class PlayerTargeting : Targeting
 {
-    private readonly float NewAimScale = 0.05f;
     private readonly float NewCircleScale = 0.02f;
     private readonly float DistanceFromCamera = 12;
     private readonly float MultiplierZ = 4;
@@ -17,15 +16,15 @@ public class PlayerAiming : Aiming
     protected override void OnEnable()
     {
         base.OnEnable();
-        _inputRouter.Aiming.performed += ctx => OnAimingStarted();
-        _inputRouter.Aiming.canceled += ctx => OnAimingCanceled();
+        _inputRouter.Aiming.performed += ctx => OnFindingStarted();
+        _inputRouter.Aiming.canceled += ctx => OnFindingCanceled();
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _inputRouter.Aiming.performed -= ctx => OnAimingStarted();
-        _inputRouter.Aiming.canceled -= ctx => OnAimingCanceled();
+        _inputRouter.Aiming.performed -= ctx => OnFindingStarted();
+        _inputRouter.Aiming.canceled -= ctx => OnFindingCanceled();
     }
 
     public void Init(PlayerInputRouter playerInputRouter)
@@ -37,7 +36,7 @@ public class PlayerAiming : Aiming
         enabled = true;
     }
 
-    private IEnumerator Aiming()
+    private IEnumerator FindingTarget()
     {
         Vector3 throwDirection = Vector3.zero;
 
@@ -74,17 +73,17 @@ public class PlayerAiming : Aiming
         Circle.ChangeScale(0f);
     }
 
-    private void OnAimingStarted()
+    private void OnFindingStarted()
     {
         if (Character.CurrentProjectile.IsFlying == false)
         {
-            Aim.ChangeScale(NewAimScale);
+            InvokeAiming();
             _canAim = true;
-            StartCoroutine(Aiming());
+            StartCoroutine(FindingTarget());
         }
     }
 
-    private void OnAimingCanceled()
+    private void OnFindingCanceled()
     {
         _canAim = false;
     }
