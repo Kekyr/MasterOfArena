@@ -4,12 +4,28 @@ using UnityEngine;
 
 public class AiTargeting : Targeting
 {
-    private readonly float CircleNewScale = 0.02f;
     private readonly float Delay = 1f;
 
-    private CubeSpawner _cubeSpawner;
+    [SerializeField] private Projectile[] _projectiles;
 
+    private CubeSpawner _cubeSpawner;
     private WaitForSeconds _waitForSeconds;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        foreach (Projectile projectile in _projectiles)
+            projectile.Catched += OnCatch;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        foreach (Projectile projectile in _projectiles)
+            projectile.Catched -= OnCatch;
+    }
 
     private void Start()
     {
@@ -17,20 +33,20 @@ public class AiTargeting : Targeting
         OnCatch();
     }
 
-    public void Init(CubeSpawner cubeSpawner)
+    public void Init(CubeSpawner cubeSpawner, Projectile[] projectiles)
     {
         if (cubeSpawner == null)
             throw new ArgumentNullException(nameof(cubeSpawner));
 
+        if (projectiles == null)
+            throw new ArgumentNullException(nameof(projectiles));
+
         _cubeSpawner = cubeSpawner;
-        enabled = true;
+        _projectiles = projectiles;
     }
 
     private IEnumerator FindingTarget()
     {
-        Circle.ChangeScale(CircleNewScale);
-        yield return _waitForSeconds;
-
         InvokeAiming();
         yield return _waitForSeconds;
 
@@ -39,13 +55,8 @@ public class AiTargeting : Targeting
         InvokeAimed(throwDirection);
     }
 
-    protected override void OnCatch()
+    private void OnCatch()
     {
         StartCoroutine(FindingTarget());
-    }
-
-    protected override void OnDead()
-    {
-        enabled = false;
     }
 }

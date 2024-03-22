@@ -7,10 +7,9 @@ public abstract class Targeting : MonoBehaviour
     private readonly float NewScale = 0.02f;
     private readonly float Duration = 0.1f;
 
-    [SerializeField] private Aim _aim;
+    [SerializeField] private Arrow _arrow;
     [SerializeField] private Circle _circle;
     [SerializeField] private Character _character;
-    [SerializeField] private Projectile[] _projectiles;
 
     private Sequence _sequence;
     private Health _health;
@@ -22,28 +21,20 @@ public abstract class Targeting : MonoBehaviour
 
     protected Character Character => _character;
 
-    public Aim Aim => _aim;
+    public Arrow Arrow => _arrow;
 
     public Circle Circle => _circle;
 
     protected virtual void OnEnable()
     {
-        int maxLength = 2;
-
-        if (_aim == null)
-            throw new ArgumentNullException(nameof(_aim));
+        if (_arrow == null)
+            throw new ArgumentNullException(nameof(_arrow));
 
         if (_circle == null)
             throw new ArgumentNullException(nameof(_circle));
 
         if (_character == null)
             throw new ArgumentNullException(nameof(_character));
-
-        if (_projectiles.Length == 0 || _projectiles.Length > maxLength)
-            throw new ArgumentOutOfRangeException(nameof(_projectiles));
-
-        foreach (Projectile projectile in _projectiles)
-            projectile.Catched += OnCatch;
 
         _circle.transform.localScale = Vector3.zero;
 
@@ -56,9 +47,6 @@ public abstract class Targeting : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        foreach (Projectile projectile in _projectiles)
-            projectile.Catched -= OnCatch;
-
         _health.Died -= OnDead;
         _enemyHealth.Died -= OnDead;
     }
@@ -77,6 +65,7 @@ public abstract class Targeting : MonoBehaviour
         _health = health;
         _enemyHealth = enemyHealth;
         _sequence = sequence;
+        enabled = true;
     }
 
     protected void RotateTo(Vector3 direction)
@@ -84,7 +73,7 @@ public abstract class Targeting : MonoBehaviour
         direction.y = 0;
         Quaternion newRotation = Quaternion.LookRotation(direction);
         transform.rotation = newRotation;
-        _aim.RotateTo(newRotation);
+        _arrow.RotateTo(newRotation);
     }
 
     protected void InvokeAimed(Vector3 value)
@@ -97,7 +86,8 @@ public abstract class Targeting : MonoBehaviour
         Aiming?.Invoke();
     }
 
-    protected abstract void OnCatch();
-
-    protected abstract void OnDead();
+    private void OnDead()
+    {
+        enabled = false;
+    }
 }

@@ -1,13 +1,30 @@
-using DG.Tweening;
-using UnityEngine;
+using System;
 
-public class Circle : MonoBehaviour
+public class Circle : AimElement
 {
-    private readonly float Duration = 0.05f;
+    private Projectile[] _projectiles;
 
-    public void ChangeScale(float endValue)
+    protected override void OnEnable()
     {
-        transform.DOScale(endValue, Duration)
-            .SetEase(Ease.InOutSine);
+        base.OnEnable();
+
+        foreach (Projectile projectile in _projectiles)
+            projectile.Catched += IncreaseScale;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        foreach (Projectile projectile in _projectiles)
+            projectile.Catched -= IncreaseScale;
+    }
+
+    public void Init(Projectile[] projectiles)
+    {
+        if (projectiles == null)
+            throw new ArgumentNullException(nameof(projectiles));
+
+        _projectiles = projectiles;
     }
 }

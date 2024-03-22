@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsPopup : MonoBehaviour
+public class SettingsPopup : Popup
 {
     private readonly float NewScale = 1f;
     private readonly float Duration = 0.2f;

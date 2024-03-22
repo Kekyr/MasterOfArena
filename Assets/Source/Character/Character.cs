@@ -9,7 +9,6 @@ using Sequence = DG.Tweening.Sequence;
 public class Character : MonoBehaviour
 {
     private readonly float NewScale = 0.8f;
-    private readonly float NewCircleScale = 0f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
     private readonly float WaitTime = 1.5f;
@@ -18,7 +17,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Color _damageMarkColor;
     [SerializeField] private CinemachineVirtualCamera _winCamera;
     [SerializeField] private Movement _movement;
-    [FormerlySerializedAs("_aiming")] [SerializeField] private Targeting targeting;
+    [SerializeField] private Targeting _targeting;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _confettiVFX;
     [SerializeField] private SFX _sfx;
@@ -29,6 +28,7 @@ public class Character : MonoBehaviour
     private Sequence _sequence;
     private Health _enemyHeath;
     private WaitForSeconds _wait;
+    private Popup _popup;
 
     private int _currentProjectileIndex;
 
@@ -47,8 +47,8 @@ public class Character : MonoBehaviour
         if (_movement == null)
             throw new ArgumentNullException(nameof(_movement));
 
-        if (targeting == null)
-            throw new ArgumentNullException(nameof(targeting));
+        if (_targeting == null)
+            throw new ArgumentNullException(nameof(_targeting));
 
         if (_animator == null)
             throw new ArgumentNullException(nameof(_animator));
@@ -91,7 +91,7 @@ public class Character : MonoBehaviour
         _enemyHeath.Died -= OnEnemyDead;
     }
 
-    public void Init(Projectile[] projectiles, Sequence sequence, Health enemyHealth)
+    public void Init(Projectile[] projectiles, Sequence sequence, Health enemyHealth, Popup popup)
     {
         int maxLength = 2;
 
@@ -104,9 +104,13 @@ public class Character : MonoBehaviour
         if (enemyHealth == null)
             throw new ArgumentNullException(nameof(enemyHealth));
 
+        if (popup == null)
+            throw new ArgumentNullException(nameof(popup));
+
         _sequence = sequence;
         _projectiles = projectiles;
         _enemyHeath = enemyHealth;
+        _popup = popup;
         enabled = true;
     }
 
@@ -123,7 +127,6 @@ public class Character : MonoBehaviour
     private void OnThrowEnded()
     {
         Throwed?.Invoke(transform.parent);
-        targeting.Circle.ChangeScale(NewCircleScale);
     }
 
     private void OnCatch()
@@ -155,5 +158,6 @@ public class Character : MonoBehaviour
         yield return _wait;
         _animator.SetBool(IsDancing, true);
         _sfx.Play(_win);
+        _popup.gameObject.SetActive(true);
     }
 }

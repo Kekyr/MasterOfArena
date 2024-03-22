@@ -4,42 +4,29 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    [SerializeField] private PlayerRoot _playerRoot;
+    [SerializeField] private AIRoot _aiRoot;
+
     [SerializeField] private Music _music;
     [SerializeField] private AudioSettingsSO _audioSettings;
 
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
 
-    [SerializeField] private Movement _playerMovement;
-    [SerializeField] private Movement _enemyMovement;
-
     [SerializeField] private PlayerInputRouter _inputRouter;
-    [SerializeField] private PlayerTargeting playerTargeting;
-    [SerializeField] private AiTargeting enemyTargeting;
-
-    [SerializeField] private ArenaSide _playerSide;
-    [SerializeField] private ArenaSide _enemySide;
-
-    [SerializeField] private BombPlatform _playerPlatform;
-    [SerializeField] private BombPlatform _enemyPlatform;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
-    [SerializeField] private Character _player;
-    [SerializeField] private Character _enemy;
-
     [SerializeField] private Health _playerHealth;
-    [SerializeField] private HealthView _playerHealthView;
-
-    [SerializeField] private Health _enemyHealth;
-    [SerializeField] private HealthView _enemyHealthView;
-
-    [SerializeField] private Projectile[] _playerProjectiles;
-    [SerializeField] private Projectile[] _enemyProjectiles;
+    [SerializeField] private Health _aiHealth;
 
     private void Validate()
     {
-        int maxProjectiles = 2;
+        if (_playerRoot == null)
+            throw new ArgumentNullException(nameof(_playerRoot));
+
+        if (_aiRoot == null)
+            throw new ArgumentNullException(nameof(_aiRoot));
 
         if (_music == null)
             throw new ArgumentNullException(nameof(_music));
@@ -53,38 +40,8 @@ public class Root : MonoBehaviour
         if (_sfxButton == null)
             throw new ArgumentNullException(nameof(_sfxButton));
 
-        if (_playerMovement == null)
-            throw new ArgumentNullException(nameof(_playerMovement));
-
-        if (_enemyMovement == null)
-            throw new ArgumentNullException(nameof(_enemyMovement));
-
         if (_inputRouter == null)
             throw new ArgumentNullException(nameof(_inputRouter));
-
-        if (playerTargeting == null)
-            throw new ArgumentNullException(nameof(playerTargeting));
-
-        if (enemyTargeting == null)
-            throw new ArgumentNullException(nameof(enemyTargeting));
-
-        if (_playerSide == null)
-            throw new ArgumentNullException(nameof(_playerSide));
-
-        if (_enemySide == null)
-            throw new ArgumentNullException(nameof(_enemySide));
-
-        if (_playerPlatform == null)
-            throw new ArgumentNullException(nameof(_playerPlatform));
-
-        if (_enemyPlatform == null)
-            throw new ArgumentNullException(nameof(_enemyPlatform));
-
-        if (_player == null)
-            throw new ArgumentNullException(nameof(_player));
-
-        if (_enemy == null)
-            throw new ArgumentNullException(nameof(_enemy));
 
         if (_cubeSpawner == null)
             throw new ArgumentNullException(nameof(_cubeSpawner));
@@ -92,20 +49,8 @@ public class Root : MonoBehaviour
         if (_playerHealth == null)
             throw new ArgumentNullException(nameof(_playerHealth));
 
-        if (_playerHealthView == null)
-            throw new ArgumentNullException(nameof(_playerHealthView));
-
-        if (_enemyHealth == null)
-            throw new ArgumentNullException(nameof(_enemyHealth));
-
-        if (_enemyHealthView == null)
-            throw new ArgumentNullException(nameof(_enemyHealthView));
-
-        if (_playerProjectiles.Length == 0 || _playerProjectiles.Length > maxProjectiles)
-            throw new ArgumentOutOfRangeException(nameof(_playerProjectiles));
-
-        if (_enemyProjectiles.Length == 0 || _enemyProjectiles.Length > maxProjectiles)
-            throw new ArgumentOutOfRangeException(nameof(_enemyProjectiles));
+        if (_aiHealth == null)
+            throw new ArgumentNullException(nameof(_aiHealth));
     }
 
     private void Awake()
@@ -117,52 +62,15 @@ public class Root : MonoBehaviour
         _musicButton.Init(_audioSettings);
         _sfxButton.Init(_audioSettings);
 
-        for (int i = 0; i < _playerProjectiles.Length; i++)
-        {
-            _playerProjectiles[i].Init(_player);
-            _playerProjectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
-        }
+        _music.Init(_playerHealth, _aiHealth, _musicButton, _audioSettings);
+        _inputRouter.Init(_playerHealth, _aiHealth);
 
-        _player.Init(_playerProjectiles, sequence, _enemyHealth);
-        _player.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
+        _cubeSpawner.Init(_playerHealth, _aiHealth);
 
-        for (int i = 0; i < _enemyProjectiles.Length; i++)
-        {
-            _enemyProjectiles[i].Init(_enemy);
-            _enemyProjectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
-        }
+        _playerRoot.Init(_inputRouter);
+        _playerRoot.Init(sequence, _sfxButton, _audioSettings);
 
-        _enemy.Init(_enemyProjectiles, sequence, _playerHealth);
-        _enemy.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
-
-        _playerMovement.Init(_playerProjectiles, _playerHealth);
-        _enemyMovement.Init(_enemyProjectiles, _enemyHealth);
-
-        _playerSide.Init(_playerHealth);
-        _playerSide.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
-
-        _enemySide.Init(_enemyHealth);
-        _enemySide.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
-
-        _playerHealthView.Init(_playerHealth);
-        _enemyHealthView.Init(_enemyHealth);
-
-        _cubeSpawner.Init(_playerHealth, _enemyHealth);
-
-        _playerHealth.Init(_playerPlatform);
-        _enemyHealth.Init(_enemyPlatform);
-
-        _music.Init(_playerHealth, _enemyHealth, _musicButton, _audioSettings);
-
-        _inputRouter.Init(_playerHealth, _enemyHealth);
-
-        _playerPlatform.Init(sequence, _playerHealth, _enemy);
-        _enemyPlatform.Init(sequence, _enemyHealth, _player);
-
-        playerTargeting.Init(sequence, _playerHealth, _enemyHealth);
-        playerTargeting.Init(_inputRouter);
-
-        enemyTargeting.Init(sequence, _enemyHealth, _playerHealth);
-        enemyTargeting.Init(_cubeSpawner);
+        _aiRoot.Init(_cubeSpawner);
+        _aiRoot.Init(sequence, _sfxButton, _audioSettings);
     }
 }

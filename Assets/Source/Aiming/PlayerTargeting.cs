@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerTargeting : Targeting
 {
-    private readonly float NewCircleScale = 0.02f;
     private readonly float DistanceFromCamera = 12;
     private readonly float MultiplierZ = 4;
 
@@ -33,7 +32,6 @@ public class PlayerTargeting : Targeting
             throw new ArgumentNullException(nameof(playerInputRouter));
 
         _inputRouter = playerInputRouter;
-        enabled = true;
     }
 
     private IEnumerator FindingTarget()
@@ -60,17 +58,6 @@ public class PlayerTargeting : Targeting
             new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * MultiplierZ);
         Vector3 throwDirection = -(mouseWorldPosition - transform.position).normalized;
         return throwDirection;
-    }
-
-    protected override void OnCatch()
-    {
-        Circle.ChangeScale(NewCircleScale);
-    }
-
-    protected override void OnDead()
-    {
-        enabled = false;
-        Circle.ChangeScale(0f);
     }
 
     private void OnFindingStarted()
