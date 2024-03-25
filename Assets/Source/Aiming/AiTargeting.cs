@@ -1,20 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AiTargeting : Targeting
 {
     private readonly float Delay = 1f;
 
-    [SerializeField] private Projectile[] _projectiles;
-
+    private IReadOnlyCollection<Projectile> _projectiles;
     private CubeSpawner _cubeSpawner;
     private WaitForSeconds _waitForSeconds;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-
         foreach (Projectile projectile in _projectiles)
             projectile.Catched += OnCatch;
     }
@@ -22,7 +21,6 @@ public class AiTargeting : Targeting
     protected override void OnDisable()
     {
         base.OnDisable();
-
         foreach (Projectile projectile in _projectiles)
             projectile.Catched -= OnCatch;
     }
@@ -33,7 +31,7 @@ public class AiTargeting : Targeting
         OnCatch();
     }
 
-    public void Init(CubeSpawner cubeSpawner, Projectile[] projectiles)
+    public void Init(CubeSpawner cubeSpawner, IReadOnlyCollection<Projectile> projectiles)
     {
         if (cubeSpawner == null)
             throw new ArgumentNullException(nameof(cubeSpawner));

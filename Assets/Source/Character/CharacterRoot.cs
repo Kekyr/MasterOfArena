@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -28,7 +29,11 @@ public class CharacterRoot : MonoBehaviour
     private AudioSettingsSO _audioSettings;
     private Sequence _sequence;
 
-    protected virtual void OnEnable()
+    public IReadOnlyCollection<Projectile> Projectiles => _projectiles;
+
+    public Targeting Aiming => _aiming;
+
+    private void OnEnable()
     {
         int maxProjectiles = 2;
 
@@ -96,7 +101,7 @@ public class CharacterRoot : MonoBehaviour
 
         _aiming.Init(_sequence, _health, _enemyHealth);
         _arrow.Init(_character, _aiming, _health);
-        
+
         _circle.Init(_projectiles);
         _circle.Init(_character, _aiming, _health);
     }
