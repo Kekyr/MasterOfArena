@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerTargeting : Targeting
 {
     private readonly float DistanceFromCamera = 12;
-    private readonly float MultiplierZ = 4;
+    private readonly float OffsetZ = -5;
 
     private PlayerInputRouter _inputRouter;
 
@@ -51,12 +51,15 @@ public class PlayerTargeting : Targeting
     private Vector3 TakeAim()
     {
         Vector3 pointerScreenPosition = Pointer.current.position.ReadValue();
-        Vector3 mouseWorldPosition =
-            Camera.main.ScreenToWorldPoint(new Vector3(pointerScreenPosition.x, pointerScreenPosition.y,
-                DistanceFromCamera));
+
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(
+            new Vector3(pointerScreenPosition.x, pointerScreenPosition.y, DistanceFromCamera));
+
         mouseWorldPosition =
-            new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z * MultiplierZ);
+            new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z + OffsetZ);
+
         Vector3 throwDirection = -(mouseWorldPosition - transform.position).normalized;
+
         return throwDirection;
     }
 

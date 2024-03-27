@@ -20,6 +20,8 @@ public class Root : MonoBehaviour
     [SerializeField] private Health _playerHealth;
     [SerializeField] private Health _aiHealth;
 
+    [SerializeField] private TutorialHand _hand;
+
     private void Validate()
     {
         if (_playerRoot == null)
@@ -51,6 +53,9 @@ public class Root : MonoBehaviour
 
         if (_aiHealth == null)
             throw new ArgumentNullException(nameof(_aiHealth));
+
+        if (_hand == null)
+            throw new ArgumentNullException(nameof(_hand));
     }
 
     private void Awake()
@@ -72,5 +77,7 @@ public class Root : MonoBehaviour
 
         _aiRoot.Init(_cubeSpawner);
         _aiRoot.Init(sequence, _sfxButton, _audioSettings);
+
+        _hand.Init(sequence, _inputRouter);
     }
 }
