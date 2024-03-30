@@ -7,12 +7,26 @@ public class TutorialHand : MonoBehaviour
 {
     [SerializeField] private float _newTimeValue;
     [SerializeField] private Transform[] _wayPoints;
+    [SerializeField] private LeaderboardButton _leaderboardButton;
+    [SerializeField] private SettingsButton _settingsButton;
 
     private Sequence _sequence;
     private PlayerInputRouter _inputRouter;
 
     private void OnEnable()
     {
+        if (_newTimeValue < 0 || _newTimeValue > 1)
+            throw new ArgumentOutOfRangeException(nameof(_newTimeValue));
+
+        if (_wayPoints.Length == 0)
+            throw new ArgumentOutOfRangeException(nameof(_wayPoints));
+
+        if (_leaderboardButton == null)
+            throw new ArgumentNullException(nameof(_leaderboardButton));
+
+        if (_settingsButton == null)
+            throw new ArgumentNullException(nameof(_settingsButton));
+
         Vector3[] wayPoints = new Vector3[_wayPoints.Length];
 
         for (int i = 0; i < _wayPoints.Length; i++)
@@ -50,6 +64,8 @@ public class TutorialHand : MonoBehaviour
     private void Stop()
     {
         Time.timeScale = 1f;
+        _leaderboardButton.gameObject.SetActive(true);
+        _settingsButton.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 }

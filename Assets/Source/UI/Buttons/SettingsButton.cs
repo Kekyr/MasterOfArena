@@ -2,13 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsButton : MonoBehaviour
+public class SettingsButton : MainButton
 {
     [SerializeField] private Button _button;
     [SerializeField] private SettingsPopup _popup;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         if (_button == null)
             throw new ArgumentNullException(nameof(_button));
 
