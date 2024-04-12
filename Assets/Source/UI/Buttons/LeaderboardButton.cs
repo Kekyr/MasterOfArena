@@ -1,27 +1,22 @@
 using System;
 using Agava.YandexGames;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LeaderboardButton : MainButton
 {
-    [SerializeField] private Button _button;
+    [SerializeField] private YandexLeaderboard _leaderboard;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        if (_button == null)
-            throw new ArgumentNullException(nameof(_button));
+        base.OnEnable();
 
-        _button.onClick.AddListener(OpenLeaderboard);
+        if (_leaderboard == null)
+            throw new ArgumentNullException(nameof(_leaderboard));
     }
 
-    private void OnDisable()
+    protected override void OnClick()
     {
-        _button.onClick.RemoveListener(OpenLeaderboard);
-    }
-
-    private void OpenLeaderboard()
-    {
+#if UNITY_WEBGL && !UNITY_EDITOR
         PlayerAccount.Authorize();
 
         if (PlayerAccount.IsAuthorized)
@@ -29,5 +24,9 @@ public class LeaderboardButton : MainButton
 
         if (PlayerAccount.IsAuthorized == false)
             return;
+        
+        _leaderboard.SetPlayerScore(1);
+        _leaderboard.Fill();
+#endif
     }
 }

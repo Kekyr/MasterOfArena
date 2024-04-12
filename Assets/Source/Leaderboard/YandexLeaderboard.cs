@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Agava.YandexGames;
 using UnityEngine;
@@ -10,6 +11,12 @@ public class YandexLeaderboard : MonoBehaviour
     private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
 
     [SerializeField] private LeaderboardView _leaderboardView;
+
+    private void OnEnable()
+    {
+        if (_leaderboardView == null)
+            throw new ArgumentNullException(nameof(_leaderboardView));
+    }
 
     public void SetPlayerScore(int score)
     {
@@ -30,22 +37,25 @@ public class YandexLeaderboard : MonoBehaviour
 
         _leaderboardPlayers.Clear();
 
-        Leaderboard.GetEntries(LeaderboardName, (result) =>
+        Leaderboard.GetEntries(LeaderboardName, (result) => { LoadData(result); });
+    }
+
+    private void LoadData(LeaderboardGetEntriesResponse result)
+    {
+        foreach (var entry in result.entries)
         {
-            foreach (var entry in result.entries)
-            {
-                //Sprite sprite = entry.player.profilePicture;
-                string name = entry.player.publicName;
-                int rank = entry.rank;
-                int score = entry.score;
+            string avatar = entry.player.profilePicture;
+            string name = entry.player.publicName;
 
-                if (string.IsNullOrEmpty(name))
-                    name = AnonymousName;
+            if (string.IsNullOrEmpty(name))
+                name = AnonymousName;
 
-                //_leaderboardPlayers.Add(new LeaderboardPlayer(sprite, name, rank, score));
-            }
+            int rank = entry.rank;
+            int score = entry.score;
 
-            _leaderboardView.ConstructLeaderboard(_leaderboardPlayers);
-        });
+            _leaderboardPlayers.Add(new LeaderboardPlayer(avatar, name, rank, score));
+        }
+
+        _leaderboardView.ConstructLeaderboard(_leaderboardPlayers);
     }
 }

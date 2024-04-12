@@ -1,8 +1,6 @@
-using UnityEngine;
-
 public class LeaderboardPlayer
 {
-    public LeaderboardPlayer(Sprite avatar, string name, int rank, int score)
+    public LeaderboardPlayer(string avatar, string name, int rank, int score)
     {
         Avatar = avatar;
         Name = name;
@@ -10,7 +8,7 @@ public class LeaderboardPlayer
         Score = score;
     }
 
-    public Sprite Avatar { get; private set; }
+    public string Avatar { get; private set; }
     public string Name { get; private set; }
     public int Rank { get; private set; }
     public int Score { get; private set; }

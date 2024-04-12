@@ -1,12 +1,15 @@
 using System;
+using Agava.YandexGames;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LeaderboardElement : MonoBehaviour
 {
-    [SerializeField] private Image _playerAvatar;
+    private const float PivotX = 0.5f;
+    private const float PivotY = 0.5f;
 
+    [SerializeField] private Image _playerAvatar;
     [SerializeField] private TMP_Text _playerName;
     [SerializeField] private TMP_Text _playerRank;
     [SerializeField] private TMP_Text _playerScore;
@@ -26,11 +29,25 @@ public class LeaderboardElement : MonoBehaviour
             throw new ArgumentNullException(nameof(_playerScore));
     }
 
-    public void Initialize(Sprite avatar, string name, int rank, int score)
+    public void Initialize(string avatar, string name, int rank, int score)
     {
-        _playerAvatar.sprite = avatar;
+        RemoteImage image = new RemoteImage(avatar);
+
+        image.Download(OnSuccessCallback, OnErrorCallback);
+
         _playerName.text = name;
         _playerRank.text = rank.ToString();
         _playerScore.text = score.ToString();
+    }
+
+    private void OnSuccessCallback(Texture2D texture)
+    {
+        _playerAvatar.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+            new Vector2(PivotX, PivotY));
+    }
+
+    private void OnErrorCallback(string error)
+    {
+        Debug.Log(error);
     }
 }
