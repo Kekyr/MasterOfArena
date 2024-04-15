@@ -3,7 +3,6 @@ using System.Collections;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 public class Character : MonoBehaviour
@@ -39,7 +38,7 @@ public class Character : MonoBehaviour
 
     public Color DamageMarkColor => _damageMarkColor;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (_winCamera == null)
             throw new ArgumentNullException(nameof(_winCamera));
@@ -151,7 +150,7 @@ public class Character : MonoBehaviour
         StartCoroutine(Win());
     }
 
-    private IEnumerator Win()
+    protected virtual IEnumerator Win()
     {
         _winCamera.gameObject.SetActive(true);
         _confettiVFX.Play();

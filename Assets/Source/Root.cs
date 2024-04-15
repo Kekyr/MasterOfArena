@@ -14,6 +14,7 @@ public class Root : MonoBehaviour
     [SerializeField] private SFXButton _sfxButton;
 
     [SerializeField] private PlayerInputRouter _inputRouter;
+    [SerializeField] private YandexLeaderboard _leaderboard;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
@@ -49,6 +50,9 @@ public class Root : MonoBehaviour
         if (_inputRouter == null)
             throw new ArgumentNullException(nameof(_inputRouter));
 
+        if (_leaderboard == null)
+            throw new ArgumentNullException(nameof(_leaderboard));
+
         if (_cubeSpawner == null)
             throw new ArgumentNullException(nameof(_cubeSpawner));
 
@@ -73,7 +77,7 @@ public class Root : MonoBehaviour
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
-        _playerRoot.Init(_inputRouter);
+        _playerRoot.Init(_inputRouter, _leaderboard);
         _playerRoot.Init(_order, _sfxButton, _audioSettings);
 
         _aiRoot.Init(_cubeSpawner);

@@ -25,7 +25,6 @@ public class LeaderboardButton : MainButton
         if (PlayerAccount.IsAuthorized == false)
             return;
         
-        _leaderboard.SetPlayerScore(1);
         _leaderboard.Fill();
 #endif
     }

@@ -12,10 +12,28 @@ public class YandexLeaderboard : MonoBehaviour
 
     [SerializeField] private LeaderboardView _leaderboardView;
 
+    private Player _player;
+
     private void OnEnable()
     {
         if (_leaderboardView == null)
             throw new ArgumentNullException(nameof(_leaderboardView));
+
+        _player.Victory += SetPlayerScore;
+    }
+
+    private void OnDisable()
+    {
+        _player.Victory -= SetPlayerScore;
+    }
+
+    public void Init(Player player)
+    {
+        if (player == null)
+            throw new ArgumentNullException(nameof(_player));
+
+        _player = player;
+        enabled = true;
     }
 
     public void SetPlayerScore(int score)

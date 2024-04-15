@@ -33,6 +33,8 @@ public class CharacterRoot : MonoBehaviour
 
     public Targeting Aiming => _aiming;
 
+    public Character Person => _character;
+
     private void OnEnable()
     {
         int maxProjectiles = 2;
