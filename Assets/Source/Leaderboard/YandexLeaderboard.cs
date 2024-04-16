@@ -62,6 +62,7 @@ public class YandexLeaderboard : MonoBehaviour
     {
         foreach (var entry in result.entries)
         {
+            string id = entry.player.uniqueID;
             string avatar = entry.player.profilePicture;
             string name = entry.player.publicName;
 
@@ -71,7 +72,7 @@ public class YandexLeaderboard : MonoBehaviour
             int rank = entry.rank;
             int score = entry.score;
 
-            _leaderboardPlayers.Add(new LeaderboardPlayer(avatar, name, rank, score));
+            _leaderboardPlayers.Add(new LeaderboardPlayer(id, avatar, name, rank, score));
         }
 
         _leaderboardView.ConstructLeaderboard(_leaderboardPlayers);
