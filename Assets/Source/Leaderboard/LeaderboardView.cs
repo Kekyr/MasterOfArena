@@ -31,7 +31,7 @@ public class LeaderboardView : MonoBehaviour
     {
         ClearLeaderboard();
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+//#if UNITY_WEBGL && !UNITY_EDITOR
         Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
         {
             string playerId = result.player.uniqueID;
@@ -51,7 +51,7 @@ public class LeaderboardView : MonoBehaviour
 
             gameObject.SetActive(true);
         });
-#endif
+//#endif
     }
 
     private void SpawnLeaderboardElement(LeaderboardElement prefab, LeaderboardPlayer player, Transform container)

@@ -12,7 +12,7 @@ public class TutorialHand : MonoBehaviour
     private readonly int Resolution = 5;
     
     [SerializeField] private float _newTimeValue;
-    [SerializeField] private Transform[] _wayPoints;
+    [SerializeField] private RectTransform[] _wayPoints;
     [SerializeField] private LeaderboardButton _leaderboardButton;
     [SerializeField] private SettingsButton _settingsButton;
 
@@ -36,7 +36,7 @@ public class TutorialHand : MonoBehaviour
         Vector3[] wayPoints = new Vector3[_wayPoints.Length];
 
         for (int i = 0; i < _wayPoints.Length; i++)
-            wayPoints[i] = _wayPoints[i].localPosition;
+            wayPoints[i] = _wayPoints[i].position;
 
         _sequence.OnComplete(() =>
         {
