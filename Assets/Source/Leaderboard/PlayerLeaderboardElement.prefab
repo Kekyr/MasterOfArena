@@ -14,8 +14,16 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 840a54519d139421686eb868f94c36fc, type: 3}
     - target: {fileID: 1829766707062295639, guid: 0efcebefeb8ea0c40846d5b8f3ab9c7c, type: 3}
       propertyPath: m_Name
-      value: AuthorizedPlayerLeaderboardElement Variant
+      value: PlayerLeaderboardElement
       objectReference: {fileID: 0}
+    - target: {fileID: 3439952385505100173, guid: 0efcebefeb8ea0c40846d5b8f3ab9c7c, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439952385505100173, guid: 0efcebefeb8ea0c40846d5b8f3ab9c7c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 4392663361673103386, guid: 0efcebefeb8ea0c40846d5b8f3ab9c7c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -32,7 +32,6 @@ public class LeaderboardElement : MonoBehaviour
     public void Initialize(string avatar, string name, int rank, int score)
     {
         RemoteImage image = new RemoteImage(avatar);
-
         image.Download(OnSuccessCallback, OnErrorCallback);
 
         _playerName.text = name;

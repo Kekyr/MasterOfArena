@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using Agava.YandexGames;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class LeaderboardView : MonoBehaviour
 {
-    private const string LeaderboardName = "Leaderboard";
+    private const string LeaderboardName = "NewLeaderboard";
 
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _playerScoreContainer;
@@ -32,42 +31,34 @@ public class LeaderboardView : MonoBehaviour
     {
         ClearLeaderboard();
 
-        LeaderboardPlayer authorizedPlayer = null;
-        LeaderboardElement leaderboardElementInstance;
-
+#if UNITY_WEBGL && !UNITY_EDITOR
         Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
         {
-            authorizedPlayer = new LeaderboardPlayer(result.player.uniqueID, result.player.profilePicture,
-                result.player.publicName, result.rank, result.score);
-
-            leaderboardElementInstance =
-                Instantiate(_leaderboardElementPrefab, _playerScoreContainer);
-
-            leaderboardElementInstance.Initialize(authorizedPlayer.Avatar, authorizedPlayer.Name, authorizedPlayer.Rank,
-                authorizedPlayer.Score);
-
-            _spawnedElements.Add(leaderboardElementInstance);
+            string playerId = result.player.uniqueID;
 
             foreach (LeaderboardPlayer player in leaderboardPlayers)
             {
-                LeaderboardElement leaderboardElementInstance;
-
-                if (player.Id == authorizedPlayer.Id)
+                if (player.Id == playerId)
                 {
-                    leaderboardElementInstance = Instantiate(_playerLeaderboardElementPrefab, _container);
+                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, player, _playerScoreContainer);
+                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, player, _container);
                 }
                 else
                 {
-                    leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _container);
+                    SpawnLeaderboardElement(_leaderboardElementPrefab, player, _container);
                 }
-
-                leaderboardElementInstance.Initialize(player.Avatar, player.Name, player.Rank, player.Score);
-
-                _spawnedElements.Add(leaderboardElementInstance);
             }
 
             gameObject.SetActive(true);
         });
+#endif
+    }
+
+    private void SpawnLeaderboardElement(LeaderboardElement prefab, LeaderboardPlayer player, Transform container)
+    {
+        LeaderboardElement leaderboardElementInstance = Instantiate(prefab, container);
+        leaderboardElementInstance.Initialize(player.Avatar, player.Name, player.Rank, player.Score);
+        _spawnedElements.Add(leaderboardElementInstance);
     }
 
     private void ClearLeaderboard()
