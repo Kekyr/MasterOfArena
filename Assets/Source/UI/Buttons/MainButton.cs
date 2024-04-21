@@ -1,14 +1,15 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public abstract class MainButton : MonoBehaviour
 {
-    private readonly float NewScale = 2f;
     private readonly float Duration = 1f;
 
     [SerializeField] private Button _button;
+    [SerializeField] private float _newScale;
 
     protected virtual void OnEnable()
     {
@@ -16,7 +17,7 @@ public abstract class MainButton : MonoBehaviour
             throw new ArgumentNullException(nameof(_button));
 
         transform.localScale = Vector3.zero;
-        transform.DOScale(NewScale, Duration)
+        transform.DOScale(_newScale, Duration)
             .SetEase(Ease.InOutSine);
 
         _button.onClick.AddListener(OnClick);

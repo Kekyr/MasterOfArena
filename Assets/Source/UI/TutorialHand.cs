@@ -1,16 +1,18 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 public class TutorialHand : MonoBehaviour
 {
     private readonly int MaxTimeValue = 1;
     private readonly int MinTimeValue = 0;
-    private readonly float Duration = 2;
+
     private readonly int LoopsCount = -1;
-    private readonly int Resolution = 5;
-    
+    private readonly float Duration = 2;
+
+    [SerializeField] private int _resolution;
     [SerializeField] private float _newTimeValue;
     [SerializeField] private RectTransform[] _wayPoints;
     [SerializeField] private LeaderboardButton _leaderboardButton;
@@ -41,7 +43,7 @@ public class TutorialHand : MonoBehaviour
         _sequence.OnComplete(() =>
         {
             Time.timeScale = _newTimeValue;
-            transform.DOLocalPath(wayPoints, Duration, PathType.CatmullRom, PathMode.Ignore, Resolution, Color.red)
+            transform.DOPath(wayPoints, Duration, PathType.CatmullRom, PathMode.Ignore, _resolution, Color.red)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(LoopsCount, LoopType.Restart);
         });
