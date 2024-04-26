@@ -6,6 +6,7 @@ using UnityEngine;
 public class LeaderboardView : MonoBehaviour
 {
     private const string LeaderboardName = "NewLeaderboard";
+    private const int Size = 5;
 
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _playerScoreContainer;
@@ -31,27 +32,29 @@ public class LeaderboardView : MonoBehaviour
     {
         ClearLeaderboard();
 
-//#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
         {
             string playerId = result.player.uniqueID;
+            int length = Size > leaderboardPlayers.Count ? leaderboardPlayers.Count : Size;
 
-            foreach (LeaderboardPlayer player in leaderboardPlayers)
+            for (int i = 0; i < length; i++)
             {
-                if (player.Id == playerId)
+                if (leaderboardPlayers[i].Id == playerId)
                 {
-                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, player, _playerScoreContainer);
-                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, player, _container);
+                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i],
+                        _playerScoreContainer);
+                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i], _container);
                 }
                 else
                 {
-                    SpawnLeaderboardElement(_leaderboardElementPrefab, player, _container);
+                    SpawnLeaderboardElement(_leaderboardElementPrefab, leaderboardPlayers[i], _container);
                 }
             }
 
             gameObject.SetActive(true);
         });
-//#endif
+#endif
     }
 
     private void SpawnLeaderboardElement(LeaderboardElement prefab, LeaderboardPlayer player, Transform container)
