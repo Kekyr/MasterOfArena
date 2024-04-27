@@ -5,10 +5,14 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    private readonly float NewScale = 1f;
+    private readonly float NewScale = 0.9f;
+    private readonly float Duration = 2f;
+
+    private readonly float ButtonNewScale = 0.8f;
+
     private readonly float CupNewScale = 3f;
     private readonly float CupDuration = 0.5f;
-    private readonly float Duration = 2f;
+
     private readonly float SliderDuration = 2f;
 
     [SerializeField] private Slider _slider;
