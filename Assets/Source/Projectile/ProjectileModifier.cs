@@ -1,25 +1,18 @@
 using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using Sequence = DG.Tweening.Sequence;
 
 public class ProjectileModifier : MonoBehaviour
 {
     private readonly float ScaleModifier = 1.3f;
     private readonly float ScaleDuration = 0.05f;
-    private readonly float ColorDuration = 0.02f;
-
-    [SerializeField] private MeshRenderer _meshRenderer;
+    private readonly float ColorDuration = 0.06f;
 
     private Character _character;
     private Vector3 _originalScale;
 
     private void OnEnable()
     {
-        if (_meshRenderer == null)
-            throw new ArgumentNullException(nameof(_meshRenderer));
-
         _character.Throwed += OnThrow;
     }
 
@@ -50,28 +43,25 @@ public class ProjectileModifier : MonoBehaviour
             });
     }
 
-    public void ChangeColor()
+    public void ChangeMeshColor(MeshRenderer meshRenderer, Color tempColor, float duration)
     {
-        Sequence sequence = DOTween.Sequence();
-        List<Color> startColors = new List<Color>();
-
-        for (int i = 0; i < _meshRenderer.materials.Length; i++)
+        foreach (Material material in meshRenderer.materials)
         {
-            Material material = _meshRenderer.materials[i];
-            startColors.Add(material.color);
-            sequence.Append(material.DOColor(Color.white, ColorDuration)
-                .SetEase(Ease.InOutSine));
+            ChangeMaterialColor(material, tempColor, duration);
         }
+    }
 
-        sequence.OnComplete(() =>
-        {
-            for (int i = 0; i < _meshRenderer.materials.Length; i++)
+    private void ChangeMaterialColor(Material material, Color tempcolor, float duration)
+    {
+        Color startColor = material.color;
+
+        material.DOColor(tempcolor, duration)
+            .SetEase(Ease.InOutSine)
+            .OnComplete(() =>
             {
-                Material material = _meshRenderer.materials[i];
-                material.DOColor(startColors[i], ColorDuration)
+                material.DOColor(startColor, duration)
                     .SetEase(Ease.InOutSine);
-            }
-        });
+            });
     }
 
     private void OnThrow(Transform newParent)

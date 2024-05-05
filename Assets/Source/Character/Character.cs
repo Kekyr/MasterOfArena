@@ -35,7 +35,6 @@ public class Character : MonoBehaviour
     public event Action<Transform> Throwed;
 
     public Projectile CurrentProjectile => _projectiles[_currentProjectileIndex];
-
     public Color DamageMarkColor => _damageMarkColor;
 
     protected virtual void OnEnable()

@@ -21,7 +21,6 @@ public class BombPlatform : MonoBehaviour
 
     private float _startPlatformScaleY;
     private float _startBombY;
-    private float _startViewY;
 
     public event Action<uint> Attacked;
 
@@ -41,7 +40,6 @@ public class BombPlatform : MonoBehaviour
 
         _startPlatformScaleY = _platform.transform.localScale.y;
         _startBombY = _bomb.transform.position.y;
-        _startViewY = _view.transform.position.y;
 
         transform.localScale = Vector3.zero;
         _sequence.Append(transform.DOScale(NewScale, ScaleDuration)

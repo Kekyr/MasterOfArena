@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private readonly float ColorDuration = 0.06f;
+
     [SerializeField] private ProjectileModifier modifier;
     [SerializeField] private ProjectileMovement _movement;
 
+    [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private TrailRenderer _trail;
     [SerializeField] private Animator _animator;
     [SerializeField] private CinemachineImpulseSource _impulseSource;
@@ -36,6 +39,9 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_meshRenderer == null)
+            throw new ArgumentNullException(nameof(_meshRenderer));
+
         if (_animationTrigger == null)
             throw new ArgumentNullException(nameof(_animationTrigger));
 
@@ -127,7 +133,7 @@ public class Projectile : MonoBehaviour
             _sfx.Play(_punch);
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
             modifier.ChangeScale();
-            modifier.ChangeColor();
+            modifier.ChangeMeshColor(_meshRenderer, Color.white, ColorDuration);
             Ricocheting?.Invoke();
         }
         else if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))

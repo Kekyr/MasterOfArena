@@ -14,8 +14,11 @@ public class AiTargeting : Targeting
     protected override void OnEnable()
     {
         base.OnEnable();
+
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.Catched += OnCatch;
+        }
     }
 
     protected override void OnDisable()
