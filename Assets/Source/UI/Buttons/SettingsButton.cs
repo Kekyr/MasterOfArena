@@ -10,7 +10,9 @@ public class SettingsButton : MainButton
         base.OnEnable();
 
         if (_popup == null)
+        {
             throw new ArgumentNullException(nameof(_popup));
+        }
     }
 
     protected override void OnClick()

@@ -24,22 +24,34 @@ public class LeaderboardElement : MonoBehaviour
     private void OnEnable()
     {
         if (_imageRank == null)
+        {
             throw new ArgumentNullException(nameof(_imageRank));
+        }
 
         if (_playerAvatar == null)
+        {
             throw new ArgumentNullException(nameof(_playerAvatar));
+        }
 
         if (_playerImageRank == null)
+        {
             throw new ArgumentNullException(nameof(_playerImageRank));
+        }
 
         if (_playerName == null)
+        {
             throw new ArgumentNullException(nameof(_playerName));
+        }
 
         if (_playerRank == null)
+        {
             throw new ArgumentNullException(nameof(_playerRank));
+        }
 
         if (_playerScore == null)
+        {
             throw new ArgumentNullException(nameof(_playerScore));
+        }
     }
 
     public void Initialize(string avatar, string name, int rank, int score)

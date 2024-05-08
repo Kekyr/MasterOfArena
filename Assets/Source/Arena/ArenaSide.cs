@@ -17,16 +17,24 @@ public class ArenaSide : MonoBehaviour
     private void OnEnable()
     {
         if (_environment == null)
+        {
             throw new ArgumentNullException(nameof(_environment));
+        }
 
         if (_explosion == null)
+        {
             throw new ArgumentNullException(nameof(_explosion));
+        }
 
         if (_sfx == null)
+        {
             throw new ArgumentNullException(nameof(_sfx));
+        }
 
         if (_blast == null)
+        {
             throw new ArgumentNullException(nameof(_blast));
+        }
 
         _health.Died += OnDead;
     }
@@ -39,7 +47,9 @@ public class ArenaSide : MonoBehaviour
     public void Init(Health health)
     {
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         _health = health;
         enabled = true;
@@ -52,8 +62,10 @@ public class ArenaSide : MonoBehaviour
             .OnComplete(() =>
             {
                 for (int i = 0; i < _explosion.transform.childCount; i++)
+                {
                     _explosion.transform.GetChild(i).gameObject.SetActive(true);
-                
+                }
+
                 _sfx.Play(_blast);
             });
     }

@@ -28,19 +28,29 @@ public class ProgressBar : MonoBehaviour
     private void OnEnable()
     {
         if (_data == null)
+        {
             throw new ArgumentNullException(nameof(_data));
+        }
 
         if (_slider == null)
+        {
             throw new ArgumentNullException(nameof(_slider));
+        }
 
         if (_points.Length != _data.PointsCount)
+        {
             throw new ArgumentOutOfRangeException(nameof(_points));
+        }
 
         if (_button == null)
+        {
             throw new ArgumentNullException(nameof(_button));
+        }
 
         if (_cup == null)
+        {
             throw new ArgumentNullException(nameof(_cup));
+        }
 
         transform.localScale = Vector3.zero;
         _button.transform.localScale = Vector3.zero;
@@ -49,7 +59,9 @@ public class ProgressBar : MonoBehaviour
         _data.GetData(out _currentPointIndex, out _startSliderValue, out _endSliderValue);
 
         for (int i = 0; i < _currentPointIndex; i++)
+        {
             _points[i].sprite = _data.Sprite;
+        }
 
         _slider.value = _startSliderValue;
 

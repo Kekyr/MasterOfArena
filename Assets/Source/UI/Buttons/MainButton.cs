@@ -14,7 +14,9 @@ public abstract class MainButton : MonoBehaviour
     protected virtual void OnEnable()
     {
         if (_button == null)
+        {
             throw new ArgumentNullException(nameof(_button));
+        }
 
         transform.localScale = Vector3.zero;
         transform.DOScale(_newScale, Duration)

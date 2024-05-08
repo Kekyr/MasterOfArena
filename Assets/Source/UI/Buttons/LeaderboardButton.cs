@@ -11,7 +11,9 @@ public class LeaderboardButton : MainButton
         base.OnEnable();
 
         if (_leaderboard == null)
+        {
             throw new ArgumentNullException(nameof(_leaderboard));
+        }
     }
 
     protected override void OnClick()

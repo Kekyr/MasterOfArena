@@ -17,7 +17,9 @@ public class YandexLeaderboard : MonoBehaviour
     private void OnEnable()
     {
         if (_leaderboardView == null)
+        {
             throw new ArgumentNullException(nameof(_leaderboardView));
+        }
 
         _player.Victory += SetPlayerScore;
     }
@@ -30,7 +32,9 @@ public class YandexLeaderboard : MonoBehaviour
     public void Init(Player player)
     {
         if (player == null)
+        {
             throw new ArgumentNullException(nameof(_player));
+        }
 
         _player = player;
         enabled = true;
@@ -39,19 +43,25 @@ public class YandexLeaderboard : MonoBehaviour
     public void SetPlayerScore(int score)
     {
         if (PlayerAccount.IsAuthorized == false)
+        {
             return;
+        }
 
         Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
         {
             if (result == null || result.score < score)
+            {
                 Leaderboard.SetScore(LeaderboardName, score);
+            }
         });
     }
 
     public void Fill()
     {
         if (PlayerAccount.IsAuthorized == false)
+        {
             return;
+        }
 
         _leaderboardPlayers.Clear();
 
@@ -67,7 +77,9 @@ public class YandexLeaderboard : MonoBehaviour
             string name = entry.player.publicName;
 
             if (string.IsNullOrEmpty(name))
+            {
                 name = AnonymousName;
+            }
 
             int rank = entry.rank;
             int score = entry.score;

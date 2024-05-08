@@ -29,7 +29,9 @@ public class PlayerTargeting : Targeting
     public void Init(PlayerInputRouter playerInputRouter)
     {
         if (playerInputRouter == null)
+        {
             throw new ArgumentNullException(nameof(playerInputRouter));
+        }
 
         _inputRouter = playerInputRouter;
     }

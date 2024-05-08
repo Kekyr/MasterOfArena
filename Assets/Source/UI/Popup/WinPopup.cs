@@ -15,7 +15,9 @@ public class WinPopup : Popup
     private void OnEnable()
     {
         if (_upperPart == null)
+        {
             throw new ArgumentNullException(nameof(_upperPart));
+        }
 
         _upperPart.transform.localScale = Vector3.zero;
 

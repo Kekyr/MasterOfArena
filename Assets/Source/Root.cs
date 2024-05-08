@@ -30,37 +30,59 @@ public class Root : MonoBehaviour
     protected virtual void Validate()
     {
         if (_playerRoot == null)
+        {
             throw new ArgumentNullException(nameof(_playerRoot));
+        }
 
         if (_aiRoot == null)
+        {
             throw new ArgumentNullException(nameof(_aiRoot));
+        }
 
         if (_music == null)
+        {
             throw new ArgumentNullException(nameof(_music));
+        }
 
         if (_audioSettings == null)
+        {
             throw new ArgumentNullException(nameof(_audioSettings));
+        }
 
         if (_musicButton == null)
+        {
             throw new ArgumentNullException(nameof(_musicButton));
+        }
 
         if (_sfxButton == null)
+        {
             throw new ArgumentNullException(nameof(_sfxButton));
+        }
 
         if (_inputRouter == null)
+        {
             throw new ArgumentNullException(nameof(_inputRouter));
+        }
 
         if (_leaderboard == null)
+        {
             throw new ArgumentNullException(nameof(_leaderboard));
+        }
 
         if (_cubeSpawner == null)
+        {
             throw new ArgumentNullException(nameof(_cubeSpawner));
+        }
 
         if (_playerHealth == null)
+        {
             throw new ArgumentNullException(nameof(_playerHealth));
+        }
 
         if (_aiHealth == null)
+        {
             throw new ArgumentNullException(nameof(_aiHealth));
+        }
     }
 
     protected virtual void Awake()

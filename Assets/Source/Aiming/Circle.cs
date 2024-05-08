@@ -9,7 +9,9 @@ public class Circle : AimElement
         base.OnEnable();
 
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.Catched += IncreaseScale;
+        }
     }
 
     protected override void OnDisable()
@@ -17,13 +19,17 @@ public class Circle : AimElement
         base.OnDisable();
 
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.Catched -= IncreaseScale;
+        }
     }
 
     public void Init(Projectile[] projectiles)
     {
         if (projectiles == null)
+        {
             throw new ArgumentNullException(nameof(projectiles));
+        }
 
         _projectiles = projectiles;
     }

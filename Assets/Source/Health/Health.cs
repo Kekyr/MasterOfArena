@@ -31,7 +31,9 @@ public class Health : MonoBehaviour
     public void Init(BombPlatform platform)
     {
         if (platform == null)
+        {
             throw new ArgumentNullException(nameof(platform));
+        }
 
         _platform = platform;
         enabled = true;
@@ -44,6 +46,8 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(_current);
 
         if (IsDead)
+        {
             Died?.Invoke();
+        }
     }
 }

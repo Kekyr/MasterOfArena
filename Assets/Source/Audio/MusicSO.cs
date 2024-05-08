@@ -12,7 +12,9 @@ public class MusicSO : ScriptableObject
     public AudioClip GetRandomClip()
     {
         while (_nextTrackIndex == _currentTrackIndex)
+        {
             _nextTrackIndex = Random.Range(0, _tracks.Count);
+        }
 
         _currentTrackIndex = _nextTrackIndex;
 

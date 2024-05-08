@@ -21,15 +21,21 @@ public class CubeSpawner : MonoBehaviour
     private void OnEnable()
     {
         if (_cubesPrefab.Count == 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(_cubesPrefab));
+        }
 
         if (_spawnPositions.Count == 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(_spawnPositions));
+        }
 
         _waitInterval = new WaitForSeconds(_interval);
 
         foreach (SpawnPosition spawnPosition in _spawnPositions)
+        {
             Spawn(spawnPosition.transform);
+        }
 
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
@@ -38,7 +44,9 @@ public class CubeSpawner : MonoBehaviour
     private void OnDisable()
     {
         foreach (Cube cube in _cubes)
+        {
             cube.Collided -= OnCollision;
+        }
 
         _playerHealth.Died -= OnDead;
         _enemyHealth.Died -= OnDead;
@@ -47,10 +55,14 @@ public class CubeSpawner : MonoBehaviour
     public void Init(Health playerHealth, Health enemyHealth)
     {
         if (playerHealth == null)
+        {
             throw new ArgumentNullException(nameof(playerHealth));
+        }
 
         if (enemyHealth == null)
+        {
             throw new ArgumentNullException(nameof(enemyHealth));
+        }
 
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;

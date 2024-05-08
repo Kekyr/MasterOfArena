@@ -23,6 +23,7 @@ public class Projectile : MonoBehaviour
     private Character _character;
     private Animator _catcherAnimator;
     private Targeting _targeting;
+    private Helper _helper;
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
@@ -40,28 +41,44 @@ public class Projectile : MonoBehaviour
     private void OnEnable()
     {
         if (_meshRenderer == null)
+        {
             throw new ArgumentNullException(nameof(_meshRenderer));
+        }
 
         if (_animationTrigger == null)
+        {
             throw new ArgumentNullException(nameof(_animationTrigger));
+        }
 
         if (_animator == null)
+        {
             throw new ArgumentNullException(nameof(_animator));
+        }
 
         if (_movement == null)
+        {
             throw new ArgumentNullException(nameof(_movement));
+        }
 
         if (_impulseSource == null)
+        {
             throw new ArgumentNullException(nameof(_impulseSource));
+        }
 
         if (_startFlyPosition == null)
+        {
             throw new ArgumentNullException(nameof(_startFlyPosition));
+        }
 
         if (_sfx == null)
+        {
             throw new ArgumentNullException(nameof(_sfx));
+        }
 
         if (_punch == null)
+        {
             throw new ArgumentNullException(nameof(_punch));
+        }
 
         _catcherAnimator = _character.GetComponent<Animator>();
         _targeting = _character.GetComponent<Targeting>();
@@ -83,12 +100,20 @@ public class Projectile : MonoBehaviour
         modifier.enabled = false;
     }
 
-    public void Init(Character character)
+    public void Init(Character character, Helper helper)
     {
         if (character == null)
+        {
             throw new ArgumentNullException(nameof(character));
+        }
+
+        if (helper == null)
+        {
+            throw new ArgumentNullException(nameof(helper));
+        }
 
         _character = character;
+        _helper = helper;
         enabled = true;
     }
 
@@ -125,7 +150,9 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (_movement.IsReturning == true)
+        {
             return;
+        }
 
         if (collision.gameObject.TryGetComponent<Cube>(out Cube cube)
             || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
@@ -133,7 +160,7 @@ public class Projectile : MonoBehaviour
             _sfx.Play(_punch);
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
             modifier.ChangeScale();
-            modifier.ChangeMeshColor(_meshRenderer, Color.white, ColorDuration);
+            _helper.ChangeMeshColor(_meshRenderer, Color.white, ColorDuration);
             Ricocheting?.Invoke();
         }
         else if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))

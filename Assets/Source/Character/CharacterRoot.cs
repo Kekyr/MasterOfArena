@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CharacterRoot : MonoBehaviour
 {
+    [SerializeField] private Helper _helper;
     [SerializeField] private Popup _popup;
     [SerializeField] private Projectile[] _projectiles;
 
@@ -40,50 +41,81 @@ public class CharacterRoot : MonoBehaviour
         int maxProjectiles = 2;
 
         if (_popup == null)
+        {
             throw new ArgumentNullException(nameof(_popup));
+        }
 
         if (_projectiles.Length == 0 || _projectiles.Length > maxProjectiles)
+        {
             throw new ArgumentOutOfRangeException(nameof(_projectiles));
+        }
 
         if (_character == null)
+        {
             throw new ArgumentNullException(nameof(_character));
+        }
 
         if (_enemyCharacter == null)
+        {
             throw new ArgumentNullException(nameof(_enemyCharacter));
+        }
 
         if (_health == null)
+        {
             throw new ArgumentNullException(nameof(_health));
+        }
 
         if (_healthView == null)
+        {
             throw new ArgumentNullException(nameof(_healthView));
+        }
 
         if (_enemyHealth == null)
+        {
             throw new ArgumentNullException(nameof(_enemyHealth));
+        }
 
         if (_movement == null)
+        {
             throw new ArgumentNullException(nameof(_movement));
+        }
 
         if (_aiming == null)
+        {
             throw new ArgumentNullException(nameof(_aiming));
+        }
 
         if (_arrow == null)
+        {
             throw new ArgumentNullException(nameof(_arrow));
+        }
 
         if (_circle == null)
+        {
             throw new ArgumentNullException(nameof(_circle));
+        }
 
         if (_side == null)
+        {
             throw new ArgumentNullException(nameof(_side));
+        }
 
         if (_bombPlatform == null)
+        {
             throw new ArgumentNullException(nameof(_bombPlatform));
+        }
+
+        if (_helper == null)
+        {
+            throw new ArgumentNullException(nameof(_helper));
+        }
     }
 
     protected virtual void Start()
     {
         for (int i = 0; i < _projectiles.Length; i++)
         {
-            _projectiles[i].Init(_character);
+            _projectiles[i].Init(_character, _helper);
             _projectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
         }
 
@@ -99,7 +131,7 @@ public class CharacterRoot : MonoBehaviour
 
         _health.Init(_bombPlatform);
 
-        _bombPlatform.Init(_sequence, _health, _enemyCharacter);
+        _bombPlatform.Init(_sequence, _health, _enemyCharacter, _helper);
 
         _aiming.Init(_sequence, _health, _enemyHealth);
         _arrow.Init(_character, _aiming, _health);

@@ -7,7 +7,9 @@ public class MusicButton : AudioButton
     public void Init(AudioSettingsSO audioSettings)
     {
         if (audioSettings == null)
+        {
             throw new ArgumentNullException(nameof(audioSettings));
+        }
 
         _audioSettings = audioSettings;
         enabled = true;

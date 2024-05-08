@@ -24,8 +24,11 @@ public class AiTargeting : Targeting
     protected override void OnDisable()
     {
         base.OnDisable();
+
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.Catched -= OnCatch;
+        }
     }
 
     private void Start()
@@ -37,10 +40,14 @@ public class AiTargeting : Targeting
     public void Init(CubeSpawner cubeSpawner, IReadOnlyCollection<Projectile> projectiles)
     {
         if (cubeSpawner == null)
+        {
             throw new ArgumentNullException(nameof(cubeSpawner));
+        }
 
         if (projectiles == null)
+        {
             throw new ArgumentNullException(nameof(projectiles));
+        }
 
         _cubeSpawner = cubeSpawner;
         _projectiles = projectiles;

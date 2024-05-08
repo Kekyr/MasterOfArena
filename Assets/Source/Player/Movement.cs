@@ -28,13 +28,19 @@ public class Movement : MonoBehaviour
     private void OnEnable()
     {
         if (_rigidbody == null)
+        {
             throw new ArgumentNullException(nameof(_rigidbody));
+        }
 
         if (_animator == null)
+        {
             throw new ArgumentNullException(nameof(_animator));
+        }
 
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.GetComponent<ProjectileMovement>().Ricocheted += OnRicochet;
+        }
 
         _health.Died += OnDead;
     }
@@ -42,7 +48,9 @@ public class Movement : MonoBehaviour
     private void OnDisable()
     {
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.GetComponent<ProjectileMovement>().Ricocheted -= OnRicochet;
+        }
 
         _health.Died -= OnDead;
     }
@@ -57,10 +65,14 @@ public class Movement : MonoBehaviour
         int maxLength = 2;
 
         if (projectiles.Length == 0 || projectiles.Length > maxLength)
+        {
             throw new ArgumentOutOfRangeException(nameof(projectiles));
+        }
 
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         _projectiles = projectiles;
         _health = health;

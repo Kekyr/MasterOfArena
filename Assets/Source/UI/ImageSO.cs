@@ -14,7 +14,9 @@ public class ImageSO : ScriptableObject
         _currentIndex++;
 
         if (_currentIndex > _sprites.Length - 1)
+        {
             _currentIndex = 0;
+        }
 
         return _sprites[_currentIndex];
     }

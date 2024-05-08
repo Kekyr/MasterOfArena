@@ -32,10 +32,14 @@ public class PlayerInputRouter : MonoBehaviour
     public void Init(Health health, Health enemyHealth)
     {
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         if (enemyHealth == null)
+        {
             throw new ArgumentNullException(nameof(enemyHealth));
+        }
 
         _health = health;
         _enemyHealth = enemyHealth;

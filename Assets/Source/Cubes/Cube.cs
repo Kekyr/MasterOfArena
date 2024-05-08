@@ -21,16 +21,24 @@ public class Cube : MonoBehaviour
     private void OnEnable()
     {
         if (_view == null)
+        {
             throw new ArgumentNullException(nameof(_view));
+        }
 
         if (_mesh == null)
+        {
             throw new ArgumentNullException(nameof(_mesh));
+        }
 
         if (_collider == null)
+        {
             throw new ArgumentNullException(nameof(_collider));
+        }
 
         if (_particleSystem == null)
+        {
             throw new ArgumentNullException(nameof(_particleSystem));
+        }
 
         _view.Init(_damage.ToString());
 

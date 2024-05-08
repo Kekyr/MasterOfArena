@@ -13,7 +13,9 @@ public class Player : Character
         base.OnEnable();
 
         if (_data == null)
+        {
             throw new ArgumentNullException(nameof(_data));
+        }
     }
 
     protected override IEnumerator Win()

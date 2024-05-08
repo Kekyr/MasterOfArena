@@ -11,7 +11,9 @@ public class HealthView : MonoBehaviour
     private void OnEnable()
     {
         if (_textMesh == null)
+        {
             throw new ArgumentNullException(nameof(_textMesh));
+        }
 
         _health.HealthChanged += OnHealthChanged;
     }
@@ -24,7 +26,9 @@ public class HealthView : MonoBehaviour
     public void Init(Health health)
     {
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         _health = health;
         enabled = true;

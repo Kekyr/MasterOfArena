@@ -28,16 +28,22 @@ public class ProgressBarSO : ScriptableObject
         _currentPointIndex++;
 
         if (_currentPointIndex >= _pointsCount)
+        {
             _currentPointIndex = 0;
+        }
 
         _startSliderValue += _pointsInterval;
 
         if (_startSliderValue == SliderMaxValue)
+        {
             _startSliderValue = 0;
+        }
 
         _endSliderValue += _pointsInterval;
 
         if (_endSliderValue > SliderMaxValue)
+        {
             _endSliderValue = _pointsInterval;
+        }
     }
 }

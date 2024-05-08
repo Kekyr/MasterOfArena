@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 public class TutorialHand : MonoBehaviour
@@ -24,21 +23,31 @@ public class TutorialHand : MonoBehaviour
     private void OnEnable()
     {
         if (_newTimeValue < MinTimeValue || _newTimeValue > MaxTimeValue)
+        {
             throw new ArgumentOutOfRangeException(nameof(_newTimeValue));
+        }
 
         if (_wayPoints.Length == 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(_wayPoints));
+        }
 
         if (_leaderboardButton == null)
+        {
             throw new ArgumentNullException(nameof(_leaderboardButton));
+        }
 
         if (_settingsButton == null)
+        {
             throw new ArgumentNullException(nameof(_settingsButton));
+        }
 
         Vector3[] wayPoints = new Vector3[_wayPoints.Length];
 
         for (int i = 0; i < _wayPoints.Length; i++)
+        {
             wayPoints[i] = _wayPoints[i].position;
+        }
 
         _sequence.OnComplete(() =>
         {
@@ -59,10 +68,14 @@ public class TutorialHand : MonoBehaviour
     public void Init(Sequence sequence, PlayerInputRouter inputRouter)
     {
         if (sequence == null)
+        {
             throw new ArgumentNullException(nameof(_sequence));
+        }
 
         if (inputRouter == null)
+        {
             throw new ArgumentNullException(nameof(inputRouter));
+        }
 
         _sequence = sequence;
         _inputRouter = inputRouter;

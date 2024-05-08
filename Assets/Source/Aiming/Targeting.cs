@@ -28,13 +28,19 @@ public abstract class Targeting : MonoBehaviour
     protected virtual void OnEnable()
     {
         if (_arrow == null)
+        {
             throw new ArgumentNullException(nameof(_arrow));
+        }
 
         if (_circle == null)
+        {
             throw new ArgumentNullException(nameof(_circle));
+        }
 
         if (_character == null)
+        {
             throw new ArgumentNullException(nameof(_character));
+        }
 
         _circle.transform.localScale = Vector3.zero;
 
@@ -54,13 +60,19 @@ public abstract class Targeting : MonoBehaviour
     public void Init(Sequence sequence, Health health, Health enemyHealth)
     {
         if (sequence == null)
+        {
             throw new ArgumentNullException(nameof(sequence));
+        }
 
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         if (enemyHealth == null)
+        {
             throw new ArgumentNullException(nameof(enemyHealth));
+        }
 
         _health = health;
         _enemyHealth = enemyHealth;

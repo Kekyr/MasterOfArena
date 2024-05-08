@@ -31,13 +31,19 @@ public class ProjectileMovement : MonoBehaviour
     private void OnEnable()
     {
         if (_rigidbody == null)
+        {
             throw new ArgumentNullException(nameof(_rigidbody));
+        }
 
         if (_sfx == null)
+        {
             throw new ArgumentNullException(nameof(_sfx));
+        }
 
         if (_miss == null)
+        {
             throw new ArgumentNullException(nameof(_miss));
+        }
 
         _acceleration = _flySpeed;
         _targeting = _projectile.Character.GetComponent<Targeting>();
@@ -55,7 +61,9 @@ public class ProjectileMovement : MonoBehaviour
     public void Init(Projectile projectile)
     {
         if (projectile == null)
+        {
             throw new ArgumentNullException(nameof(projectile));
+        }
 
         _projectile = projectile;
         enabled = true;
@@ -68,9 +76,7 @@ public class ProjectileMovement : MonoBehaviour
         while (_projectile.IsFlying)
         {
             float distance = Vector3.Distance(startPosition, transform.position);
-
             _rigidbody.velocity = _acceleration * _flyDirection;
-
             yield return null;
         }
 
@@ -90,7 +96,9 @@ public class ProjectileMovement : MonoBehaviour
     private Vector3 GenerateNewDirection()
     {
         if (IsReturning == false)
+        {
             Return();
+        }
 
         _flyDirection.x = Random.Range(_minRandomX, _maxRandomX);
         Rotate();
@@ -130,7 +138,10 @@ public class ProjectileMovement : MonoBehaviour
 
             if (hit.point != Vector3.zero &&
                 hit.collider.gameObject.TryGetComponent<CatchZone>(out CatchZone catchZone))
+            {
                 canRicochet = true;
+            }
+
         } while (canRicochet == false);
 
         Ricocheted?.Invoke(hit.point);

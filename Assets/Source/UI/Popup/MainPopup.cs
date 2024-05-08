@@ -16,10 +16,14 @@ public class MainPopup : Popup
     private void OnEnable()
     {
         if (_button == null)
+        {
             throw new ArgumentNullException(nameof(_button));
+        }
 
         if (_blackout == null)
+        {
             throw new ArgumentNullException(nameof(_blackout));
+        }
 
         transform.localScale = Vector3.zero;
         transform.DOScale(NewScale, Duration)

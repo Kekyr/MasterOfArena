@@ -31,13 +31,19 @@ public class AimElement : MonoBehaviour
     public void Init(Character character, Targeting targeting, Health health)
     {
         if (character == null)
+        {
             throw new ArgumentNullException(nameof(character));
+        }
 
         if (targeting == null)
+        {
             throw new ArgumentNullException(nameof(targeting));
+        }
 
         if (health == null)
+        {
             throw new ArgumentNullException(nameof(health));
+        }
 
         _character = character;
         _targeting = targeting;

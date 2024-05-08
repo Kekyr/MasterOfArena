@@ -13,13 +13,19 @@ public class AudioButton : MonoBehaviour
     private void OnEnable()
     {
         if (_button == null)
+        {
             throw new ArgumentNullException(nameof(_button));
+        }
 
         if (_image == null)
+        {
             throw new ArgumentNullException(nameof(_image));
+        }
 
         if (_imageSO == null)
+        {
             throw new ArgumentNullException(nameof(_imageSO));
+        }
 
         _image.sprite = _imageSO.CurrentSprite;
         _button.onClick.AddListener(Switch);

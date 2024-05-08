@@ -40,25 +40,39 @@ public class Character : MonoBehaviour
     protected virtual void OnEnable()
     {
         if (_winCamera == null)
+        {
             throw new ArgumentNullException(nameof(_winCamera));
+        }
 
         if (_movement == null)
+        {
             throw new ArgumentNullException(nameof(_movement));
+        }
 
         if (_targeting == null)
+        {
             throw new ArgumentNullException(nameof(_targeting));
+        }
 
         if (_animator == null)
+        {
             throw new ArgumentNullException(nameof(_animator));
+        }
 
         if (_sfx == null)
+        {
             throw new ArgumentNullException(nameof(_sfx));
+        }
 
         if (_throw == null)
+        {
             throw new ArgumentNullException(nameof(_throw));
+        }
 
         if (_win == null)
+        {
             throw new ArgumentNullException(nameof(_throw));
+        }
 
         _wait = new WaitForSeconds(WaitTime);
 
@@ -73,7 +87,9 @@ public class Character : MonoBehaviour
             _projectiles[i].Catched += OnCatch;
 
             if (i != _currentProjectileIndex)
+            {
                 _projectiles[i].enabled = false;
+            }
         }
 
         _enemyHeath.Died += OnEnemyDead;
@@ -94,16 +110,24 @@ public class Character : MonoBehaviour
         int maxLength = 2;
 
         if (projectiles.Length == 0 || projectiles.Length > maxLength)
+        {
             throw new ArgumentOutOfRangeException(nameof(projectiles));
+        }
 
         if (sequence == null)
+        {
             throw new ArgumentNullException(nameof(sequence));
+        }
 
         if (enemyHealth == null)
+        {
             throw new ArgumentNullException(nameof(enemyHealth));
+        }
 
         if (popup == null)
+        {
             throw new ArgumentNullException(nameof(popup));
+        }
 
         _sequence = sequence;
         _projectiles = projectiles;
@@ -135,7 +159,9 @@ public class Character : MonoBehaviour
         _currentProjectileIndex++;
 
         if (_currentProjectileIndex == _projectiles.Length)
+        {
             _currentProjectileIndex = 0;
+        }
 
         _projectiles[_currentProjectileIndex].enabled = true;
         _projectiles[_currentProjectileIndex].Trail.enabled = true;
@@ -144,7 +170,9 @@ public class Character : MonoBehaviour
     private void OnEnemyDead()
     {
         foreach (Projectile projectile in _projectiles)
+        {
             projectile.gameObject.SetActive(false);
+        }
 
         StartCoroutine(Win());
     }

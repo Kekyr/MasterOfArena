@@ -10,7 +10,9 @@ public class TutorialRoot : Root
         base.Validate();
 
         if (_hand == null)
+        {
             throw new ArgumentNullException(nameof(_hand));
+        }
     }
 
     protected override void Awake()

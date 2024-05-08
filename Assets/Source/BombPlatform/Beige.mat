@@ -80,7 +80,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FirebandWitdth: 8.27
+    - _FirebandWitdth: 7.06
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -98,6 +98,6 @@ Material:
     m_Colors:
     - _Color: {r: 0.7029161, g: 0.42532375, b: 0.20689358, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Fire_Color: {r: 1, g: 0.274432, b: 0, a: 0}
+    - _Fire_Color: {r: 1, g: 0.274432, b: 0, a: 1}
     - _ScrollDirection: {r: 0, g: 0.25, b: 0, a: 0}
   m_BuildTextureStacks: []
