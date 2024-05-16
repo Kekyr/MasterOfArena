@@ -2,17 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Cube> _cubesPrefab = new List<Cube>();
     [SerializeField] private List<SpawnPosition> _spawnPositions = new List<SpawnPosition>();
+
+    [SerializeField] private GameSpawnChanceSO _gameSpawnChanceSO;
 
     [SerializeField] private uint _interval;
 
     private List<Cube> _cubes = new List<Cube>();
 
+    private LevelSpawnChanceSO _levelSpawnChanceSO;
     private Health _playerHealth;
     private Health _enemyHealth;
 
@@ -20,16 +23,17 @@ public class CubeSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_cubesPrefab.Count == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(_cubesPrefab));
-        }
-
         if (_spawnPositions.Count == 0)
         {
             throw new ArgumentOutOfRangeException(nameof(_spawnPositions));
         }
 
+        if (_gameSpawnChanceSO == null)
+        {
+            throw new ArgumentNullException(nameof(_gameSpawnChanceSO));
+        }
+
+        _levelSpawnChanceSO = _gameSpawnChanceSO.GetLevelSpawnChance(SceneManager.GetActiveScene().buildIndex);
         _waitInterval = new WaitForSeconds(_interval);
 
         foreach (SpawnPosition spawnPosition in _spawnPositions)
@@ -76,17 +80,18 @@ public class CubeSpawner : MonoBehaviour
         do
         {
             randomPositionIndex = Random.Range(0, _spawnPositions.Count);
-        } while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
+        }
+        while (_spawnPositions[randomPositionIndex].transform.childCount == 0);
 
         return _spawnPositions[randomPositionIndex].transform.position;
     }
 
     private void Spawn(Transform spawnPosition)
     {
-        int randomCubeIndex = Random.Range(0, _cubesPrefab.Count);
-        Cube cube = Instantiate(_cubesPrefab[randomCubeIndex], spawnPosition.transform.position,
-            _cubesPrefab[randomCubeIndex].transform.rotation,
-            spawnPosition.transform);
+        float randomValue = Random.value * 100;
+        Debug.Log($"Random.value:{randomValue}");
+        Cube prefab = _levelSpawnChanceSO.GetRandomCube(randomValue);
+        Cube cube = Instantiate(prefab, spawnPosition.transform.position, prefab.transform.rotation, spawnPosition.transform);
         cube.Collided += OnCollision;
         _cubes.Add(cube);
     }

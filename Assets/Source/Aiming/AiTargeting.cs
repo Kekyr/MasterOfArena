@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AiTargeting : Targeting
 {
-    private readonly float Delay = 1f;
+    private readonly float Delay = 2f;
 
     private IReadOnlyCollection<Projectile> _projectiles;
     private CubeSpawner _cubeSpawner;

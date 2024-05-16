@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,11 +12,25 @@ public class LosePopup : Popup
     [SerializeField] private LowerPart _lowerPart;
 
     [SerializeField] private float Duration = 1f;
-
-    private Button _nextButton;
+    [SerializeField] private Button _nextButton;
 
     private void OnEnable()
     {
+        if (_upperPart == null)
+        {
+            throw new ArgumentNullException(nameof(_upperPart));
+        }
+
+        if (_lowerPart == null)
+        {
+            throw new ArgumentNullException(nameof(_lowerPart));
+        }
+
+        if (_nextButton == null)
+        {
+            throw new ArgumentNullException(nameof(_nextButton));
+        }
+
         _upperPart.transform.localScale = Vector3.zero;
         _lowerPart.transform.localScale = Vector3.zero;
 
@@ -27,7 +42,6 @@ public class LosePopup : Popup
                     .SetEase(Ease.InOutSine);
             });
 
-        _nextButton = _lowerPart.GetComponentInChildren<Button>();
         _nextButton.onClick.AddListener(Next);
     }
 

@@ -19,6 +19,11 @@ public class WinPopup : Popup
             throw new ArgumentNullException(nameof(_upperPart));
         }
 
+        if (_button == null)
+        {
+            throw new ArgumentNullException(nameof(_button));
+        }
+
         _upperPart.transform.localScale = Vector3.zero;
 
         _upperPart.transform.DOScale(NewScale, Duration)
@@ -34,6 +39,6 @@ public class WinPopup : Popup
 
     private void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
