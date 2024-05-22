@@ -185,5 +185,6 @@ public class Character : MonoBehaviour
         _animator.SetBool(IsDancing, true);
         _sfx.Play(_win);
         _popup.gameObject.SetActive(true);
+        
     }
 }

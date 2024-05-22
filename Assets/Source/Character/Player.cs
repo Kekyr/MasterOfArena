@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField] private PlayerDataSO _data;
+    [SerializeField] private SpawnChancesSO _spawnChancesSO;
 
     public event Action<int> Victory;
 
@@ -16,11 +17,17 @@ public class Player : Character
         {
             throw new ArgumentNullException(nameof(_data));
         }
+
+        if (_spawnChancesSO == null)
+        {
+            throw new ArgumentNullException(nameof(_spawnChancesSO));
+        }
     }
 
     protected override IEnumerator Win()
     {
         _data.AddScore();
+        _spawnChancesSO.OnWin();
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         Victory?.Invoke(_data.Score);

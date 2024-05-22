@@ -154,7 +154,8 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.TryGetComponent<Cube>(out Cube cube)
+        Debug.Log($"Gameobject name:{collision.gameObject.transform.parent.name}");
+        if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube)
             || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
         {
             _sfx.Play(_punch);

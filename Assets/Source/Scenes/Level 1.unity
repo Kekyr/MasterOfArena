@@ -743,7 +743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58389857}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40147197, y: 0.00050506514, z: -0.00022139524, w: 0.91587114}
+  m_LocalRotation: {x: 0.40147197, y: 0.0005051097, z: -0.00022141477, w: 0.91587114}
   m_LocalPosition: {x: 3.25, y: 7.267643, z: -6.0060005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6392,7 +6392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40147197, y: 0.00050506514, z: -0.00022139524, w: 0.91587114}
+  m_LocalRotation: {x: 0.40147197, y: 0.0005051097, z: -0.00022141477, w: 0.91587114}
   m_LocalPosition: {x: 3.25, y: 7.267643, z: -6.0060005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12558,6 +12558,10 @@ PrefabInstance:
       propertyPath: _meshRenderer
       value: 
       objectReference: {fileID: 1534994426}
+    - target: {fileID: 6367724876910674270, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
+      propertyPath: _spawnChancesSO
+      value: 
+      objectReference: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
     - target: {fileID: 6557570692264104143, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
       propertyPath: ColorDuration
       value: 0.06
@@ -15290,6 +15294,10 @@ PrefabInstance:
       propertyPath: _startDelay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4686425410283749966, guid: 2b7d61e30f6006d498d52eb43dcca85c, type: 3}
+      propertyPath: _spawnChancesSO
+      value: 
+      objectReference: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
     - target: {fileID: 4686425410283749966, guid: 2b7d61e30f6006d498d52eb43dcca85c, type: 3}
       propertyPath: _gameSpawnChanceSO
       value: 

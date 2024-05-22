@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CubeMovement : MonoBehaviour
 {
-    private readonly float YModifier = 1.5f;
-
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private float Duration;
+
+    [SerializeField] private float _yModifier;
+    [SerializeField] private float _xModifier;
+    [SerializeField] private float _duration;
 
     private void OnEnable()
     {
@@ -16,7 +17,9 @@ public class CubeMovement : MonoBehaviour
             throw new ArgumentNullException(nameof(_rigidbody));
         }
 
-        _rigidbody.DOMoveY(transform.position.y + YModifier, Duration)
+        Vector3 endPosition = new Vector3(transform.position.x + _xModifier, transform.position.y + _yModifier, transform.position.z);
+
+        _rigidbody.DOMove(endPosition, _duration)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.Linear);
     }
@@ -25,6 +28,7 @@ public class CubeMovement : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile))
         {
+            Debug.Log("I'm on CubeMovement!");
             _rigidbody.DOKill();
         }
     }

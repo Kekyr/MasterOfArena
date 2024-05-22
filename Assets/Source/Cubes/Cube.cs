@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    private readonly float Duration = 0.05f;
+    private readonly float Duration = 0.1f;
     private readonly float Delay = 0.05f;
 
     [SerializeField] private uint _damage;
     [SerializeField] private CubeView _view;
     [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private Collider _collider;
-    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private CubeExplosion _cubeExplosion;
+    [SerializeField] private ColliderEventHandler _colliderEventHandler;
 
+    private Collider _collider;
+    private ParticleSystem _particleSystem;
     private Vector3 _startScale;
+
     public event Action<Cube> Collided;
 
     public uint Damage => _damage;
@@ -30,15 +33,18 @@ public class Cube : MonoBehaviour
             throw new ArgumentNullException(nameof(_mesh));
         }
 
-        if (_collider == null)
+        if (_cubeExplosion == null)
         {
-            throw new ArgumentNullException(nameof(_collider));
+            throw new ArgumentNullException(nameof(_cubeExplosion));
         }
 
-        if (_particleSystem == null)
+        if (_colliderEventHandler == null)
         {
-            throw new ArgumentNullException(nameof(_particleSystem));
+            throw new ArgumentNullException(nameof(_colliderEventHandler));
         }
+
+        _collider = _colliderEventHandler.GetComponent<Collider>();
+        _particleSystem = _cubeExplosion.GetComponent<ParticleSystem>();
 
         _view.Init(_damage.ToString());
 
@@ -47,6 +53,15 @@ public class Cube : MonoBehaviour
         _mesh.transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay);
+
+        _cubeExplosion.Stopped += OnCubeExplosionStopped;
+        _colliderEventHandler.Collided += OnCollisionEnter;
+    }
+
+    private void OnDisable()
+    {
+        _cubeExplosion.Stopped -= OnCubeExplosionStopped;
+        _colliderEventHandler.Collided -= OnCollisionEnter;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -65,7 +80,7 @@ public class Cube : MonoBehaviour
         }
     }
 
-    private void OnParticleSystemStopped()
+    private void OnCubeExplosionStopped()
     {
         Collided?.Invoke(this);
     }
