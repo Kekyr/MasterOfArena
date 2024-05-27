@@ -154,7 +154,6 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Gameobject name:{collision.gameObject.transform.parent.name}");
         if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube)
             || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
         {

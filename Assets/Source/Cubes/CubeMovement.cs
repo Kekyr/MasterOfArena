@@ -28,7 +28,6 @@ public class CubeMovement : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile))
         {
-            Debug.Log("I'm on CubeMovement!");
             _rigidbody.DOKill();
         }
     }

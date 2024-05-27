@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +15,16 @@ public class SpawnChancesSO : ScriptableObject
     {
         if (_cubePrefabs.Count < _spawnChances.Count)
         {
-            throw new ArgumentOutOfRangeException(nameof(_cubePrefabs.Count));
+            int index = 1;
+            int count = _spawnChances.Count - 2;
+            int startChance = 50;
+            int firstElementIndex = 0;
+            int secondElementIndex = 1;
+
+            _spawnChances.RemoveRange(index, count);
+
+            _spawnChances[firstElementIndex] = startChance;
+            _spawnChances[secondElementIndex] = startChance;
         }
 
         float minValue = 0;
