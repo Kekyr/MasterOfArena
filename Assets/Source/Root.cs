@@ -1,9 +1,16 @@
 using System;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    [SerializeField] private CharactersSO _characters;
+    [SerializeField] private PlayerSpawnPosition _playerSpawnPosition;
+    [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
+    
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+
     [SerializeField] private PlayerRoot _playerRoot;
     [SerializeField] private AIRoot _aiRoot;
 
@@ -13,15 +20,15 @@ public class Root : MonoBehaviour
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
 
-    [SerializeField] private PlayerInputRouter _inputRouter;
     [SerializeField] private YandexLeaderboard _leaderboard;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
-    [SerializeField] private Health _playerHealth;
-    [SerializeField] private Health _aiHealth;
-
     private Sequence _order;
+    private PlayerInputRouter _inputRouter;
+
+    private Health _playerHealth;
+    private Health _aiHealth;
 
     protected Sequence Order => _order;
 
@@ -29,6 +36,26 @@ public class Root : MonoBehaviour
 
     protected virtual void Validate()
     {
+        if (_characters == null)
+        {
+            throw new ArgumentNullException(nameof(_characters));
+        }
+
+        if (_playerSpawnPosition == null)
+        {
+            throw new ArgumentNullException(nameof(_characters));
+        }
+
+        if (_enemySpawnPosition == null)
+        {
+            throw new ArgumentNullException(nameof(_enemySpawnPosition));
+        }
+
+        if (_virtualCamera == null)
+        {
+            throw new ArgumentNullException(nameof(_virtualCamera));
+        }
+
         if (_playerRoot == null)
         {
             throw new ArgumentNullException(nameof(_playerRoot));
@@ -59,11 +86,6 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_sfxButton));
         }
 
-        if (_inputRouter == null)
-        {
-            throw new ArgumentNullException(nameof(_inputRouter));
-        }
-
         if (_leaderboard == null)
         {
             throw new ArgumentNullException(nameof(_leaderboard));
@@ -73,21 +95,25 @@ public class Root : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_cubeSpawner));
         }
-
-        if (_playerHealth == null)
-        {
-            throw new ArgumentNullException(nameof(_playerHealth));
-        }
-
-        if (_aiHealth == null)
-        {
-            throw new ArgumentNullException(nameof(_aiHealth));
-        }
     }
 
     protected virtual void Awake()
     {
         Validate();
+
+        Character player = _characters.GetRandomPlayerPrefab();
+        player = Instantiate(player, _playerSpawnPosition.transform.position, player.transform.rotation,
+            _playerSpawnPosition.transform);
+
+        _virtualCamera.Follow = player.transform;
+
+        Character enemy = _characters.GetRandomEnemyPrefab();
+        enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
+            _enemySpawnPosition.transform);
+
+        _inputRouter = player.GetComponent<PlayerInputRouter>();
+        _playerHealth = player.GetComponent<Health>();
+        _aiHealth = enemy.GetComponent<Health>();
 
         _order = DOTween.Sequence();
 
@@ -100,9 +126,11 @@ public class Root : MonoBehaviour
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(_inputRouter, _leaderboard);
+        _playerRoot.Init(player, enemy, _virtualCamera);
         _playerRoot.Init(_order, _sfxButton, _audioSettings);
 
         _aiRoot.Init(_cubeSpawner);
+        _aiRoot.Init(enemy, player, _virtualCamera);
         _aiRoot.Init(_order, _sfxButton, _audioSettings);
     }
 }

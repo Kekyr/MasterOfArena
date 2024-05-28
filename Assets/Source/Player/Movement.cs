@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly float MinDistance = 0.1f;
 
-    [SerializeField] private CinemachineVirtualCamera _camera;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Animator _animator;
     [SerializeField] private SFX _sfx;
@@ -20,6 +19,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _yModifier;
     [SerializeField] private float _duration;
 
+    private CinemachineVirtualCamera _camera;
     private Projectile[] _projectiles;
     private Health _health;
 
@@ -35,6 +35,16 @@ public class Movement : MonoBehaviour
         if (_animator == null)
         {
             throw new ArgumentNullException(nameof(_animator));
+        }
+
+        if (_sfx == null)
+        {
+            throw new ArgumentNullException(nameof(_sfx));
+        }
+
+        if (_footsteps == null)
+        {
+            throw new ArgumentNullException(nameof(_footsteps));
         }
 
         foreach (Projectile projectile in _projectiles)
@@ -60,7 +70,7 @@ public class Movement : MonoBehaviour
         _startRotation = transform.rotation;
     }
 
-    public void Init(Projectile[] projectiles, Health health)
+    public void Init(Projectile[] projectiles, Health health, CinemachineVirtualCamera camera)
     {
         int maxLength = 2;
 
@@ -74,6 +84,12 @@ public class Movement : MonoBehaviour
             throw new ArgumentNullException(nameof(health));
         }
 
+        if (camera == null)
+        {
+            throw new ArgumentNullException(nameof(camera));
+        }
+
+        _camera = camera;
         _projectiles = projectiles;
         _health = health;
         enabled = true;

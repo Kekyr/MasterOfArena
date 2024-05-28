@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,28 +8,31 @@ public class CharacterRoot : MonoBehaviour
 {
     [SerializeField] private Helper _helper;
     [SerializeField] private Popup _popup;
-    [SerializeField] private Projectile[] _projectiles;
 
-    [SerializeField] private Character _character;
-    [SerializeField] private Character _enemyCharacter;
-
-    [SerializeField] private Movement _movement;
-
-    [SerializeField] private Targeting _aiming;
-    [SerializeField] private Arrow _arrow;
-    [SerializeField] private Circle _circle;
-
-    [SerializeField] private Health _health;
     [SerializeField] private HealthView _healthView;
-
-    [SerializeField] private Health _enemyHealth;
 
     [SerializeField] private ArenaSide _side;
     [SerializeField] private BombPlatform _bombPlatform;
 
+    private Character _character;
+    private Character _enemyCharacter;
+
+    private Health _health;
+    private Health _enemyHealth;
+
+    private Movement _movement;
+    private Targeting _aiming;
+
+    private Projectile[] _projectiles;
+
+    private Arrow _arrow;
+    private Circle _circle;
+
     private SFXButton _sfxButton;
     private AudioSettingsSO _audioSettings;
+
     private Sequence _sequence;
+    private CinemachineVirtualCamera _camera;
 
     public IReadOnlyCollection<Projectile> Projectiles => _projectiles;
 
@@ -38,61 +42,14 @@ public class CharacterRoot : MonoBehaviour
 
     private void OnEnable()
     {
-        int maxProjectiles = 2;
-
         if (_popup == null)
         {
             throw new ArgumentNullException(nameof(_popup));
         }
 
-        if (_projectiles.Length == 0 || _projectiles.Length > maxProjectiles)
-        {
-            throw new ArgumentOutOfRangeException(nameof(_projectiles));
-        }
-
-        if (_character == null)
-        {
-            throw new ArgumentNullException(nameof(_character));
-        }
-
-        if (_enemyCharacter == null)
-        {
-            throw new ArgumentNullException(nameof(_enemyCharacter));
-        }
-
-        if (_health == null)
-        {
-            throw new ArgumentNullException(nameof(_health));
-        }
-
         if (_healthView == null)
         {
             throw new ArgumentNullException(nameof(_healthView));
-        }
-
-        if (_enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(_enemyHealth));
-        }
-
-        if (_movement == null)
-        {
-            throw new ArgumentNullException(nameof(_movement));
-        }
-
-        if (_aiming == null)
-        {
-            throw new ArgumentNullException(nameof(_aiming));
-        }
-
-        if (_arrow == null)
-        {
-            throw new ArgumentNullException(nameof(_arrow));
-        }
-
-        if (_circle == null)
-        {
-            throw new ArgumentNullException(nameof(_circle));
         }
 
         if (_side == null)
@@ -109,6 +66,14 @@ public class CharacterRoot : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_helper));
         }
+
+        _projectiles = _character.GetComponentsInChildren<Projectile>();
+        _movement = _character.GetComponent<Movement>();
+        _aiming = _character.GetComponent<Targeting>();
+        _arrow = _character.GetComponentInChildren<Arrow>();
+        _circle = _character.GetComponentInChildren<Circle>();
+        _health = _character.GetComponent<Health>();
+        _enemyHealth = _enemyCharacter.GetComponent<Health>();
     }
 
     protected virtual void Start()
@@ -122,7 +87,7 @@ public class CharacterRoot : MonoBehaviour
         _character.Init(_projectiles, _sequence, _enemyHealth, _popup);
         _character.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
-        _movement.Init(_projectiles, _health);
+        _movement.Init(_projectiles, _health, _camera);
 
         _side.Init(_health);
         _side.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
@@ -146,5 +111,12 @@ public class CharacterRoot : MonoBehaviour
         _sfxButton = sfxButton;
         _audioSettings = audioSettings;
         enabled = true;
+    }
+
+    public void Init(Character character, Character enemyCharacter, CinemachineVirtualCamera camera)
+    {
+        _character = character;
+        _enemyCharacter = enemyCharacter;
+        _camera = camera;
     }
 }
