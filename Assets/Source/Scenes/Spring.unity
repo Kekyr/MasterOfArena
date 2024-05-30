@@ -14352,7 +14352,6 @@ MonoBehaviour:
   _characters: {fileID: 11400000, guid: 51372e89887c2e34f9008da914b91128, type: 2}
   _playerSpawnPosition: {fileID: 501353260}
   _enemySpawnPosition: {fileID: 1207284036}
-  _targetGroup: {fileID: 1658553833}
   _virtualCamera: {fileID: 58389858}
   _playerRoot: {fileID: 1167279483}
   _aiRoot: {fileID: 1167279482}
@@ -19838,7 +19837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0240db46dfe9ef649b2b92b94414162f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 1522574699}
 --- !u!1001 &1531862790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23308,7 +23306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0240db46dfe9ef649b2b92b94414162f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 1833303143}
 --- !u!1001 &1836146566
 PrefabInstance:
   m_ObjectHideFlags: 0

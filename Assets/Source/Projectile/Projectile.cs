@@ -2,28 +2,34 @@ using System;
 using Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(ProjectileModifier))]
+[RequireComponent(typeof(ProjectileMovement))]
+[RequireComponent(typeof(TrailRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CinemachineImpulseSource))]
+[RequireComponent(typeof(SFX))]
 public class Projectile : MonoBehaviour
 {
     private readonly float ColorDuration = 0.06f;
 
-    [SerializeField] private ProjectileModifier modifier;
-    [SerializeField] private ProjectileMovement _movement;
-
-    [SerializeField] private MeshRenderer _meshRenderer;
-    [SerializeField] private TrailRenderer _trail;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private CinemachineImpulseSource _impulseSource;
-    [SerializeField] private StartFlyPosition _startFlyPosition;
-    [SerializeField] private SFX _sfx;
-    [SerializeField] private SFXSO _punch;
-
     [SerializeField] private float _shakeForce;
     [SerializeField] private string _animationTrigger;
 
+    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private StartFlyPosition _startFlyPosition;
+
+    [SerializeField] private SFXSO _punch;
+
     private Character _character;
-    private Animator _catcherAnimator;
+    private Animator _animator;
     private Targeting _targeting;
     private Helper _helper;
+    private CinemachineImpulseSource _impulseSource;
+    private SFX _sfx;
+
+    private ProjectileModifier _modifier;
+    private ProjectileMovement _movement;
+    private TrailRenderer _trail;
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
@@ -31,6 +37,7 @@ public class Projectile : MonoBehaviour
 
     public event Action Catched;
     public event Action Ricocheting;
+    public event Action<string> Throwing;
 
     public bool IsFlying => transform.parent != _startParent;
 
@@ -50,29 +57,9 @@ public class Projectile : MonoBehaviour
             throw new ArgumentNullException(nameof(_animationTrigger));
         }
 
-        if (_animator == null)
-        {
-            throw new ArgumentNullException(nameof(_animator));
-        }
-
-        if (_movement == null)
-        {
-            throw new ArgumentNullException(nameof(_movement));
-        }
-
-        if (_impulseSource == null)
-        {
-            throw new ArgumentNullException(nameof(_impulseSource));
-        }
-
         if (_startFlyPosition == null)
         {
             throw new ArgumentNullException(nameof(_startFlyPosition));
-        }
-
-        if (_sfx == null)
-        {
-            throw new ArgumentNullException(nameof(_sfx));
         }
 
         if (_punch == null)
@@ -80,15 +67,20 @@ public class Projectile : MonoBehaviour
             throw new ArgumentNullException(nameof(_punch));
         }
 
-        _catcherAnimator = _character.GetComponent<Animator>();
         _targeting = _character.GetComponent<Targeting>();
+        _modifier = GetComponent<ProjectileModifier>();
+        _movement = GetComponent<ProjectileMovement>();
+        _trail = GetComponent<TrailRenderer>();
+        _animator = GetComponent<Animator>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
+        _sfx = GetComponent<SFX>();
 
         _movement.Init(this);
 
         _targeting.Aimed += OnAimed;
         _character.Throwed += OnThrow;
 
-        modifier.Init(_character);
+        _modifier.Init(_character);
 
         _startParent = transform.parent;
     }
@@ -97,7 +89,7 @@ public class Projectile : MonoBehaviour
     {
         _targeting.Aimed -= OnAimed;
         _character.Throwed -= OnThrow;
-        modifier.enabled = false;
+        _modifier.enabled = false;
     }
 
     public void Init(Character character, Helper helper)
@@ -121,7 +113,7 @@ public class Projectile : MonoBehaviour
     {
         _startPosition = transform.localPosition;
         _startRotation = transform.localRotation;
-        _catcherAnimator.SetTrigger(_animationTrigger);
+        Throwing?.Invoke(_animationTrigger);
     }
 
     private void OnThrow(Transform newParent)
@@ -159,7 +151,7 @@ public class Projectile : MonoBehaviour
         {
             _sfx.Play(_punch);
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
-            modifier.ChangeScale();
+            _modifier.ChangeScale();
             _helper.ChangeMeshColor(_meshRenderer, Color.white, ColorDuration);
             Ricocheting?.Invoke();
         }

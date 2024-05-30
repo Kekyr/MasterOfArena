@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Character))]
 public abstract class Targeting : MonoBehaviour
 {
     private readonly float NewScale = 0.02f;
@@ -9,8 +10,8 @@ public abstract class Targeting : MonoBehaviour
 
     [SerializeField] private Arrow _arrow;
     [SerializeField] private Circle _circle;
-    [SerializeField] private Character _character;
 
+    private Character _character;
     private Sequence _sequence;
     private Health _health;
     private Health _enemyHealth;
@@ -37,11 +38,7 @@ public abstract class Targeting : MonoBehaviour
             throw new ArgumentNullException(nameof(_circle));
         }
 
-        if (_character == null)
-        {
-            throw new ArgumentNullException(nameof(_character));
-        }
-
+        _character = GetComponent<Character>();
         _circle.transform.localScale = Vector3.zero;
 
         _sequence.Append(_circle.transform.DOScale(NewScale, Duration)

@@ -1,23 +1,24 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SFX))]
 public class ProjectileMovement : MonoBehaviour
 {
     private readonly float RayDistance = 7;
     private readonly float ReturnSpeed = 10;
 
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private SFX _sfx;
-    [SerializeField] private SFXSO _miss;
-    [SerializeField] private Vector3 _halfExtents;
-
     [SerializeField] private float _flySpeed;
     [SerializeField] private float _minRandomX;
     [SerializeField] private float _maxRandomX;
 
+    [SerializeField] private SFXSO _miss;
+    [SerializeField] private Vector3 _halfExtents;
+
+    private SFX _sfx;
+    private Rigidbody _rigidbody;
     private Projectile _projectile;
     private Targeting _targeting;
 
@@ -30,16 +31,6 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_rigidbody == null)
-        {
-            throw new ArgumentNullException(nameof(_rigidbody));
-        }
-
-        if (_sfx == null)
-        {
-            throw new ArgumentNullException(nameof(_sfx));
-        }
-
         if (_miss == null)
         {
             throw new ArgumentNullException(nameof(_miss));
@@ -47,6 +38,8 @@ public class ProjectileMovement : MonoBehaviour
 
         _acceleration = _flySpeed;
         _targeting = _projectile.Character.GetComponent<Targeting>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _sfx = GetComponent<SFX>();
 
         _targeting.Aimed += OnAimed;
         _projectile.Ricocheting += OnRicocheting;

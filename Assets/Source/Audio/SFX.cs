@@ -2,26 +2,22 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(AudioSource))]
 public class SFX : MonoBehaviour
 {
     private readonly int minPitch = 1;
     private readonly int maxPitch = 4;
 
-    [SerializeField] private AudioSource _audioSource;
-
     private AudioSettingsSO _audioSettings;
     private SFXButton _button;
+    private AudioSource _audioSource;
 
     private float _defaultVolume;
     private float _defaultPitch;
 
     private void OnEnable()
     {
-        if (_audioSource == null)
-        {
-            throw new ArgumentNullException(nameof(_audioSource));
-        }
-
+        _audioSource = GetComponent<AudioSource>();
         _button.Switched += OnSwitch;
     }
 

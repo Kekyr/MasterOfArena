@@ -4,48 +4,40 @@ using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SFX))]
 public class Movement : MonoBehaviour
 {
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly float MinDistance = 0.1f;
 
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private SFX _sfx;
     [SerializeField] private SFXSO _footsteps;
 
     [SerializeField] private float _acceleration;
-
     [SerializeField] private float _yModifier;
     [SerializeField] private float _duration;
 
     private CinemachineVirtualCamera _camera;
     private Projectile[] _projectiles;
+    private SFX _sfx;
+
     private Health _health;
+    private Rigidbody _rigidbody;
+    private Animator _animator;
 
     private Quaternion _startRotation;
 
     private void OnEnable()
     {
-        if (_rigidbody == null)
-        {
-            throw new ArgumentNullException(nameof(_rigidbody));
-        }
-
-        if (_animator == null)
-        {
-            throw new ArgumentNullException(nameof(_animator));
-        }
-
-        if (_sfx == null)
-        {
-            throw new ArgumentNullException(nameof(_sfx));
-        }
-
         if (_footsteps == null)
         {
             throw new ArgumentNullException(nameof(_footsteps));
         }
+
+        _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        _sfx = GetComponent<SFX>();
 
         foreach (Projectile projectile in _projectiles)
         {

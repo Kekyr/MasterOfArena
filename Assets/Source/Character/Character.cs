@@ -5,6 +5,8 @@ using DG.Tweening;
 using UnityEngine;
 using Sequence = DG.Tweening.Sequence;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SFX))]
 public class Character : MonoBehaviour
 {
     private readonly float NewScale = 0.8f;
@@ -15,17 +17,17 @@ public class Character : MonoBehaviour
 
     [SerializeField] private Color _damageMarkColor;
     [SerializeField] private CinemachineVirtualCamera _winCamera;
-    [SerializeField] private Movement _movement;
-    [SerializeField] private Targeting _targeting;
-    [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _confettiVFX;
-    [SerializeField] private SFX _sfx;
+
     [SerializeField] private SFXSO _throw;
     [SerializeField] private SFXSO _win;
 
     private Projectile[] _projectiles;
-    private Sequence _sequence;
+    private Animator _animator;
     private Health _enemyHeath;
+    private SFX _sfx;
+
+    private Sequence _sequence;
     private WaitForSeconds _wait;
     private Popup _popup;
 
@@ -44,26 +46,6 @@ public class Character : MonoBehaviour
             throw new ArgumentNullException(nameof(_winCamera));
         }
 
-        if (_movement == null)
-        {
-            throw new ArgumentNullException(nameof(_movement));
-        }
-
-        if (_targeting == null)
-        {
-            throw new ArgumentNullException(nameof(_targeting));
-        }
-
-        if (_animator == null)
-        {
-            throw new ArgumentNullException(nameof(_animator));
-        }
-
-        if (_sfx == null)
-        {
-            throw new ArgumentNullException(nameof(_sfx));
-        }
-
         if (_throw == null)
         {
             throw new ArgumentNullException(nameof(_throw));
@@ -74,8 +56,10 @@ public class Character : MonoBehaviour
             throw new ArgumentNullException(nameof(_throw));
         }
 
-        _wait = new WaitForSeconds(WaitTime);
+        _animator = GetComponent<Animator>();
+        _sfx = GetComponent<SFX>();
 
+        _wait = new WaitForSeconds(WaitTime);
         transform.localScale = Vector3.zero;
 
         _sequence.Append(transform.DOScale(NewScale, Duration)
@@ -85,6 +69,7 @@ public class Character : MonoBehaviour
         for (int i = 0; i < _projectiles.Length; i++)
         {
             _projectiles[i].Catched += OnCatch;
+            _projectiles[i].Throwing += OnThrowing;
 
             if (i != _currentProjectileIndex)
             {
@@ -100,6 +85,7 @@ public class Character : MonoBehaviour
         for (int i = 0; i < _projectiles.Length; i++)
         {
             _projectiles[i].Catched -= OnCatch;
+            _projectiles[i].Throwing -= OnThrowing;
         }
 
         _enemyHeath.Died -= OnEnemyDead;
@@ -139,6 +125,11 @@ public class Character : MonoBehaviour
     public void Attack(Cube cube)
     {
         Attacking?.Invoke(cube);
+    }
+
+    private void OnThrowing(string animationTrigger)
+    {
+        _animator.SetTrigger(animationTrigger);
     }
 
     private void OnThrowStarted()
@@ -185,6 +176,5 @@ public class Character : MonoBehaviour
         _animator.SetBool(IsDancing, true);
         _sfx.Play(_win);
         _popup.gameObject.SetActive(true);
-        
     }
 }
