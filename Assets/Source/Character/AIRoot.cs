@@ -6,7 +6,7 @@ public class AIRoot : CharacterRoot
 
     protected override void Start()
     {
-        AiTargeting targeting = (AiTargeting)Aiming;
+        AITargeting targeting = (AITargeting)Aiming;
         targeting.Init(_cubeSpawner, Projectiles);
         base.Start();
     }

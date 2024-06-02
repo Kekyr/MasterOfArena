@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new CharactersSO", menuName = "CharactersSO/Create new CharactersSO")]
 public class CharactersSO : ScriptableObject
 {
-    [SerializeField] private Character[] _playerPrefabs;
+    [SerializeField] private Player[] _playerPrefabs;
     [SerializeField] private Character[] _enemyPrefabs;
 
     public Character GetRandomEnemyPrefab()

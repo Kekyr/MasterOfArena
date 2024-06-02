@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AiTargeting : Targeting
+public class AITargeting : Targeting
 {
     private readonly float Delay = 2f;
 

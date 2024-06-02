@@ -14,6 +14,9 @@ public class CharacterRoot : MonoBehaviour
     [SerializeField] private ArenaSide _side;
     [SerializeField] private BombPlatform _bombPlatform;
 
+    [SerializeField] private ParticleSystem _confettiVFX;
+    [SerializeField] private CinemachineVirtualCamera _winCamera;
+
     private Character _character;
     private Character _enemyCharacter;
 
@@ -67,6 +70,16 @@ public class CharacterRoot : MonoBehaviour
             throw new ArgumentNullException(nameof(_helper));
         }
 
+        if (_winCamera == null)
+        {
+            throw new ArgumentNullException(nameof(_winCamera));
+        }
+
+        if (_confettiVFX == null)
+        {
+            throw new ArgumentNullException(nameof(_confettiVFX));
+        }
+
         _projectiles = _character.GetComponentsInChildren<Projectile>();
         _movement = _character.GetComponent<Movement>();
         _aiming = _character.GetComponent<Targeting>();
@@ -84,6 +97,7 @@ public class CharacterRoot : MonoBehaviour
             _projectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
         }
 
+        _character.Init(_confettiVFX, _winCamera);
         _character.Init(_projectiles, _sequence, _enemyHealth, _popup);
         _character.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Characters
   m_EditorClassIdentifier: 
   _playerPrefabs:
-  - {fileID: 2032743788611245685, guid: 26bbc8c4a74d3fd44bfa0e44aa21ab28, type: 3}
+  - {fileID: 5927466161466357695, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
   _enemyPrefabs:
-  - {fileID: 2291289789097387221, guid: 1178ff85a29d6584e867db7c4f301c3b, type: 3}
+  - {fileID: 7181920457580701491, guid: abcdcaa73f36a2741ba165aef5c8ed34, type: 3}

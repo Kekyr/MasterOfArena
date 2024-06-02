@@ -16,9 +16,6 @@ public class Character : MonoBehaviour
     private readonly int IsDancing = Animator.StringToHash("IsDancing");
 
     [SerializeField] private Color _damageMarkColor;
-    [SerializeField] private CinemachineVirtualCamera _winCamera;
-    [SerializeField] private ParticleSystem _confettiVFX;
-
     [SerializeField] private SFXSO _throw;
     [SerializeField] private SFXSO _win;
 
@@ -26,6 +23,9 @@ public class Character : MonoBehaviour
     private Animator _animator;
     private Health _enemyHeath;
     private SFX _sfx;
+
+    private CinemachineVirtualCamera _winCamera;
+    private ParticleSystem _confettiVFX;
 
     private Sequence _sequence;
     private WaitForSeconds _wait;
@@ -41,11 +41,6 @@ public class Character : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        if (_winCamera == null)
-        {
-            throw new ArgumentNullException(nameof(_winCamera));
-        }
-
         if (_throw == null)
         {
             throw new ArgumentNullException(nameof(_throw));
@@ -61,6 +56,8 @@ public class Character : MonoBehaviour
 
         _wait = new WaitForSeconds(WaitTime);
         transform.localScale = Vector3.zero;
+        _winCamera.Follow = transform;
+        _winCamera.LookAt = transform;
 
         _sequence.Append(transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InOutSine)
@@ -120,6 +117,22 @@ public class Character : MonoBehaviour
         _enemyHeath = enemyHealth;
         _popup = popup;
         enabled = true;
+    }
+
+    public void Init(ParticleSystem confettiVFX, CinemachineVirtualCamera winCamera)
+    {
+        if (confettiVFX == null)
+        {
+            throw new ArgumentNullException(nameof(confettiVFX));
+        }
+
+        if (winCamera == null)
+        {
+            throw new ArgumentNullException(nameof(winCamera));
+        }
+
+        _confettiVFX = confettiVFX;
+        _winCamera = winCamera;
     }
 
     public void Attack(Cube cube)
