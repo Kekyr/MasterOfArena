@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af03b60cbe6978644bdc698b04c2cd0e, type: 3}
+  m_Name: Zones
+  m_EditorClassIdentifier: 
+  _zonePrefabs:
+  - {fileID: 4068600838270051341, guid: 5cb2d91b1c31e8249b72ee8c58458d8d, type: 3}
+  - {fileID: 7574027050681284289, guid: 41008a9545a0966438b4c685bd9383da, type: 3}
+  - {fileID: 4032423187344363079, guid: c2dc88db6bf19b5438d905d2a53d86d0, type: 3}
+  - {fileID: 7445131833317935986, guid: 22d9ce6db4115e641a5707bfbc9c3202, type: 3}
+  _currentIndex: 0

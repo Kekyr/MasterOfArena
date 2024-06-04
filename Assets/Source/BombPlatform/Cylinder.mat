@@ -120,7 +120,7 @@ Material:
     - _ShadowEdgeSize: 0.05
     - _ShadowEdgeSizeExtra: 0.05
     - _Shadow_HSV_H: 0
-    - _Shadow_HSV_S: 0
+    - _Shadow_HSV_S: 0.1
     - _Shadow_HSV_V: 0
     - _Smoothness: 0.2
     - _SmoothnessTextureChannel: 0

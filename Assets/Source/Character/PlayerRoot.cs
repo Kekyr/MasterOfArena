@@ -1,10 +1,31 @@
+using System;
+using Cinemachine;
+using UnityEngine;
+
 public class PlayerRoot : CharacterRoot
 {
+    [SerializeField] private CinemachineTargetGroup _targetGroup;
+
     private PlayerInputRouter _inputRouter;
     private YandexLeaderboard _leaderboard;
 
+    protected override void OnEnable()
+    {
+        if (_targetGroup == null)
+        {
+            throw new ArgumentNullException(nameof(_targetGroup));
+        }
+
+        base.OnEnable();
+    }
+
     protected override void Start()
     {
+        float weight = 1.69f;
+        int radius = 1;
+
+        _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
+
         PlayerTargeting targeting = (PlayerTargeting)Aiming;
         targeting.Init(_inputRouter);
 

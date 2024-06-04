@@ -16,16 +16,6 @@ public class ArenaSide : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_environment == null)
-        {
-            throw new ArgumentNullException(nameof(_environment));
-        }
-
-        if (_explosion == null)
-        {
-            throw new ArgumentNullException(nameof(_explosion));
-        }
-
         if (_sfx == null)
         {
             throw new ArgumentNullException(nameof(_sfx));

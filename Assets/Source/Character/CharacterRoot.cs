@@ -9,17 +9,16 @@ public class CharacterRoot : MonoBehaviour
     [SerializeField] private Helper _helper;
     [SerializeField] private Popup _popup;
 
-    [SerializeField] private HealthView _healthView;
+    private ArenaSide _side;
+    private BombPlatform _platformWithBomb;
 
-    [SerializeField] private ArenaSide _side;
-    [SerializeField] private BombPlatform _bombPlatform;
-
-    [SerializeField] private ParticleSystem _confettiVFX;
-    [SerializeField] private CinemachineVirtualCamera _winCamera;
+    private ParticleSystem _confettiVFX;
+    private CinemachineVirtualCamera _winCamera;
 
     private Character _character;
     private Character _enemyCharacter;
 
+    private HealthView _healthView;
     private Health _health;
     private Health _enemyHealth;
 
@@ -43,26 +42,13 @@ public class CharacterRoot : MonoBehaviour
 
     public Character Person => _character;
 
-    private void OnEnable()
+    public BombPlatform PlatformWithBomb => _platformWithBomb;
+
+    protected virtual void OnEnable()
     {
         if (_popup == null)
         {
             throw new ArgumentNullException(nameof(_popup));
-        }
-
-        if (_healthView == null)
-        {
-            throw new ArgumentNullException(nameof(_healthView));
-        }
-
-        if (_side == null)
-        {
-            throw new ArgumentNullException(nameof(_side));
-        }
-
-        if (_bombPlatform == null)
-        {
-            throw new ArgumentNullException(nameof(_bombPlatform));
         }
 
         if (_helper == null)
@@ -70,21 +56,19 @@ public class CharacterRoot : MonoBehaviour
             throw new ArgumentNullException(nameof(_helper));
         }
 
-        if (_winCamera == null)
-        {
-            throw new ArgumentNullException(nameof(_winCamera));
-        }
-
-        if (_confettiVFX == null)
-        {
-            throw new ArgumentNullException(nameof(_confettiVFX));
-        }
+        _platformWithBomb = _side.GetComponentInChildren<BombPlatform>();
+        _confettiVFX = _side.GetComponentInChildren<ParticleSystem>();
+        _winCamera = _side.GetComponentInChildren<CinemachineVirtualCamera>();
+        _winCamera.gameObject.SetActive(false);
+        _healthView = _side.GetComponentInChildren<HealthView>();
 
         _projectiles = _character.GetComponentsInChildren<Projectile>();
         _movement = _character.GetComponent<Movement>();
+
         _aiming = _character.GetComponent<Targeting>();
         _arrow = _character.GetComponentInChildren<Arrow>();
         _circle = _character.GetComponentInChildren<Circle>();
+
         _health = _character.GetComponent<Health>();
         _enemyHealth = _enemyCharacter.GetComponent<Health>();
     }
@@ -108,9 +92,9 @@ public class CharacterRoot : MonoBehaviour
 
         _healthView.Init(_health);
 
-        _health.Init(_bombPlatform);
+        _health.Init(_platformWithBomb);
 
-        _bombPlatform.Init(_sequence, _health, _enemyCharacter, _helper);
+        _platformWithBomb.Init(_sequence, _health, _enemyCharacter, _helper);
 
         _aiming.Init(_sequence, _health, _enemyHealth);
         _arrow.Init(_character, _aiming, _health);
@@ -132,5 +116,10 @@ public class CharacterRoot : MonoBehaviour
         _character = character;
         _enemyCharacter = enemyCharacter;
         _camera = camera;
+    }
+
+    public void Init(ArenaSide side)
+    {
+        _side = side;
     }
 }

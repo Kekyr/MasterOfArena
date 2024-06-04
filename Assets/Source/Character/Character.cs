@@ -9,7 +9,6 @@ using Sequence = DG.Tweening.Sequence;
 [RequireComponent(typeof(SFX))]
 public class Character : MonoBehaviour
 {
-    private readonly float NewScale = 0.8f;
     private readonly float Duration = 0.05f;
     private readonly float Delay = 0.05f;
     private readonly float WaitTime = 1.5f;
@@ -18,6 +17,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Color _damageMarkColor;
     [SerializeField] private SFXSO _throw;
     [SerializeField] private SFXSO _win;
+    [SerializeField] private Vector3 _startScale;
 
     private Projectile[] _projectiles;
     private Animator _animator;
@@ -55,11 +55,12 @@ public class Character : MonoBehaviour
         _sfx = GetComponent<SFX>();
 
         _wait = new WaitForSeconds(WaitTime);
+        _startScale = transform.localScale;
         transform.localScale = Vector3.zero;
         _winCamera.Follow = transform;
         _winCamera.LookAt = transform;
 
-        _sequence.Append(transform.DOScale(NewScale, Duration)
+        _sequence.Append(transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine)
             .SetDelay(Delay));
 

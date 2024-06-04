@@ -1945,7 +1945,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.9, y: 0.8, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4093720784581668187}
@@ -1990,6 +1990,7 @@ MonoBehaviour:
   _damageMarkColor: {r: 0.32941177, g: 0, b: 0.83921576, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
+  _startScale: {x: 0, y: 0, z: 0}
 --- !u!114 &5192813065695797921
 MonoBehaviour:
   m_ObjectHideFlags: 0

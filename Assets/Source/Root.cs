@@ -6,10 +6,14 @@ using UnityEngine;
 public class Root : MonoBehaviour
 {
     [SerializeField] private CharactersSO _characters;
+    [SerializeField] private ZonesSO _zones;
+
     [SerializeField] private PlayerSpawnPosition _playerSpawnPosition;
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
-    
+    [SerializeField] private ZoneSpawnPosition _zoneSpawnPosition;
+
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private CinemachineTargetGroup _targetGroup;
 
     [SerializeField] private PlayerRoot _playerRoot;
     [SerializeField] private AIRoot _aiRoot;
@@ -41,6 +45,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_characters));
         }
 
+        if (_zones == null)
+        {
+            throw new ArgumentNullException(nameof(_zones));
+        }
+
         if (_playerSpawnPosition == null)
         {
             throw new ArgumentNullException(nameof(_characters));
@@ -51,9 +60,19 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_enemySpawnPosition));
         }
 
+        if (_zoneSpawnPosition == null)
+        {
+            throw new ArgumentNullException(nameof(_zoneSpawnPosition));
+        }
+
         if (_virtualCamera == null)
         {
             throw new ArgumentNullException(nameof(_virtualCamera));
+        }
+
+        if (_targetGroup == null)
+        {
+            throw new ArgumentNullException(nameof(_targetGroup));
         }
 
         if (_playerRoot == null)
@@ -99,7 +118,19 @@ public class Root : MonoBehaviour
 
     protected virtual void Awake()
     {
+        int weight = 1;
+        int radius = 1;
+
         Validate();
+
+        Zone zone = _zones.Current;
+        zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
+            _zoneSpawnPosition.transform);
+
+        ArenaSide playerSide = zone.PlayerSide;
+        ArenaSide enemySide = zone.EnemySide;
+
+        _targetGroup.AddMember(enemySide.transform, weight, radius);
 
         Character player = _characters.GetRandomPlayerPrefab();
         player = Instantiate(player, _playerSpawnPosition.transform.position, player.transform.rotation,
@@ -125,10 +156,12 @@ public class Root : MonoBehaviour
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
+        _playerRoot.Init(playerSide);
         _playerRoot.Init(_inputRouter, _leaderboard);
         _playerRoot.Init(player, enemy, _virtualCamera);
         _playerRoot.Init(_order, _sfxButton, _audioSettings);
 
+        _aiRoot.Init(enemySide);
         _aiRoot.Init(_cubeSpawner);
         _aiRoot.Init(enemy, player, _virtualCamera);
         _aiRoot.Init(_order, _sfxButton, _audioSettings);
