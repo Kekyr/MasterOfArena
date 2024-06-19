@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class YandexLeaderboard : MonoBehaviour
 {
-    private const string LeaderboardName = "NewLeaderboard";
+    public const string LeaderboardName = "NewNewLeaderboard";
     private const string AnonymousName = "Anonymous";
 
     private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();

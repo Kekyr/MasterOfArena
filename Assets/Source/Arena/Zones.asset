@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af03b60cbe6978644bdc698b04c2cd0e, type: 3}
   m_Name: Zones
   m_EditorClassIdentifier: 
-  _zonePrefabs:
-  - {fileID: 4068600838270051341, guid: 5cb2d91b1c31e8249b72ee8c58458d8d, type: 3}
-  - {fileID: 7574027050681284289, guid: 41008a9545a0966438b4c685bd9383da, type: 3}
-  - {fileID: 4032423187344363079, guid: c2dc88db6bf19b5438d905d2a53d86d0, type: 3}
-  - {fileID: 7445131833317935986, guid: 22d9ce6db4115e641a5707bfbc9c3202, type: 3}
+  _zones:
+  - {fileID: 11400000, guid: cd56c4021fca4dc47adebceca085d32a, type: 2}
+  - {fileID: 11400000, guid: 6f8620e875734494784e36b9f1f5913f, type: 2}
+  - {fileID: 11400000, guid: afc54aa0aff1b184aa17504d774f3aa3, type: 2}
+  - {fileID: 11400000, guid: bb7a548d551f69949ae83e956110ff0a, type: 2}
   _currentIndex: 0

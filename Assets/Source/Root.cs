@@ -123,7 +123,7 @@ public class Root : MonoBehaviour
 
         Validate();
 
-        Zone zone = _zones.Current;
+        Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
             _zoneSpawnPosition.transform);
 

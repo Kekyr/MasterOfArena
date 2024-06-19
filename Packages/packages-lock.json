@@ -8,11 +8,11 @@
       "hash": "32d39130ea78dce0c3ea0ed83ec5f022efefde42"
     },
     "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.0.0",
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.0.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "faf20595c0f18f4a471e6b27fbd5fbf5fd05d7a2"
+      "hash": "6c1dcfeb19d5b8ab6720dd36f9261149143c2578"
     },
     "com.bovinelabs.analyzers": {
       "version": "https://github.com/tertle/com.bovinelabs.analyzers.git",

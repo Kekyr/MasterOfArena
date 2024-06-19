@@ -36,6 +36,7 @@ public class CharacterRoot : MonoBehaviour
     private Sequence _sequence;
     private CinemachineVirtualCamera _camera;
 
+    public Popup Window => _popup;
     public IReadOnlyCollection<Projectile> Projectiles => _projectiles;
 
     public Targeting Aiming => _aiming;
@@ -82,7 +83,7 @@ public class CharacterRoot : MonoBehaviour
         }
 
         _character.Init(_confettiVFX, _winCamera);
-        _character.Init(_projectiles, _sequence, _enemyHealth, _popup);
+        _character.Init(_projectiles, _sequence, _health, _enemyHealth, _popup);
         _character.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
         _movement.Init(_projectiles, _health, _camera);

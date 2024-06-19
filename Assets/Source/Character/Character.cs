@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
 
     private Projectile[] _projectiles;
     private Animator _animator;
+    private Health _health;
     private Health _enemyHeath;
     private SFX _sfx;
 
@@ -89,7 +90,7 @@ public class Character : MonoBehaviour
         _enemyHeath.Died -= OnEnemyDead;
     }
 
-    public void Init(Projectile[] projectiles, Sequence sequence, Health enemyHealth, Popup popup)
+    public void Init(Projectile[] projectiles, Sequence sequence, Health health, Health enemyHealth, Popup popup)
     {
         int maxLength = 2;
 
@@ -101,6 +102,11 @@ public class Character : MonoBehaviour
         if (sequence == null)
         {
             throw new ArgumentNullException(nameof(sequence));
+        }
+
+        if (health == null)
+        {
+            throw new ArgumentNullException(nameof(health));
         }
 
         if (enemyHealth == null)
@@ -115,6 +121,7 @@ public class Character : MonoBehaviour
 
         _sequence = sequence;
         _projectiles = projectiles;
+        _health = health;
         _enemyHeath = enemyHealth;
         _popup = popup;
         enabled = true;
@@ -179,7 +186,10 @@ public class Character : MonoBehaviour
             projectile.gameObject.SetActive(false);
         }
 
-        StartCoroutine(Win());
+        if (_health.IsDead != true)
+        {
+            StartCoroutine(Win());
+        }
     }
 
     protected virtual IEnumerator Win()

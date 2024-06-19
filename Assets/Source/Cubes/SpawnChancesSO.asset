@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnChances:
   - 50
-  - 25
-  - 25
+  - 30
+  - 20
   _cubePrefabs:
   - {fileID: 1535271192868560719, guid: a5c90b7b68b66e547a5b3a96408d61c1, type: 3}
   - {fileID: 1446710126809515456, guid: 1f9dccd4654180a49b2b3ad6bc56e805, type: 3}

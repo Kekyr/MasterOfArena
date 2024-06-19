@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefabs:
   - {fileID: 5927466161466357695, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
+  - {fileID: 9126460304465172601, guid: adecd8491142a0c4094d3c83b875eaf6, type: 3}
+  - {fileID: 8587508848919397276, guid: 27077a84ee6e0634eade4b1660971e61, type: 3}
+  - {fileID: 2032743788611245685, guid: 26bbc8c4a74d3fd44bfa0e44aa21ab28, type: 3}
   _enemyPrefabs:
   - {fileID: 7181920457580701491, guid: abcdcaa73f36a2741ba165aef5c8ed34, type: 3}
+  - {fileID: 2291289789097387221, guid: 1178ff85a29d6584e867db7c4f301c3b, type: 3}
+  - {fileID: 6152762241845828056, guid: 9b6b531b81497e54abe3aefbd9fd48bc, type: 3}
+  - {fileID: 3626454936163857965, guid: 2ccdbbcb4f096f04297271f0c99852d4, type: 3}
+  - {fileID: 4749191086872601578, guid: 93265b3150b08534c8e3b4502a9b1537, type: 3}

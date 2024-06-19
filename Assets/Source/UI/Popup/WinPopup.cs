@@ -12,6 +12,8 @@ public class WinPopup : Popup
     [SerializeField] private UpperPart _upperPart;
     [SerializeField] private Button _button;
 
+    private SaveLoader _saveLoader;
+
     private void OnEnable()
     {
         if (_upperPart == null)
@@ -37,8 +39,20 @@ public class WinPopup : Popup
         _button.onClick.RemoveListener(Restart);
     }
 
+    public void Init(SaveLoader saveLoader)
+    {
+        if (saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(saveLoader));
+        }
+
+        _saveLoader = saveLoader;
+        enabled = true;
+    }
+
     private void Restart()
     {
+        _saveLoader.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

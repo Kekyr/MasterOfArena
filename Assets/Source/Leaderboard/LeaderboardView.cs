@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class LeaderboardView : MonoBehaviour
 {
-    private const string LeaderboardName = "NewLeaderboard";
     private const int Size = 5;
 
     [SerializeField] private Transform _container;
@@ -39,7 +38,7 @@ public class LeaderboardView : MonoBehaviour
         ClearLeaderboard();
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
+        Leaderboard.GetPlayerEntry(YandexLeaderboard.LeaderboardName, (result) =>
         {
             string playerId = result.player.uniqueID;
             int length = Size > leaderboardPlayers.Count ? leaderboardPlayers.Count : Size;

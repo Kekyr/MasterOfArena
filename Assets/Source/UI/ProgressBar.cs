@@ -17,7 +17,10 @@ public class ProgressBar : MonoBehaviour
 
     [SerializeField] private Slider _slider;
     [SerializeField] private Image[] _points;
+    [SerializeField] private Image _currentZone;
+    [SerializeField] private Image _nextZone;
     [SerializeField] private ProgressBarSO _data;
+    [SerializeField] private ZonesSO _zones;
     [SerializeField] private NextButton _button;
     [SerializeField] private Cup _cup;
 
@@ -32,6 +35,11 @@ public class ProgressBar : MonoBehaviour
             throw new ArgumentNullException(nameof(_data));
         }
 
+        if (_zones == null)
+        {
+            throw new ArgumentNullException(nameof(_zones));
+        }
+
         if (_slider == null)
         {
             throw new ArgumentNullException(nameof(_slider));
@@ -40,6 +48,16 @@ public class ProgressBar : MonoBehaviour
         if (_points.Length != _data.PointsCount)
         {
             throw new ArgumentOutOfRangeException(nameof(_points));
+        }
+
+        if (_currentZone == null)
+        {
+            throw new ArgumentNullException(nameof(_currentZone));
+        }
+
+        if (_nextZone == null)
+        {
+            throw new ArgumentNullException(nameof(_nextZone));
         }
 
         if (_button == null)
@@ -51,6 +69,9 @@ public class ProgressBar : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_cup));
         }
+
+        _currentZone.sprite = _zones.Current.Icon;
+        _nextZone.sprite = _zones.Next.Icon;
 
         transform.localScale = Vector3.zero;
         _button.transform.localScale = Vector3.zero;
@@ -73,11 +94,11 @@ public class ProgressBar : MonoBehaviour
                     .SetEase(Ease.OutBounce)
                     .OnComplete(() =>
                     {
+                        _points[_currentPointIndex].sprite = _data.Sprite;
                         _cup.transform.DOScale(CupNewScale, CupDuration)
                             .SetEase(Ease.OutBounce)
                             .OnComplete(() =>
                             {
-                                _points[_currentPointIndex].sprite = _data.Sprite;
                                 _button.transform.DOScale(NewScale, Duration)
                                     .SetEase(Ease.OutBounce);
                             });

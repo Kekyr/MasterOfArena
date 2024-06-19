@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4005ded1f921541aee49227cb9dd63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _saveLoader: {fileID: 1761460120}
 --- !u!4 &59161491
 Transform:
   m_ObjectHideFlags: 0
@@ -167,8 +168,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1761460119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1761460121}
+  - component: {fileID: 1761460120}
+  m_Layer: 0
+  m_Name: SaveLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1761460120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761460119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b31653e2f48dd40a17479b3f5239fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _progressBarData: {fileID: 11400000, guid: 383352bf1969c184a80c6c01fc83d4a3, type: 2}
+  _playerData: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
+  _zonesData: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
+  _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
+--- !u!4 &1761460121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761460119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 285.83643, y: 98.042816, z: -226.75449}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 59161491}
+  - {fileID: 1761460121}

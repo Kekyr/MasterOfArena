@@ -1,11 +1,22 @@
+using System;
 using System.Collections;
 using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
 
 public sealed class SDKInitializer : MonoBehaviour
 {
+    [SerializeField] private SaveLoader _saveLoader;
     private int _nextSceneIndex;
+
+    private void OnEnable()
+    {
+        if (_saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(_saveLoader));
+        }
+    }
 
     private void Awake()
     {
@@ -28,6 +39,7 @@ public sealed class SDKInitializer : MonoBehaviour
     private void OnInitialized()
     {
         YandexGamesSdk.GameReady();
+        PlayerPrefs.Load(_saveLoader.OnLoaded);
         SceneManager.LoadScene(_nextSceneIndex);
     }
 }

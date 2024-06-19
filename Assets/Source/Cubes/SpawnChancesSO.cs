@@ -11,6 +11,13 @@ public class SpawnChancesSO : ScriptableObject
     private int _secondElementIndex = 1;
     private int _thirdElementIndex = 2;
 
+    public List<float> SpawnChances => _spawnChances;
+
+    public void Init(List<float> spawnChances)
+    {
+        _spawnChances = spawnChances;
+    }
+
     public Cube GetRandomCube(float randomValue)
     {
         if (_cubePrefabs.Count < _spawnChances.Count)

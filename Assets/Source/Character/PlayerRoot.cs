@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerRoot : CharacterRoot
 {
     [SerializeField] private CinemachineTargetGroup _targetGroup;
+    [SerializeField] private SaveLoader _saveLoader;
 
     private PlayerInputRouter _inputRouter;
     private YandexLeaderboard _leaderboard;
@@ -16,6 +17,11 @@ public class PlayerRoot : CharacterRoot
             throw new ArgumentNullException(nameof(_targetGroup));
         }
 
+        if (_saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(_saveLoader));
+        }
+
         base.OnEnable();
     }
 
@@ -23,6 +29,9 @@ public class PlayerRoot : CharacterRoot
     {
         float weight = 1.69f;
         int radius = 1;
+
+        WinPopup winPopup = (WinPopup)Window;
+        winPopup.Init(_saveLoader);
 
         _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
 

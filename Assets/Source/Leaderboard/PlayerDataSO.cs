@@ -7,6 +7,11 @@ public class PlayerDataSO : ScriptableObject
 
     public int Score => _score;
 
+    public void Init(int score)
+    {
+        _score = score;
+    }
+    
     public void AddScore()
     {
         _score++;
