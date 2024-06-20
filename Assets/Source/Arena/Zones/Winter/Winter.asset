@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4068600838270051341, guid: 5cb2d91b1c31e8249b72ee8c58458d8d, type: 3}
   _sprite: {fileID: 21300000, guid: 577be9646eeb4684bbc5a0c83b15729a, type: 3}
+  _translationName: WinterPhrase

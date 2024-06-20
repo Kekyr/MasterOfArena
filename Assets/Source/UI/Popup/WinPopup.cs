@@ -52,7 +52,9 @@ public class WinPopup : Popup
 
     private void Restart()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
         _saveLoader.Save();
+#endif
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4032423187344363079, guid: c2dc88db6bf19b5438d905d2a53d86d0, type: 3}
   _sprite: {fileID: 21300000, guid: 38f718c1f537aa84fb4657bf3f739021, type: 3}
+  _translationName: SpringPhrase

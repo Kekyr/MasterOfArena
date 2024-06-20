@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using DG.Tweening;
+using Lean.Localization;
 using UnityEngine;
 
 public class Root : MonoBehaviour
@@ -21,6 +22,8 @@ public class Root : MonoBehaviour
     [SerializeField] private Music _music;
     [SerializeField] private AudioSettingsSO _audioSettings;
 
+    [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
+    
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
 
@@ -95,6 +98,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_audioSettings));
         }
 
+        if (_zoneText == null)
+        {
+            throw new ArgumentNullException(nameof(_zoneText));
+        }
+
         if (_musicButton == null)
         {
             throw new ArgumentNullException(nameof(_musicButton));
@@ -126,6 +134,8 @@ public class Root : MonoBehaviour
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
             _zoneSpawnPosition.transform);
+
+        _zoneText.TranslationName = _zones.Current.TranslationName;
 
         ArenaSide playerSide = zone.PlayerSide;
         ArenaSide enemySide = zone.EnemySide;

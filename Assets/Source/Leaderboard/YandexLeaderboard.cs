@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using Agava.YandexGames;
+using Lean.Localization;
 using UnityEngine;
 
 public class YandexLeaderboard : MonoBehaviour
 {
     public const string LeaderboardName = "NewNewLeaderboard";
-    private const string AnonymousName = "Anonymous";
+    private const string TranslationName = "AnonymPhrase";
 
     private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
 
     [SerializeField] private LeaderboardView _leaderboardView;
 
     private Player _player;
+    private LeanTranslation _translation;
 
     private void OnEnable()
     {
@@ -20,6 +22,8 @@ public class YandexLeaderboard : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_leaderboardView));
         }
+
+        _translation = LeanLocalization.GetTranslation(TranslationName);
 
         _player.Victory += SetPlayerScore;
     }
@@ -78,7 +82,7 @@ public class YandexLeaderboard : MonoBehaviour
 
             if (string.IsNullOrEmpty(name))
             {
-                name = AnonymousName;
+                name = (string)_translation.Data;
             }
 
             int rank = entry.rank;
