@@ -13,6 +13,7 @@ public class WinPopup : Popup
     [SerializeField] private Button _button;
 
     private SaveLoader _saveLoader;
+    private InterstitialAd _interstitialAd;
 
     private void OnEnable()
     {
@@ -39,14 +40,20 @@ public class WinPopup : Popup
         _button.onClick.RemoveListener(Restart);
     }
 
-    public void Init(SaveLoader saveLoader)
+    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd)
     {
         if (saveLoader == null)
         {
             throw new ArgumentNullException(nameof(saveLoader));
         }
 
+        if (interstitialAd == null)
+        {
+            throw new ArgumentNullException(nameof(interstitialAd));
+        }
+
         _saveLoader = saveLoader;
+        _interstitialAd = interstitialAd;
         enabled = true;
     }
 
@@ -55,6 +62,11 @@ public class WinPopup : Popup
 #if UNITY_WEBGL && !UNITY_EDITOR
         _saveLoader.Save();
 #endif
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        _interstitialAd.Show();
+#endif
     }
 }

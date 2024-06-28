@@ -9,6 +9,7 @@ public class PlayerRoot : CharacterRoot
 
     private PlayerInputRouter _inputRouter;
     private YandexLeaderboard _leaderboard;
+    private InterstitialAd _interstitialAd;
 
     protected override void OnEnable()
     {
@@ -31,7 +32,7 @@ public class PlayerRoot : CharacterRoot
         int radius = 1;
 
         WinPopup winPopup = (WinPopup)Window;
-        winPopup.Init(_saveLoader);
+        winPopup.Init(_saveLoader, _interstitialAd);
 
         _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
 
@@ -44,9 +45,10 @@ public class PlayerRoot : CharacterRoot
         base.Start();
     }
 
-    public void Init(PlayerInputRouter inputRouter, YandexLeaderboard leaderboard)
+    public void Init(PlayerInputRouter inputRouter, YandexLeaderboard leaderboard, InterstitialAd interstitialAd)
     {
         _inputRouter = inputRouter;
         _leaderboard = leaderboard;
+        _interstitialAd = interstitialAd;
     }
 }

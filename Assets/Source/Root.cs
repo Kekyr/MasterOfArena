@@ -22,6 +22,8 @@ public class Root : MonoBehaviour
     [SerializeField] private Music _music;
     [SerializeField] private AudioSettingsSO _audioSettings;
 
+    [SerializeField] private InterstitialAd _interstitialAd;
+
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
     
     [SerializeField] private MusicButton _musicButton;
@@ -98,6 +100,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_audioSettings));
         }
 
+        if (_interstitialAd == null)
+        {
+            throw new ArgumentNullException(nameof(_interstitialAd));
+        }
+
         if (_zoneText == null)
         {
             throw new ArgumentNullException(nameof(_zoneText));
@@ -161,13 +168,14 @@ public class Root : MonoBehaviour
         _musicButton.Init(_audioSettings);
         _sfxButton.Init(_audioSettings);
 
+        _music.Init(_interstitialAd);
         _music.Init(_playerHealth, _aiHealth, _musicButton, _audioSettings);
         _inputRouter.Init(_playerHealth, _aiHealth);
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(playerSide);
-        _playerRoot.Init(_inputRouter, _leaderboard);
+        _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
         _playerRoot.Init(player, enemy, _virtualCamera);
         _playerRoot.Init(_order, _sfxButton, _audioSettings);
 

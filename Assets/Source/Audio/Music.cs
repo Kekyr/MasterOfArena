@@ -12,6 +12,8 @@ public class Music : MonoBehaviour
     private MusicButton _button;
     private AudioSettingsSO _audioSettings;
 
+    private InterstitialAd _interstitialAd;
+
     private void OnEnable()
     {
         if (_audioSource == null)
@@ -24,6 +26,8 @@ public class Music : MonoBehaviour
             throw new ArgumentNullException(nameof(_music));
         }
 
+        _interstitialAd.Opened += OnAdOpen;
+        _interstitialAd.Closed += OnAdClose;
         _button.Switched += OnSwitch;
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
@@ -31,6 +35,8 @@ public class Music : MonoBehaviour
 
     private void OnDisable()
     {
+        _interstitialAd.Opened -= OnAdOpen;
+        _interstitialAd.Closed -= OnAdClose;
         _button.Switched -= OnSwitch;
         _playerHealth.Died -= OnDead;
         _enemyHealth.Died -= OnDead;
@@ -39,6 +45,16 @@ public class Music : MonoBehaviour
     private void Start()
     {
         Play(_music.GetRandomClip());
+    }
+
+    public void Init(InterstitialAd interstitialAd)
+    {
+        if (interstitialAd == null)
+        {
+            throw new ArgumentNullException(nameof(interstitialAd));
+        }
+
+        _interstitialAd = interstitialAd;
     }
 
     public void Init(Health playerHealth, Health enemyHealth, MusicButton button, AudioSettingsSO audioSettings)
@@ -94,6 +110,16 @@ public class Music : MonoBehaviour
     private void OnSwitch()
     {
         _audioSource.Stop();
+        Play(_music.GetRandomClip());
+    }
+
+    private void OnAdOpen()
+    {
+        _audioSource.Stop();
+    }
+
+    private void OnAdClose()
+    {
         Play(_music.GetRandomClip());
     }
 }
