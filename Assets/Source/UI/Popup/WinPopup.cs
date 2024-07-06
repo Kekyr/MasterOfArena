@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinPopup : Popup
@@ -10,10 +9,12 @@ public class WinPopup : Popup
     private readonly float Duration = 1f;
 
     [SerializeField] private UpperPart _upperPart;
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _nextButton;
+    [SerializeField] private Button _rewardButton;
 
     private SaveLoader _saveLoader;
     private InterstitialAd _interstitialAd;
+    private RewardedAd _rewardedAd;
 
     private void OnEnable()
     {
@@ -22,9 +23,14 @@ public class WinPopup : Popup
             throw new ArgumentNullException(nameof(_upperPart));
         }
 
-        if (_button == null)
+        if (_nextButton == null)
         {
-            throw new ArgumentNullException(nameof(_button));
+            throw new ArgumentNullException(nameof(_nextButton));
+        }
+
+        if (_rewardButton == null)
+        {
+            throw new ArgumentNullException(nameof(_rewardButton));
         }
 
         _upperPart.transform.localScale = Vector3.zero;
@@ -32,15 +38,17 @@ public class WinPopup : Popup
         _upperPart.transform.DOScale(NewScale, Duration)
             .SetEase(Ease.OutBounce);
 
-        _button.onClick.AddListener(Restart);
+        _nextButton.onClick.AddListener(Restart);
+        _rewardButton.onClick.AddListener(GetReward);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(Restart);
+        _nextButton.onClick.RemoveListener(Restart);
+        _rewardButton.onClick.AddListener(GetReward);
     }
 
-    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd)
+    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd, RewardedAd rewardedAd)
     {
         if (saveLoader == null)
         {
@@ -52,8 +60,14 @@ public class WinPopup : Popup
             throw new ArgumentNullException(nameof(interstitialAd));
         }
 
+        if (rewardedAd == null)
+        {
+            throw new ArgumentNullException(nameof(rewardedAd));
+        }
+
         _saveLoader = saveLoader;
         _interstitialAd = interstitialAd;
+        _rewardedAd = rewardedAd;
         enabled = true;
     }
 
@@ -63,10 +77,16 @@ public class WinPopup : Popup
         _saveLoader.Save();
 #endif
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
 #if UNITY_WEBGL && !UNITY_EDITOR
         _interstitialAd.Show();
 #endif
+    }
+
+    private void GetReward()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        _rewardedAd.Show();
+#endif
+        _rewardButton.interactable = false;
     }
 }

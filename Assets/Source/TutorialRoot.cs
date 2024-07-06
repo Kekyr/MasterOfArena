@@ -17,6 +17,8 @@ public class TutorialRoot : Root
 
     protected override void Awake()
     {
+        FocusObserver.Init(_hand);
+
         base.Awake();
 
         _hand.Init(Order, InputRouter);

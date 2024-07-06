@@ -9,7 +9,9 @@ public class PlayerRoot : CharacterRoot
 
     private PlayerInputRouter _inputRouter;
     private YandexLeaderboard _leaderboard;
+
     private InterstitialAd _interstitialAd;
+    private RewardedAd _rewardedAd;
 
     protected override void OnEnable()
     {
@@ -32,7 +34,7 @@ public class PlayerRoot : CharacterRoot
         int radius = 1;
 
         WinPopup winPopup = (WinPopup)Window;
-        winPopup.Init(_saveLoader, _interstitialAd);
+        winPopup.Init(_saveLoader, _interstitialAd, _rewardedAd);
 
         _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
 
@@ -40,7 +42,7 @@ public class PlayerRoot : CharacterRoot
         targeting.Init(_inputRouter);
 
         Player player = (Player)Person;
-        _leaderboard.Init(player);
+        _leaderboard.Init(player, _rewardedAd);
 
         base.Start();
     }
@@ -50,5 +52,10 @@ public class PlayerRoot : CharacterRoot
         _inputRouter = inputRouter;
         _leaderboard = leaderboard;
         _interstitialAd = interstitialAd;
+    }
+
+    public void Init(RewardedAd rewardedAd)
+    {
+        _rewardedAd = rewardedAd;
     }
 }

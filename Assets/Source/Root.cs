@@ -8,6 +8,7 @@ public class Root : MonoBehaviour
 {
     [SerializeField] private CharactersSO _characters;
     [SerializeField] private ZonesSO _zones;
+    [SerializeField] private PlayerDataSO _playerData;
 
     [SerializeField] private PlayerSpawnPosition _playerSpawnPosition;
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
@@ -23,13 +24,15 @@ public class Root : MonoBehaviour
     [SerializeField] private AudioSettingsSO _audioSettings;
 
     [SerializeField] private InterstitialAd _interstitialAd;
+    [SerializeField] private RewardedAd _rewardedAd;
 
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
-    
+
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
 
     [SerializeField] private YandexLeaderboard _leaderboard;
+    [SerializeField] private FocusTracker _focusTracker;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
 
@@ -43,6 +46,8 @@ public class Root : MonoBehaviour
 
     protected PlayerInputRouter InputRouter => _inputRouter;
 
+    protected FocusTracker FocusObserver => _focusTracker;
+
     protected virtual void Validate()
     {
         if (_characters == null)
@@ -53,6 +58,11 @@ public class Root : MonoBehaviour
         if (_zones == null)
         {
             throw new ArgumentNullException(nameof(_zones));
+        }
+
+        if (_playerData == null)
+        {
+            throw new ArgumentNullException(nameof(_playerData));
         }
 
         if (_playerSpawnPosition == null)
@@ -105,6 +115,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_interstitialAd));
         }
 
+        if (_rewardedAd == null)
+        {
+            throw new ArgumentNullException(nameof(_rewardedAd));
+        }
+
         if (_zoneText == null)
         {
             throw new ArgumentNullException(nameof(_zoneText));
@@ -123,6 +138,11 @@ public class Root : MonoBehaviour
         if (_leaderboard == null)
         {
             throw new ArgumentNullException(nameof(_leaderboard));
+        }
+
+        if (_focusTracker == null)
+        {
+            throw new ArgumentNullException(nameof(_focusTracker));
         }
 
         if (_cubeSpawner == null)
@@ -159,6 +179,8 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
+        _rewardedAd.Init(_playerData);
+
         _inputRouter = player.GetComponent<PlayerInputRouter>();
         _playerHealth = player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
@@ -168,12 +190,13 @@ public class Root : MonoBehaviour
         _musicButton.Init(_audioSettings);
         _sfxButton.Init(_audioSettings);
 
-        _music.Init(_interstitialAd);
         _music.Init(_playerHealth, _aiHealth, _musicButton, _audioSettings);
+        _focusTracker.Init(_music);
         _inputRouter.Init(_playerHealth, _aiHealth);
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
+        _playerRoot.Init(_rewardedAd);
         _playerRoot.Init(playerSide);
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
         _playerRoot.Init(player, enemy, _virtualCamera);

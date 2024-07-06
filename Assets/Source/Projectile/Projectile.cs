@@ -33,6 +33,7 @@ public class Projectile : MonoBehaviour
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
+    private Vector3 _startScale;
     private Transform _startParent;
 
     public event Action Catched;
@@ -113,6 +114,7 @@ public class Projectile : MonoBehaviour
     {
         _startPosition = transform.localPosition;
         _startRotation = transform.localRotation;
+        _startScale = transform.localScale;
         Throwing?.Invoke(_animationTrigger);
     }
 
@@ -135,6 +137,7 @@ public class Projectile : MonoBehaviour
             transform.parent = _startParent;
             transform.localPosition = _startPosition;
             transform.localRotation = _startRotation;
+            transform.localScale = _startScale;
             Catched?.Invoke();
         }
     }

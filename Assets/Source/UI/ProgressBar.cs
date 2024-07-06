@@ -19,9 +19,11 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Image[] _points;
     [SerializeField] private Image _currentZone;
     [SerializeField] private Image _nextZone;
+
     [SerializeField] private ProgressBarSO _data;
     [SerializeField] private ZonesSO _zones;
-    [SerializeField] private NextButton _button;
+    [SerializeField] private NextButton _nextbutton;
+    [SerializeField] private RewardButton _rewardButton;
     [SerializeField] private Cup _cup;
 
     private int _currentPointIndex;
@@ -60,9 +62,14 @@ public class ProgressBar : MonoBehaviour
             throw new ArgumentNullException(nameof(_nextZone));
         }
 
-        if (_button == null)
+        if (_nextbutton == null)
         {
-            throw new ArgumentNullException(nameof(_button));
+            throw new ArgumentNullException(nameof(_nextbutton));
+        }
+
+        if (_rewardButton == null)
+        {
+            throw new ArgumentNullException(nameof(_rewardButton));
         }
 
         if (_cup == null)
@@ -74,7 +81,8 @@ public class ProgressBar : MonoBehaviour
         _nextZone.sprite = _zones.Next.Icon;
 
         transform.localScale = Vector3.zero;
-        _button.transform.localScale = Vector3.zero;
+        _nextbutton.transform.localScale = Vector3.zero;
+        _rewardButton.transform.localScale = Vector3.zero;
         _cup.transform.localScale = Vector3.zero;
 
         _data.GetData(out _currentPointIndex, out _startSliderValue, out _endSliderValue);
@@ -99,7 +107,9 @@ public class ProgressBar : MonoBehaviour
                             .SetEase(Ease.OutBounce)
                             .OnComplete(() =>
                             {
-                                _button.transform.DOScale(NewScale, Duration)
+                                _nextbutton.transform.DOScale(ButtonNewScale, Duration)
+                                    .SetEase(Ease.OutBounce);
+                                _rewardButton.transform.DOScale(ButtonNewScale, Duration)
                                     .SetEase(Ease.OutBounce);
                             });
                     });
