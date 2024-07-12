@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class PlayerInputRouter : MonoBehaviour
     private PlayerInput _input;
     private Health _health;
     private Health _enemyHealth;
+    private Sequence _sequence;
 
     public InputAction Aiming => _input.Player.Aiming;
 
@@ -17,9 +19,7 @@ public class PlayerInputRouter : MonoBehaviour
 
     private void OnEnable()
     {
-        _input.Enable();
-        _health.Died += OnDead;
-        _enemyHealth.Died += OnDead;
+        _sequence.OnComplete(OnComplete);
     }
 
     private void OnDisable()
@@ -29,7 +29,7 @@ public class PlayerInputRouter : MonoBehaviour
         _enemyHealth.Died -= OnDead;
     }
 
-    public void Init(Health health, Health enemyHealth)
+    public void Init(Health health, Health enemyHealth, Sequence sequence)
     {
         if (health == null)
         {
@@ -41,13 +41,28 @@ public class PlayerInputRouter : MonoBehaviour
             throw new ArgumentNullException(nameof(enemyHealth));
         }
 
+        if (sequence == null)
+        {
+            throw new ArgumentNullException(nameof(sequence));
+        }
+
         _health = health;
         _enemyHealth = enemyHealth;
+        _sequence = sequence;
+
+        _health.Died += OnDead;
+        _enemyHealth.Died += OnDead;
+
         enabled = true;
     }
 
     private void OnDead()
     {
         _input.Disable();
+    }
+
+    private void OnComplete()
+    {
+        _input.Enable();
     }
 }

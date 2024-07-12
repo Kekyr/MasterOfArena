@@ -37,9 +37,6 @@ public class CubeSpawner : MonoBehaviour
         {
             Spawn(spawnPosition.transform);
         }
-
-        _playerHealth.Died += OnDead;
-        _enemyHealth.Died += OnDead;
     }
 
     private void OnDisable()
@@ -67,6 +64,10 @@ public class CubeSpawner : MonoBehaviour
 
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
+
+        _playerHealth.Died += OnDead;
+        _enemyHealth.Died += OnDead;
+
         enabled = true;
     }
 

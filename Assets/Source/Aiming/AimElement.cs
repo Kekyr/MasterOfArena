@@ -18,7 +18,6 @@ public class AimElement : MonoBehaviour
         transform.localScale = Vector3.zero;
         _character.Throwed += DecreaseScale;
         _targeting.Aiming += IncreaseScale;
-        _health.Died += DecreaseScale;
     }
 
     protected virtual void OnDisable()
@@ -48,6 +47,9 @@ public class AimElement : MonoBehaviour
         _character = character;
         _targeting = targeting;
         _health = health;
+
+        _health.Died += DecreaseScale;
+
         enabled = true;
     }
 

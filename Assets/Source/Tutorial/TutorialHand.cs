@@ -1,7 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using Sequence = DG.Tweening.Sequence;
+using UnityEngine.UI;
 
 public class TutorialHand : MonoBehaviour
 {
@@ -12,13 +12,12 @@ public class TutorialHand : MonoBehaviour
     private readonly float Duration = 2;
 
     [SerializeField] private RectTransform[] _wayPoints;
-    [SerializeField] private LeaderboardButton _leaderboardButton;
-    [SerializeField] private SettingsButton _settingsButton;
+    [SerializeField] private Button _leaderboardButton;
+    [SerializeField] private Button _settingsButton;
 
     [SerializeField] private int _resolution;
     [SerializeField] private float _tutorialTimeScale;
 
-    private Sequence _sequence;
     private PlayerInputRouter _inputRouter;
 
     public float TutorialTimeScale => _tutorialTimeScale;
@@ -45,6 +44,9 @@ public class TutorialHand : MonoBehaviour
             throw new ArgumentNullException(nameof(_settingsButton));
         }
 
+        _leaderboardButton.interactable = false;
+        _settingsButton.interactable = false;
+
         Vector3[] wayPoints = new Vector3[_wayPoints.Length];
 
         for (int i = 0; i < _wayPoints.Length; i++)
@@ -52,13 +54,10 @@ public class TutorialHand : MonoBehaviour
             wayPoints[i] = _wayPoints[i].position;
         }
 
-        _sequence.OnComplete(() =>
-        {
-            Time.timeScale = _tutorialTimeScale;
-            transform.DOPath(wayPoints, Duration, PathType.CatmullRom, PathMode.Ignore, _resolution, Color.red)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(LoopsCount, LoopType.Restart);
-        });
+        Time.timeScale = _tutorialTimeScale;
+        transform.DOPath(wayPoints, Duration, PathType.CatmullRom, PathMode.Ignore, _resolution, Color.red)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(LoopsCount, LoopType.Restart);
 
         _inputRouter.Aiming.performed += ctx => Stop();
     }
@@ -68,19 +67,13 @@ public class TutorialHand : MonoBehaviour
         _inputRouter.Aiming.performed -= ctx => Stop();
     }
 
-    public void Init(Sequence sequence, PlayerInputRouter inputRouter)
+    public void Init(PlayerInputRouter inputRouter)
     {
-        if (sequence == null)
-        {
-            throw new ArgumentNullException(nameof(_sequence));
-        }
-
         if (inputRouter == null)
         {
             throw new ArgumentNullException(nameof(inputRouter));
         }
 
-        _sequence = sequence;
         _inputRouter = inputRouter;
         enabled = true;
     }
@@ -88,9 +81,8 @@ public class TutorialHand : MonoBehaviour
     private void Stop()
     {
         Time.timeScale = MaxTimeScale;
-        _leaderboardButton.gameObject.SetActive(true);
-        _settingsButton.gameObject.SetActive(true);
+        _leaderboardButton.interactable = true;
+        _settingsButton.interactable = true;
         gameObject.SetActive(false);
-        enabled = false;
     }
 }

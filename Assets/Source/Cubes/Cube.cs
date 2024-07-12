@@ -16,6 +16,7 @@ public class Cube : MonoBehaviour
     private Collider _collider;
     private ParticleSystem _particleSystem;
     private Vector3 _startScale;
+    private bool _collided;
 
     public event Action<Cube> Collided;
 
@@ -66,8 +67,9 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile))
+        if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile) && _collided == false)
         {
+            _collided = true;
             _mesh.transform.DOScale(0f, Duration)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>

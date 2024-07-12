@@ -7,7 +7,7 @@ public class BombPlatform : MonoBehaviour
     private readonly float BombScaleXOffset = 0.2f;
     private readonly float BombScaleDuration = 1f;
     private readonly float NewScale = 1f;
-    private readonly float ScaleDuration = 0.05f;
+    private readonly float ScaleDuration = 0.02f;
     private readonly float PlatformScaleYDuration = 0.1f;
     private readonly float MoveYDuration = 0.1f;
     private readonly float LightningMoveDuration = 0.7f;
@@ -24,6 +24,7 @@ public class BombPlatform : MonoBehaviour
 
     private Sequence _sequence;
     private Health _health;
+    private Health _enemyHealth;
     private Character _enemy;
     private Helper _helper;
 
@@ -59,6 +60,8 @@ public class BombPlatform : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_fuse));
         }
+
+        _enemyHealth = _enemy.GetComponent<Health>();
 
         _startPlatformScaleY = _platform.transform.localScale.y;
         _startBombY = _bomb.MeshRenderer.transform.position.y;
@@ -142,6 +145,12 @@ public class BombPlatform : MonoBehaviour
         _lightningTrail.Play();
         _lightningTrail.transform.DOMove(transform.position, LightningMoveDuration)
             .SetEase(Ease.InOutSine)
-            .OnComplete(() => { Attacked?.Invoke(cube.Damage); });
+            .OnComplete(() =>
+            {
+                if (_enemyHealth.IsDead == false)
+                {
+                    Attacked?.Invoke(cube.Damage);
+                }
+            });
     }
 }

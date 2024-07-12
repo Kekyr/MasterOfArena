@@ -25,8 +25,6 @@ public class Music : MonoBehaviour
         }
 
         _button.Switched += OnSwitch;
-        _playerHealth.Died += OnDead;
-        _enemyHealth.Died += OnDead;
     }
 
     private void OnDisable()
@@ -67,6 +65,10 @@ public class Music : MonoBehaviour
         _enemyHealth = enemyHealth;
         _button = button;
         _audioSettings = audioSettings;
+
+        _playerHealth.Died += OnDead;
+        _enemyHealth.Died += OnDead;
+
         enabled = true;
     }
 

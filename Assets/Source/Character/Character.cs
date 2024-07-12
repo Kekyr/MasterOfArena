@@ -9,7 +9,7 @@ using Sequence = DG.Tweening.Sequence;
 [RequireComponent(typeof(SFX))]
 public class Character : MonoBehaviour
 {
-    private readonly float Duration = 0.05f;
+    private readonly float Duration = 0.02f;
     private readonly float Delay = 0.05f;
     private readonly float WaitTime = 1.5f;
     private readonly int IsDancing = Animator.StringToHash("IsDancing");
@@ -17,7 +17,6 @@ public class Character : MonoBehaviour
     [SerializeField] private Color _damageMarkColor;
     [SerializeField] private SFXSO _throw;
     [SerializeField] private SFXSO _win;
-    [SerializeField] private Vector3 _startScale;
 
     private Projectile[] _projectiles;
     private Animator _animator;
@@ -33,6 +32,7 @@ public class Character : MonoBehaviour
     private Popup _popup;
 
     private int _currentProjectileIndex;
+    private Vector3 _startScale;
 
     public event Action<Cube> Attacking;
     public event Action<Transform> Throwed;
@@ -75,8 +75,6 @@ public class Character : MonoBehaviour
                 _projectiles[i].enabled = false;
             }
         }
-
-        _enemyHeath.Died += OnEnemyDead;
     }
 
     private void OnDisable()
@@ -87,45 +85,10 @@ public class Character : MonoBehaviour
             _projectiles[i].Throwing -= OnThrowing;
         }
 
+        _health.Died -= OnDead;
         _enemyHeath.Died -= OnEnemyDead;
     }
 
-    public void Init(Projectile[] projectiles, Sequence sequence, Health health, Health enemyHealth, Popup popup)
-    {
-        int maxLength = 2;
-
-        if (projectiles.Length == 0 || projectiles.Length > maxLength)
-        {
-            throw new ArgumentOutOfRangeException(nameof(projectiles));
-        }
-
-        if (sequence == null)
-        {
-            throw new ArgumentNullException(nameof(sequence));
-        }
-
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
-        if (popup == null)
-        {
-            throw new ArgumentNullException(nameof(popup));
-        }
-
-        _sequence = sequence;
-        _projectiles = projectiles;
-        _health = health;
-        _enemyHeath = enemyHealth;
-        _popup = popup;
-        enabled = true;
-    }
 
     public void Init(ParticleSystem confettiVFX, CinemachineVirtualCamera winCamera)
     {
@@ -141,6 +104,55 @@ public class Character : MonoBehaviour
 
         _confettiVFX = confettiVFX;
         _winCamera = winCamera;
+    }
+
+    public void Init(Health health, Sequence sequence)
+    {
+        if (health == null)
+        {
+            throw new ArgumentNullException(nameof(health));
+        }
+
+        if (sequence == null)
+        {
+            throw new ArgumentNullException(nameof(sequence));
+        }
+
+        _health = health;
+        _sequence = sequence;
+
+        _health.Died += OnDead;
+    }
+
+    public void Init(Health enemyHealth)
+    {
+        if (enemyHealth == null)
+        {
+            throw new ArgumentNullException(nameof(enemyHealth));
+        }
+
+        _enemyHeath = enemyHealth;
+
+        _enemyHeath.Died += OnEnemyDead;
+    }
+
+    public void Init(Projectile[] projectiles, Popup popup)
+    {
+        int maxLength = 2;
+
+        if (projectiles.Length == 0 || projectiles.Length > maxLength)
+        {
+            throw new ArgumentOutOfRangeException(nameof(projectiles));
+        }
+
+        if (popup == null)
+        {
+            throw new ArgumentNullException(nameof(popup));
+        }
+
+        _projectiles = projectiles;
+        _popup = popup;
+        enabled = true;
     }
 
     public void Attack(Cube cube)
@@ -186,10 +198,12 @@ public class Character : MonoBehaviour
             projectile.gameObject.SetActive(false);
         }
 
-        if (_health.IsDead != true)
-        {
-            StartCoroutine(Win());
-        }
+        StartCoroutine(Win());
+    }
+
+    private void OnDead()
+    {
+        gameObject.SetActive(false);
     }
 
     protected virtual IEnumerator Win()

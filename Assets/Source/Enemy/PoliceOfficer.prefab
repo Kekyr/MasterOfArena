@@ -1629,6 +1629,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 7972262015789642922}
   _startFlyPosition: {fileID: 2456628581594019473}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
+  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &5348793979589891567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2779,7 +2780,6 @@ MonoBehaviour:
   _damageMarkColor: {r: 0, g: 0.29803923, b: 1, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
-  _startScale: {x: 0, y: 0, z: 0}
 --- !u!114 &3720165560719553791
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -43,8 +43,6 @@ public class Movement : MonoBehaviour
         {
             projectile.GetComponent<ProjectileMovement>().Ricocheted += OnRicochet;
         }
-
-        _health.Died += OnDead;
     }
 
     private void OnDisable()
@@ -84,6 +82,9 @@ public class Movement : MonoBehaviour
         _camera = camera;
         _projectiles = projectiles;
         _health = health;
+
+        _health.Died += OnDead;
+
         enabled = true;
     }
 

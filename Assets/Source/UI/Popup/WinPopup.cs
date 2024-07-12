@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinPopup : Popup
@@ -75,10 +76,11 @@ public class WinPopup : Popup
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         _saveLoader.Save();
+        _interstitialAd.Show();
 #endif
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-        _interstitialAd.Show();
+#if UNITY_EDITOR
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 #endif
     }
 

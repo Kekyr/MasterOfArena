@@ -11,6 +11,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private readonly float ColorDuration = 0.06f;
+    private readonly Color NewColor = Color.white;
 
     [SerializeField] private float _shakeForce;
     [SerializeField] private string _animationTrigger;
@@ -26,6 +27,7 @@ public class Projectile : MonoBehaviour
     private Helper _helper;
     private CinemachineImpulseSource _impulseSource;
     private SFX _sfx;
+    private Health _health;
 
     private ProjectileModifier _modifier;
     private ProjectileMovement _movement;
@@ -155,7 +157,7 @@ public class Projectile : MonoBehaviour
             _sfx.Play(_punch);
             _impulseSource.GenerateImpulseWithForce(_shakeForce);
             _modifier.ChangeScale();
-            _helper.ChangeMeshColor(_meshRenderer, Color.white, ColorDuration);
+            _helper.ChangeMeshColor(_meshRenderer, NewColor, ColorDuration);
             Ricocheting?.Invoke();
         }
         else if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))

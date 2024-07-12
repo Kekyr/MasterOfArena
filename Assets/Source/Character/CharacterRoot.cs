@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CharacterRoot : MonoBehaviour
 {
-    [SerializeField] private Helper _helper;
     [SerializeField] private Popup _popup;
+    [SerializeField] private Helper _helper;
 
     private ArenaSide _side;
     private BombPlatform _platformWithBomb;
@@ -69,9 +69,6 @@ public class CharacterRoot : MonoBehaviour
         _aiming = _character.GetComponent<Targeting>();
         _arrow = _character.GetComponentInChildren<Arrow>();
         _circle = _character.GetComponentInChildren<Circle>();
-
-        _health = _character.GetComponent<Health>();
-        _enemyHealth = _enemyCharacter.GetComponent<Health>();
     }
 
     protected virtual void Start()
@@ -83,7 +80,7 @@ public class CharacterRoot : MonoBehaviour
         }
 
         _character.Init(_confettiVFX, _winCamera);
-        _character.Init(_projectiles, _sequence, _health, _enemyHealth, _popup);
+        _character.Init(_projectiles, _popup);
         _character.GetComponent<SFX>().Init(_sfxButton, _audioSettings);
 
         _movement.Init(_projectiles, _health, _camera);
@@ -109,7 +106,6 @@ public class CharacterRoot : MonoBehaviour
         _sequence = sequence;
         _sfxButton = sfxButton;
         _audioSettings = audioSettings;
-        enabled = true;
     }
 
     public void Init(Character character, Character enemyCharacter, CinemachineVirtualCamera camera)
@@ -119,8 +115,19 @@ public class CharacterRoot : MonoBehaviour
         _camera = camera;
     }
 
-    public void Init(ArenaSide side)
+    public void Init(Health health, ArenaSide side)
     {
+        _health = health;
         _side = side;
+
+        _character.Init(_health, _sequence);
+    }
+
+    public void Init(Health enemyHealth)
+    {
+        _enemyHealth = enemyHealth;
+
+        _character.Init(_enemyHealth);
+        enabled = true;
     }
 }

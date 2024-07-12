@@ -79,6 +79,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 5504081690409457477}
   _startFlyPosition: {fileID: 1359739414927074679}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
+  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &3266248477267284570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,6 +2279,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 4890923771125254862}
   _startFlyPosition: {fileID: 1543551786029919792}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
+  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &5985912104615924604
 MonoBehaviour:
   m_ObjectHideFlags: 0

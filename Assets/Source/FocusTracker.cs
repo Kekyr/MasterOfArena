@@ -25,6 +25,16 @@ public class FocusTracker : MonoBehaviour
         WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
     }
 
+    public void Init(TutorialHand tutorialHand)
+    {
+        if (tutorialHand == null)
+        {
+            throw new ArgumentNullException(nameof(tutorialHand));
+        }
+
+        _tutorialHand = tutorialHand;
+    }
+
     public void Init(Music music)
     {
         if (music == null)
@@ -36,15 +46,6 @@ public class FocusTracker : MonoBehaviour
         enabled = true;
     }
 
-    public void Init(TutorialHand tutorialHand)
-    {
-        if (tutorialHand == null)
-        {
-            throw new ArgumentNullException(nameof(tutorialHand));
-        }
-
-        _tutorialHand = tutorialHand;
-    }
 
     private void OnInBackgroundChangeApp(bool inApp)
     {
@@ -65,7 +66,7 @@ public class FocusTracker : MonoBehaviour
 
     private void PauseGame(bool value)
     {
-        float playTimeScale = _tutorialHand.enabled ? _tutorialHand.TutorialTimeScale : PlayTimeScale;
+        float playTimeScale = _tutorialHand.gameObject.activeSelf ? _tutorialHand.TutorialTimeScale : PlayTimeScale;
         Time.timeScale = value ? PauseTimeScale : playTimeScale;
     }
 }

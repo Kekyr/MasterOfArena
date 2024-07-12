@@ -25,8 +25,6 @@ public class ArenaSide : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_blast));
         }
-
-        _health.Died += OnDead;
     }
 
     private void OnDisable()
@@ -42,6 +40,9 @@ public class ArenaSide : MonoBehaviour
         }
 
         _health = health;
+
+        _health.Died += OnDead;
+
         enabled = true;
     }
 

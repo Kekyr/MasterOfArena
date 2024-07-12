@@ -9,6 +9,7 @@ public class Root : MonoBehaviour
     [SerializeField] private CharactersSO _characters;
     [SerializeField] private ZonesSO _zones;
     [SerializeField] private PlayerDataSO _playerData;
+    [SerializeField] private TutorialSO _tutorialData;
 
     [SerializeField] private PlayerSpawnPosition _playerSpawnPosition;
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
@@ -28,6 +29,8 @@ public class Root : MonoBehaviour
 
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
 
+    [SerializeField] private Tutorial _tutorial;
+    [SerializeField] private TutorialHand _tutorialHand;
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
 
@@ -42,13 +45,7 @@ public class Root : MonoBehaviour
     private Health _playerHealth;
     private Health _aiHealth;
 
-    protected Sequence Order => _order;
-
-    protected PlayerInputRouter InputRouter => _inputRouter;
-
-    protected FocusTracker FocusObserver => _focusTracker;
-
-    protected virtual void Validate()
+    private void Validate()
     {
         if (_characters == null)
         {
@@ -63,6 +60,11 @@ public class Root : MonoBehaviour
         if (_playerData == null)
         {
             throw new ArgumentNullException(nameof(_playerData));
+        }
+
+        if (_tutorialData == null)
+        {
+            throw new ArgumentNullException(nameof(_tutorialData));
         }
 
         if (_playerSpawnPosition == null)
@@ -149,9 +151,19 @@ public class Root : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_cubeSpawner));
         }
+
+        if (_tutorial == null)
+        {
+            throw new ArgumentNullException(nameof(_tutorial));
+        }
+
+        if (_tutorialHand == null)
+        {
+            throw new ArgumentNullException(nameof(_tutorialHand));
+        }
     }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         int weight = 1;
         int radius = 1;
@@ -192,19 +204,30 @@ public class Root : MonoBehaviour
 
         _music.Init(_playerHealth, _aiHealth, _musicButton, _audioSettings);
         _focusTracker.Init(_music);
-        _inputRouter.Init(_playerHealth, _aiHealth);
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
-        _playerRoot.Init(_rewardedAd);
-        _playerRoot.Init(playerSide);
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
-        _playerRoot.Init(player, enemy, _virtualCamera);
-        _playerRoot.Init(_order, _sfxButton, _audioSettings);
+        _playerRoot.Init(_rewardedAd);
 
-        _aiRoot.Init(enemySide);
         _aiRoot.Init(_cubeSpawner);
+
+        _playerRoot.Init(player, enemy, _virtualCamera);
         _aiRoot.Init(enemy, player, _virtualCamera);
+
+        _playerRoot.Init(_order, _sfxButton, _audioSettings);
         _aiRoot.Init(_order, _sfxButton, _audioSettings);
+
+        _playerRoot.Init(_playerHealth, playerSide);
+        _aiRoot.Init(_aiHealth, enemySide);
+
+        _playerRoot.Init(_aiHealth);
+        _aiRoot.Init(_playerHealth);
+
+        _focusTracker.Init(_tutorialHand);
+        _tutorialHand.Init(_inputRouter);
+        _tutorial.Init(_tutorialData, _tutorialHand);
+
+        _inputRouter.Init(_playerHealth, _aiHealth, _order);
     }
 }

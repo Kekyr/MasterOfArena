@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,10 +8,15 @@ public class Helper : MonoBehaviour
     {
         foreach (Material material in meshRenderer.materials)
         {
-            ChangeMaterialColor(material, tempColor, duration);
+            if (material.mainTexture == null)
+            {
+                ChangeMaterialColor(material, tempColor, duration);
+            }
+            else
+            {
+                StartCoroutine(ChangeMaterialColor(material, duration));
+            }
         }
-        
-        
     }
 
     private void ChangeMaterialColor(Material material, Color tempcolor, float duration)
@@ -24,5 +30,15 @@ public class Helper : MonoBehaviour
                 material.DOColor(startColor, duration)
                     .SetEase(Ease.InOutSine);
             });
+    }
+
+    private IEnumerator ChangeMaterialColor(Material material, float duration)
+    {
+        Texture texture = material.mainTexture;
+        material.mainTexture = null;
+
+        yield return new WaitForSeconds(duration);
+
+        material.mainTexture = texture;
     }
 }

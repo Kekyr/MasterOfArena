@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: SpawnChancesSO
   m_EditorClassIdentifier: 
   _spawnChances:
+  - 0
+  - 0
+  - 0
   - 50
   - 30
   - 20

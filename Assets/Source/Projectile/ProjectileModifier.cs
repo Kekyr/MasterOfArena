@@ -6,7 +6,6 @@ public class ProjectileModifier : MonoBehaviour
 {
     private readonly float ScaleModifier = 1.3f;
     private readonly float ScaleDuration = 0.05f;
-    private readonly float ColorDuration = 0.06f;
 
     private Character _character;
     private Vector3 _originalScale;

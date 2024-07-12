@@ -1385,6 +1385,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 6688116335733882049}
   _startFlyPosition: {fileID: 3446256271532933361}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
+  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &4581628711070326662
 MonoBehaviour:
   m_ObjectHideFlags: 0

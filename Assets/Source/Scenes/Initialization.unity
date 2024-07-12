@@ -201,6 +201,7 @@ MonoBehaviour:
   _playerData: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
   _zonesData: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
   _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
+  _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
 --- !u!4 &1761460121
 Transform:
   m_ObjectHideFlags: 0

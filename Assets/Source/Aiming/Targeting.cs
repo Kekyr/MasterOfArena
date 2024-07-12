@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Targeting : MonoBehaviour
 {
     private readonly float NewScale = 0.02f;
-    private readonly float Duration = 0.1f;
+    private readonly float Duration = 0.02f;
 
     [SerializeField] private Arrow _arrow;
     [SerializeField] private Circle _circle;
@@ -43,9 +43,6 @@ public abstract class Targeting : MonoBehaviour
 
         _sequence.Append(_circle.transform.DOScale(NewScale, Duration)
             .SetEase(Ease.InBounce));
-
-        _health.Died += OnDead;
-        _enemyHealth.Died += OnDead;
     }
 
     protected virtual void OnDisable()
@@ -74,6 +71,10 @@ public abstract class Targeting : MonoBehaviour
         _health = health;
         _enemyHealth = enemyHealth;
         _sequence = sequence;
+
+        _health.Died += OnDead;
+        _enemyHealth.Died += OnDead;
+
         enabled = true;
     }
 
