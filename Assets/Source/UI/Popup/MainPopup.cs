@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MainPopup : Popup
 {
-    private readonly float NewScale = 1f;
+    private readonly float NewScale = 0.9f;
     private readonly float Duration = 0.2f;
     private readonly float NewAlpha = 1f;
 

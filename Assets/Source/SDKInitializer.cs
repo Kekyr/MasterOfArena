@@ -8,7 +8,6 @@ using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
 public sealed class SDKInitializer : MonoBehaviour
 {
     [SerializeField] private SaveLoader _saveLoader;
-    private int _nextSceneIndex;
 
     private void OnEnable()
     {
@@ -20,8 +19,6 @@ public sealed class SDKInitializer : MonoBehaviour
 
     private void Awake()
     {
-        _nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
 #if UNITY_WEBGL && !UNITY_EDITOR
         YandexGamesSdk.CallbackLogging = true;
 #endif
@@ -40,6 +37,5 @@ public sealed class SDKInitializer : MonoBehaviour
     {
         YandexGamesSdk.GameReady();
         PlayerPrefs.Load(_saveLoader.OnLoaded);
-        SceneManager.LoadScene(_nextSceneIndex);
     }
 }

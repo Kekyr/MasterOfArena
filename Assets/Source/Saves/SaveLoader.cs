@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
 
 public class SaveLoader : MonoBehaviour
@@ -54,6 +55,8 @@ public class SaveLoader : MonoBehaviour
 
     public void OnLoaded()
     {
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
         SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
 
         if (saveData == null)
@@ -66,5 +69,7 @@ public class SaveLoader : MonoBehaviour
         _zonesData.Init(saveData.CurrentZoneIndex);
         _spawnChancesData.Init(saveData.SpawnChances);
         _tutorialData.Init(saveData.CanPlay);
+
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }

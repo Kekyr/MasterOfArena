@@ -18,3 +18,4 @@ MonoBehaviour:
   _pointsInterval: 0.2
   _startSliderValue: 0
   _endSliderValue: 0.2
+  _currentPointIndex: 0

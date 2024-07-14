@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    private readonly float NewScale = 0.9f;
+    private readonly float NewScale = 0.8f;
     private readonly float Duration = 2f;
 
     private readonly float ButtonNewScale = 0.8f;
