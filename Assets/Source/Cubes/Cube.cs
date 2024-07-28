@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
     private readonly float Duration = 0.1f;
@@ -13,6 +14,7 @@ public class Cube : MonoBehaviour
     [SerializeField] private CubeExplosion _cubeExplosion;
     [SerializeField] private ColliderEventHandler _colliderEventHandler;
 
+    private Rigidbody _rigidbody;
     private Collider _collider;
     private ParticleSystem _particleSystem;
     private Vector3 _startScale;
@@ -44,6 +46,7 @@ public class Cube : MonoBehaviour
             throw new ArgumentNullException(nameof(_colliderEventHandler));
         }
 
+        _rigidbody = GetComponent<Rigidbody>();
         _collider = _colliderEventHandler.GetComponent<Collider>();
         _particleSystem = _cubeExplosion.GetComponent<ParticleSystem>();
 
@@ -69,7 +72,10 @@ public class Cube : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile) && _collided == false)
         {
+
             _collided = true;
+            _rigidbody.DOKill();
+
             _mesh.transform.DOScale(0f, Duration)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>

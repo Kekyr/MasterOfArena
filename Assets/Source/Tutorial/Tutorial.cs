@@ -10,7 +10,6 @@ public class Tutorial : MonoBehaviour
     {
         if (_tutorialData.CanPlay)
         {
-            Debug.Log("I'm here!");
             _hand.gameObject.SetActive(true);
             _tutorialData.ChangeValue();
         }

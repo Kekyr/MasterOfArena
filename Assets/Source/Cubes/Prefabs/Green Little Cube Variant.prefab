@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 148424666432932536, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: _duration
-      value: 1.5
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 148424666432932536, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: _yModifier
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 6c60b3c75ddb0884e9734b19d435f905, type: 2}
     - target: {fileID: 3787529436485609629, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: m_Name
-      value: Mentol Little Cube Variant
+      value: Green Little Cube Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3844751987448212674, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: Duration

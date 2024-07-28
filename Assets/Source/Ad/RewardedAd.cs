@@ -4,21 +4,24 @@ using UnityEngine;
 public class RewardedAd : MonoBehaviour
 {
     private PlayerDataSO _playerData;
+    private SaveLoader _saveLoader;
 
     public event Action<int> Rewarded;
 
-    private void OnEnable()
-    {
-    }
-
-    public void Init(PlayerDataSO playerData)
+    public void Init(PlayerDataSO playerData, SaveLoader saveLoader)
     {
         if (playerData == null)
         {
             throw new ArgumentNullException(nameof(playerData));
         }
 
+        if (saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(saveLoader));
+        }
+
         _playerData = playerData;
+        _saveLoader = saveLoader;
         enabled = true;
     }
 
@@ -36,6 +39,7 @@ public class RewardedAd : MonoBehaviour
     {
         _playerData.AddScore();
         Rewarded?.Invoke(_playerData.Score);
+        _saveLoader.Save();
     }
 
     private void OnCloseCallback()

@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 148424666432932536, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: _duration
-      value: 2
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 148424666432932536, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: _yModifier

@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7a27e3e35e756584f90a92c951e41da5, type: 2}
     - target: {fileID: 3787529436485609629, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: m_Name
-      value: Pink Little Cube Variant
+      value: Dark Pink Little Cube Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3844751987448212674, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: Duration
@@ -166,10 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbbd6f04504120458c1747d827cb9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 8968766726464599426}
   _yModifier: 1.5
   _xModifier: 0
-  _duration: 2.5
+  _duration: 1.25
 --- !u!54 &8968766726464599426
 Rigidbody:
   m_ObjectHideFlags: 0

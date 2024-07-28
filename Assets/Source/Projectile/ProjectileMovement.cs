@@ -8,9 +8,9 @@ using Random = UnityEngine.Random;
 public class ProjectileMovement : MonoBehaviour
 {
     private readonly float RayDistance = 7;
-    private readonly float ReturnSpeed = 10;
+    private readonly float ReturnSpeed = 13;
+    private readonly float FlySpeed = 6;
 
-    [SerializeField] private float _flySpeed;
     [SerializeField] private float _minRandomX;
     [SerializeField] private float _maxRandomX;
 
@@ -36,7 +36,7 @@ public class ProjectileMovement : MonoBehaviour
             throw new ArgumentNullException(nameof(_miss));
         }
 
-        _acceleration = _flySpeed;
+        _acceleration = FlySpeed;
         _targeting = _projectile.Character.GetComponent<Targeting>();
         _rigidbody = GetComponent<Rigidbody>();
         _sfx = GetComponent<SFX>();
@@ -73,7 +73,7 @@ public class ProjectileMovement : MonoBehaviour
             yield return null;
         }
 
-        _acceleration = _flySpeed;
+        _acceleration = FlySpeed;
         IsReturning = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
@@ -134,7 +134,6 @@ public class ProjectileMovement : MonoBehaviour
             {
                 canRicochet = true;
             }
-
         } while (canRicochet == false);
 
         Ricocheted?.Invoke(hit.point);

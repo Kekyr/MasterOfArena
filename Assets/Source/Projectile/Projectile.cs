@@ -44,6 +44,8 @@ public class Projectile : MonoBehaviour
 
     public bool IsFlying => transform.parent != _startParent;
 
+    public bool IsReturning => _movement.IsReturning;
+
     public Character Character => _character;
 
     public TrailRenderer Trail => _trail;

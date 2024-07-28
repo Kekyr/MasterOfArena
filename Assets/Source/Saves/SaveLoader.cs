@@ -59,16 +59,14 @@ public class SaveLoader : MonoBehaviour
 
         SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
 
-        if (saveData == null)
+        if (saveData != null)
         {
-            return;
+            _progressBarData.Init(saveData.CurrentPointIndex, saveData.StartBarValue, saveData.EndBarValue);
+            _playerData.Init(saveData.Score);
+            _zonesData.Init(saveData.CurrentZoneIndex);
+            _spawnChancesData.Init(saveData.SpawnChances);
+            _tutorialData.Init(saveData.CanPlay);
         }
-
-        _progressBarData.Init(saveData.CurrentPointIndex, saveData.StartBarValue, saveData.EndBarValue);
-        _playerData.Init(saveData.Score);
-        _zonesData.Init(saveData.CurrentZoneIndex);
-        _spawnChancesData.Init(saveData.SpawnChances);
-        _tutorialData.Init(saveData.CanPlay);
 
         SceneManager.LoadScene(nextSceneIndex);
     }

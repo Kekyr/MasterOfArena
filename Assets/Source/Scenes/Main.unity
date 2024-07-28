@@ -2436,7 +2436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &786613051
 Transform:
   m_ObjectHideFlags: 0
@@ -3321,7 +3321,6 @@ MonoBehaviour:
   _popup: {fileID: 3961760013075573029}
   _helper: {fileID: 1489921344}
   _targetGroup: {fileID: 1658553833}
-  _saveLoader: {fileID: 59439276}
 --- !u!114 &1167279484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3338,6 +3337,7 @@ MonoBehaviour:
   _zones: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
   _playerData: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
   _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
+  _saveLoader: {fileID: 59439276}
   _playerSpawnPosition: {fileID: 501353260}
   _enemySpawnPosition: {fileID: 1207284036}
   _zoneSpawnPosition: {fileID: 1446421070}

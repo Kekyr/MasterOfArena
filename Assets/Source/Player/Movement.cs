@@ -11,10 +11,10 @@ public class Movement : MonoBehaviour
 {
     private readonly int IsRunning = Animator.StringToHash("IsRunning");
     private readonly float MinDistance = 0.1f;
+    private readonly float Acceleration = 7f;
 
     [SerializeField] private SFXSO _footsteps;
 
-    [SerializeField] private float _acceleration;
     [SerializeField] private float _yModifier;
     [SerializeField] private float _duration;
 
@@ -98,7 +98,7 @@ public class Movement : MonoBehaviour
 
         while (distance > MinDistance)
         {
-            _rigidbody.velocity = _acceleration * direction;
+            _rigidbody.velocity = Acceleration * direction;
             distance = Vector3.Distance(endPosition, transform.position);
             yield return null;
         }

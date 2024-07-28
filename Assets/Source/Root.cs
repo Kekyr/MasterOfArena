@@ -11,6 +11,8 @@ public class Root : MonoBehaviour
     [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private TutorialSO _tutorialData;
 
+    [SerializeField] private SaveLoader _saveLoader;
+
     [SerializeField] private PlayerSpawnPosition _playerSpawnPosition;
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
     [SerializeField] private ZoneSpawnPosition _zoneSpawnPosition;
@@ -65,6 +67,11 @@ public class Root : MonoBehaviour
         if (_tutorialData == null)
         {
             throw new ArgumentNullException(nameof(_tutorialData));
+        }
+
+        if (_saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(_saveLoader));
         }
 
         if (_playerSpawnPosition == null)
@@ -170,8 +177,7 @@ public class Root : MonoBehaviour
 
         Validate();
 
-        
-        
+
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
             _zoneSpawnPosition.transform);
@@ -193,7 +199,7 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
-        _rewardedAd.Init(_playerData);
+        _rewardedAd.Init(_playerData, _saveLoader);
 
         _inputRouter = player.GetComponent<PlayerInputRouter>();
         _playerHealth = player.GetComponent<Health>();
@@ -210,7 +216,7 @@ public class Root : MonoBehaviour
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
-        _playerRoot.Init(_rewardedAd);
+        _playerRoot.Init(_rewardedAd, _saveLoader);
 
         _aiRoot.Init(_cubeSpawner);
 

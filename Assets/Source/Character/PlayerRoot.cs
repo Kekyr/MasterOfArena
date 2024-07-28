@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerRoot : CharacterRoot
 {
     [SerializeField] private CinemachineTargetGroup _targetGroup;
-    [SerializeField] private SaveLoader _saveLoader;
 
+    private SaveLoader _saveLoader;
     private PlayerInputRouter _inputRouter;
     private YandexLeaderboard _leaderboard;
 
@@ -18,11 +18,6 @@ public class PlayerRoot : CharacterRoot
         if (_targetGroup == null)
         {
             throw new ArgumentNullException(nameof(_targetGroup));
-        }
-
-        if (_saveLoader == null)
-        {
-            throw new ArgumentNullException(nameof(_saveLoader));
         }
 
         base.OnEnable();
@@ -42,6 +37,8 @@ public class PlayerRoot : CharacterRoot
         targeting.Init(_inputRouter);
 
         Player player = (Player)Person;
+        player.Init(_saveLoader);
+
         _leaderboard.Init(player, _rewardedAd);
 
         base.Start();
@@ -54,8 +51,9 @@ public class PlayerRoot : CharacterRoot
         _interstitialAd = interstitialAd;
     }
 
-    public void Init(RewardedAd rewardedAd)
+    public void Init(RewardedAd rewardedAd, SaveLoader saveLoader)
     {
         _rewardedAd = rewardedAd;
+        _saveLoader = saveLoader;
     }
 }
