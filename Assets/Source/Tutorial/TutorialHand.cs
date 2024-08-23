@@ -1,5 +1,7 @@
 using System;
 using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,14 +13,20 @@ public class TutorialHand : MonoBehaviour
     private readonly int LoopsCount = -1;
     private readonly float Duration = 2;
 
+    private readonly int StartAlpha = 100;
+    private readonly int EndAlpha = 255;
+
     [SerializeField] private RectTransform[] _wayPoints;
-    [SerializeField] private Button _leaderboardButton;
-    [SerializeField] private Button _settingsButton;
 
     [SerializeField] private int _resolution;
     [SerializeField] private float _tutorialTimeScale;
 
     private PlayerInputRouter _inputRouter;
+    private Button[] _mainButtons;
+
+    private CoinsView _coinsView;
+    private TextMeshProUGUI _coinsText;
+    private Image _coinsIcon;
 
     public float TutorialTimeScale => _tutorialTimeScale;
 
@@ -34,18 +42,13 @@ public class TutorialHand : MonoBehaviour
             throw new ArgumentOutOfRangeException(nameof(_wayPoints));
         }
 
-        if (_leaderboardButton == null)
+        foreach (Button mainButton in _mainButtons)
         {
-            throw new ArgumentNullException(nameof(_leaderboardButton));
+            mainButton.interactable = false;
         }
 
-        if (_settingsButton == null)
-        {
-            throw new ArgumentNullException(nameof(_settingsButton));
-        }
-
-        _leaderboardButton.interactable = false;
-        _settingsButton.interactable = false;
+        _coinsText = _coinsView.GetComponentInChildren<TextMeshProUGUI>();
+        _coinsIcon = _coinsView.GetComponentInChildren<Image>();
 
         Vector3[] wayPoints = new Vector3[_wayPoints.Length];
 
@@ -67,22 +70,38 @@ public class TutorialHand : MonoBehaviour
         _inputRouter.Aiming.performed -= ctx => Stop();
     }
 
-    public void Init(PlayerInputRouter inputRouter)
+    public void Init(PlayerInputRouter inputRouter, Button[] mainButtons, CoinsView coinsView)
     {
         if (inputRouter == null)
         {
             throw new ArgumentNullException(nameof(inputRouter));
         }
 
+        if (mainButtons == null)
+        {
+            throw new ArgumentNullException(nameof(mainButtons));
+        }
+
+        if (coinsView == null)
+        {
+            throw new ArgumentNullException(nameof(coinsView));
+        }
+
         _inputRouter = inputRouter;
+        _mainButtons = mainButtons;
+        _coinsView = coinsView;
         enabled = true;
     }
 
     private void Stop()
     {
         Time.timeScale = MaxTimeScale;
-        _leaderboardButton.interactable = true;
-        _settingsButton.interactable = true;
+
+        foreach (Button mainButton in _mainButtons)
+        {
+            mainButton.interactable = true;
+        }
+
         gameObject.SetActive(false);
     }
 }

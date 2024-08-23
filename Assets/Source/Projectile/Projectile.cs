@@ -153,18 +153,26 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube)
-            || collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform platform))
-        {
-            _sfx.Play(_punch);
-            _impulseSource.GenerateImpulseWithForce(_shakeForce);
-            _modifier.ChangeScale();
-            _helper.ChangeMeshColor(_meshRenderer, NewColor, ColorDuration);
-            Ricocheting?.Invoke();
-        }
-        else if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))
+        if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))
         {
             _movement.Miss();
+            return;
         }
+
+        OnRicocheting();
+
+        if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube))
+        {
+            cube.OnCollision(this);
+        }
+    }
+
+    private void OnRicocheting()
+    {
+        _sfx.Play(_punch);
+        _impulseSource.GenerateImpulseWithForce(_shakeForce);
+        _modifier.ChangeScale();
+        _helper.ChangeMeshColor(_meshRenderer, NewColor, ColorDuration);
+        Ricocheting?.Invoke();
     }
 }

@@ -3,6 +3,7 @@ using Cinemachine;
 using DG.Tweening;
 using Lean.Localization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Root : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Root : MonoBehaviour
     [SerializeField] private ZonesSO _zones;
     [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private TutorialSO _tutorialData;
+    [SerializeField] private SpawnChancesSO _spawnChancesSO;
 
     [SerializeField] private SaveLoader _saveLoader;
 
@@ -33,13 +35,21 @@ public class Root : MonoBehaviour
 
     [SerializeField] private Tutorial _tutorial;
     [SerializeField] private TutorialHand _tutorialHand;
+
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
+    [SerializeField] private Button[] _mainButtons;
 
     [SerializeField] private YandexLeaderboard _leaderboard;
     [SerializeField] private FocusTracker _focusTracker;
+    [SerializeField] private ProgressBar _progressBar;
 
     [SerializeField] private CubeSpawner _cubeSpawner;
+    [SerializeField] private Coins _coins;
+    [SerializeField] private CoinsView _coinsView;
+
+    [SerializeField] private Shop _shop;
+    [SerializeField] private ShopPopup _shopPopup;
 
     private Sequence _order;
     private PlayerInputRouter _inputRouter;
@@ -67,6 +77,11 @@ public class Root : MonoBehaviour
         if (_tutorialData == null)
         {
             throw new ArgumentNullException(nameof(_tutorialData));
+        }
+
+        if (_spawnChancesSO == null)
+        {
+            throw new ArgumentNullException(nameof(_spawnChancesSO));
         }
 
         if (_saveLoader == null)
@@ -144,6 +159,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_sfxButton));
         }
 
+        if (_mainButtons.Length == 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(_mainButtons));
+        }
+
         if (_leaderboard == null)
         {
             throw new ArgumentNullException(nameof(_leaderboard));
@@ -159,6 +179,21 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_cubeSpawner));
         }
 
+        if (_progressBar == null)
+        {
+            throw new ArgumentNullException(nameof(_progressBar));
+        }
+
+        if (_coins == null)
+        {
+            throw new ArgumentNullException(nameof(_coins));
+        }
+
+        if (_coinsView == null)
+        {
+            throw new ArgumentNullException(nameof(_coinsView));
+        }
+
         if (_tutorial == null)
         {
             throw new ArgumentNullException(nameof(_tutorial));
@@ -168,6 +203,16 @@ public class Root : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_tutorialHand));
         }
+
+        if (_shop == null)
+        {
+            throw new ArgumentNullException(nameof(_shop));
+        }
+
+        if (_shopPopup == null)
+        {
+            throw new ArgumentNullException(nameof(_shopPopup));
+        }
     }
 
     private void Awake()
@@ -176,7 +221,6 @@ public class Root : MonoBehaviour
         int radius = 1;
 
         Validate();
-
 
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
@@ -199,7 +243,13 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
-        _rewardedAd.Init(_playerData, _saveLoader);
+        _rewardedAd.Init(_playerData, _saveLoader, _coins);
+
+        _coinsView.Init(_coins);
+        _coins.Init(_playerData);
+        _progressBar.Init(_coins, _playerData);
+
+        _shop.Init(_playerData, _shopPopup);
 
         _inputRouter = player.GetComponent<PlayerInputRouter>();
         _playerHealth = player.GetComponent<Health>();
@@ -216,7 +266,8 @@ public class Root : MonoBehaviour
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
-        _playerRoot.Init(_rewardedAd, _saveLoader);
+        _playerRoot.Init(_rewardedAd, _saveLoader, _coins);
+        _playerRoot.Init(_playerData, _spawnChancesSO);
 
         _aiRoot.Init(_cubeSpawner);
 
@@ -233,7 +284,7 @@ public class Root : MonoBehaviour
         _aiRoot.Init(_playerHealth);
 
         _focusTracker.Init(_tutorialHand);
-        _tutorialHand.Init(_inputRouter);
+        _tutorialHand.Init(_inputRouter, _mainButtons, _coinsView);
         _tutorial.Init(_tutorialData, _tutorialHand);
 
         _inputRouter.Init(_playerHealth, _aiHealth, _order);

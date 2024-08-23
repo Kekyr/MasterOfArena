@@ -5,10 +5,11 @@ public class RewardedAd : MonoBehaviour
 {
     private PlayerDataSO _playerData;
     private SaveLoader _saveLoader;
+    private Coins _coins;
 
     public event Action<int> Rewarded;
 
-    public void Init(PlayerDataSO playerData, SaveLoader saveLoader)
+    public void Init(PlayerDataSO playerData, SaveLoader saveLoader, Coins coins)
     {
         if (playerData == null)
         {
@@ -20,8 +21,14 @@ public class RewardedAd : MonoBehaviour
             throw new ArgumentNullException(nameof(saveLoader));
         }
 
+        if (coins == null)
+        {
+            throw new ArgumentNullException(nameof(coins));
+        }
+
         _playerData = playerData;
         _saveLoader = saveLoader;
+        _coins = coins;
         enabled = true;
     }
 
@@ -37,6 +44,7 @@ public class RewardedAd : MonoBehaviour
 
     private void OnRewardCallback()
     {
+        _coins.AddCoins();
         _playerData.AddScore();
         Rewarded?.Invoke(_playerData.Score);
         _saveLoader.Save();

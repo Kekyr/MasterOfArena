@@ -12,6 +12,10 @@ public class PlayerRoot : CharacterRoot
 
     private InterstitialAd _interstitialAd;
     private RewardedAd _rewardedAd;
+    private Coins _coins;
+
+    private PlayerDataSO _data;
+    private SpawnChancesSO _spawnChancesSO;
 
     protected override void OnEnable()
     {
@@ -37,7 +41,7 @@ public class PlayerRoot : CharacterRoot
         targeting.Init(_inputRouter);
 
         Player player = (Player)Person;
-        player.Init(_saveLoader);
+        player.Init(_data, _spawnChancesSO, _saveLoader);
 
         _leaderboard.Init(player, _rewardedAd);
 
@@ -51,9 +55,16 @@ public class PlayerRoot : CharacterRoot
         _interstitialAd = interstitialAd;
     }
 
-    public void Init(RewardedAd rewardedAd, SaveLoader saveLoader)
+    public void Init(RewardedAd rewardedAd, SaveLoader saveLoader, Coins coins)
     {
         _rewardedAd = rewardedAd;
         _saveLoader = saveLoader;
+        _coins = coins;
+    }
+
+    public void Init(PlayerDataSO data, SpawnChancesSO spawnChancesSO)
+    {
+        _data = data;
+        _spawnChancesSO = spawnChancesSO;
     }
 }

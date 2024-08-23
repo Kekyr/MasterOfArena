@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: _damage
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1838256430536983638, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 6854617473608657063}
     - target: {fileID: 2747253608075971197, guid: 500cd6b9eb9952445b5508d92abfe133, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 

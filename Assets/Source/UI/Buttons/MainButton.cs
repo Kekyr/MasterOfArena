@@ -1,22 +1,20 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public abstract class MainButton : MonoBehaviour
 {
     private readonly float Duration = 1f;
 
-    [SerializeField] private Button _button;
     [SerializeField] private float _newScale;
+
+    private Button _button;
 
     protected virtual void OnEnable()
     {
-        if (_button == null)
-        {
-            throw new ArgumentNullException(nameof(_button));
-        }
+        _button = GetComponent<Button>();
 
         transform.localScale = Vector3.zero;
         transform.DOScale(_newScale, Duration)

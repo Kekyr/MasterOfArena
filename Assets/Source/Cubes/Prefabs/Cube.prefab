@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547a052559422f2429f2a35bc613d758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
   _view: {fileID: 7971983721235237349}
   _mesh: {fileID: 7663494716056192819}
   _cubeExplosion: {fileID: 8496177906307405687}
-  _colliderEventHandler: {fileID: 1105676046629673814}
+  _collider: {fileID: 1920389443581750878}
+  _damage: 0
 --- !u!54 &5491612052820976614
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -348,7 +348,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2817271975898530761}
-  - component: {fileID: 1105676046629673814}
   - component: {fileID: 7091469271613215162}
   - component: {fileID: 7663494716056192819}
   - component: {fileID: 1920389443581750878}
@@ -374,18 +373,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4102153116839978737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1105676046629673814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6735496292230057577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c1bc461d5f07ee43bd9b407c67bad5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &7091469271613215162
 MeshFilter:
   m_ObjectHideFlags: 0

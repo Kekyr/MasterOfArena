@@ -1,18 +1,13 @@
 using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    private readonly float NewScale = 0.8f;
     private readonly float Duration = 2f;
-
-    private readonly float ButtonNewScale = 0.8f;
-
-    private readonly float CupNewScale = 3f;
-    private readonly float CupDuration = 0.5f;
-
+    private readonly float RewardDuration = 1f;
     private readonly float SliderDuration = 2f;
 
     [SerializeField] private Slider _slider;
@@ -25,10 +20,39 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private NextButton _nextbutton;
     [SerializeField] private RewardButton _rewardButton;
     [SerializeField] private Cup _cup;
+    [SerializeField] private Coin _coin;
+
+    private Coins _coins;
+    private PlayerDataSO _playerData;
+
+    private TextMeshProUGUI _coinTextMesh;
+    private TextMeshProUGUI _cupTextMesh;
+
+    private float _startScale;
+    private float _startButtonScale;
+    private float _startCupScale;
+    private float _startCoinScale;
 
     private int _currentPointIndex;
     private float _startSliderValue;
     private float _endSliderValue;
+
+    public void Init(Coins coins, PlayerDataSO playerData)
+    {
+        if (coins == null)
+        {
+            throw new ArgumentNullException(nameof(coins));
+        }
+
+        if (playerData == null)
+        {
+            throw new ArgumentNullException(nameof(playerData));
+        }
+
+        _coins = coins;
+        _playerData = playerData;
+        enabled = true;
+    }
 
     private void OnEnable()
     {
@@ -77,13 +101,32 @@ public class ProgressBar : MonoBehaviour
             throw new ArgumentNullException(nameof(_cup));
         }
 
+        if (_coin == null)
+        {
+            throw new ArgumentNullException(nameof(_coin));
+        }
+
+        _coinTextMesh = _coin.GetComponentInChildren<TextMeshProUGUI>();
+        _coinTextMesh.text = $"+{_playerData.CoinsReward.ToString()}";
+
+        _cupTextMesh = _cup.GetComponentInChildren<TextMeshProUGUI>();
+        _cupTextMesh.text = $"+{_playerData.ScoreReward.ToString()}";
+
         _currentZone.sprite = _zones.Current.Icon;
         _nextZone.sprite = _zones.Next.Icon;
 
+        _startScale = transform.localScale.x;
         transform.localScale = Vector3.zero;
+
+        _startButtonScale = _nextbutton.transform.localScale.x;
         _nextbutton.transform.localScale = Vector3.zero;
         _rewardButton.transform.localScale = Vector3.zero;
+
+        _startCupScale = _cup.transform.localScale.x;
         _cup.transform.localScale = Vector3.zero;
+
+        _startCoinScale = _coin.transform.localScale.x;
+        _coin.transform.localScale = Vector3.zero;
 
         _data.GetData(out _currentPointIndex, out _startSliderValue, out _endSliderValue);
 
@@ -94,7 +137,7 @@ public class ProgressBar : MonoBehaviour
 
         _slider.value = _startSliderValue;
 
-        transform.DOScale(NewScale, Duration)
+        transform.DOScale(_startScale, Duration)
             .SetEase(Ease.OutBounce)
             .OnComplete(() =>
             {
@@ -103,14 +146,20 @@ public class ProgressBar : MonoBehaviour
                     .OnComplete(() =>
                     {
                         _points[_currentPointIndex].sprite = _data.Sprite;
-                        _cup.transform.DOScale(CupNewScale, CupDuration)
-                            .SetEase(Ease.OutBounce)
+                        _cup.transform.DOScale(_startCupScale, RewardDuration)
+                            .SetEase(Ease.InBounce)
                             .OnComplete(() =>
                             {
-                                _nextbutton.transform.DOScale(ButtonNewScale, Duration)
-                                    .SetEase(Ease.OutBounce);
-                                _rewardButton.transform.DOScale(ButtonNewScale, Duration)
-                                    .SetEase(Ease.OutBounce);
+                                _coin.transform.DOScale(_startCoinScale, RewardDuration)
+                                    .SetEase(Ease.InBounce)
+                                    .OnComplete(() =>
+                                    {
+                                        _coins.AddCoins();
+                                        _nextbutton.transform.DOScale(_startButtonScale, Duration)
+                                            .SetEase(Ease.OutBounce);
+                                        _rewardButton.transform.DOScale(_startButtonScale, Duration)
+                                            .SetEase(Ease.OutBounce);
+                                    });
                             });
                     });
             });

@@ -39,13 +39,13 @@ public class WinPopup : Popup
         _upperPart.transform.DOScale(NewScale, Duration)
             .SetEase(Ease.OutBounce);
 
-        _nextButton.onClick.AddListener(Restart);
+        _nextButton.onClick.AddListener(Next);
         _rewardButton.onClick.AddListener(GetReward);
     }
 
     private void OnDisable()
     {
-        _nextButton.onClick.RemoveListener(Restart);
+        _nextButton.onClick.RemoveListener(Next);
         _rewardButton.onClick.AddListener(GetReward);
     }
 
@@ -72,7 +72,7 @@ public class WinPopup : Popup
         enabled = true;
     }
 
-    private void Restart()
+    private void Next()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         _interstitialAd.Show();

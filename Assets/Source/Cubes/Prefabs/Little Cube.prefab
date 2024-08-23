@@ -174,11 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547a052559422f2429f2a35bc613d758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
   _view: {fileID: 6846438703058630909}
   _mesh: {fileID: 2747253608075971197}
   _cubeExplosion: {fileID: 6965777847620979443}
-  _colliderEventHandler: {fileID: 7950427245510923927}
+  _collider: {fileID: 761755713240330090}
+  _damage: 0
 --- !u!114 &148424666432932536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbbd6f04504120458c1747d827cb9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 2598358745581242825}
   _yModifier: 0
   _xModifier: 0
   _duration: 0
@@ -365,7 +364,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5028448643112952402}
-  - component: {fileID: 7950427245510923927}
   - component: {fileID: 7753485472616378530}
   - component: {fileID: 2747253608075971197}
   - component: {fileID: 761755713240330090}
@@ -391,18 +389,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6914346287989647259}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7950427245510923927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567126185367538455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c1bc461d5f07ee43bd9b407c67bad5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &7753485472616378530
 MeshFilter:
   m_ObjectHideFlags: 0

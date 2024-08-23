@@ -8,14 +8,14 @@ public class Cube : MonoBehaviour
     private readonly float Duration = 0.1f;
     private readonly float Delay = 0.05f;
 
-    [SerializeField] private uint _damage;
     [SerializeField] private CubeView _view;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private CubeExplosion _cubeExplosion;
-    [SerializeField] private ColliderEventHandler _colliderEventHandler;
+    [SerializeField] private Collider _collider;
+
+    [SerializeField] private uint _damage;
 
     private Rigidbody _rigidbody;
-    private Collider _collider;
     private ParticleSystem _particleSystem;
     private Vector3 _startScale;
     private bool _collided;
@@ -41,13 +41,12 @@ public class Cube : MonoBehaviour
             throw new ArgumentNullException(nameof(_cubeExplosion));
         }
 
-        if (_colliderEventHandler == null)
+        if (_collider == null)
         {
-            throw new ArgumentNullException(nameof(_colliderEventHandler));
+            throw new ArgumentNullException(nameof(_collider));
         }
 
         _rigidbody = GetComponent<Rigidbody>();
-        _collider = _colliderEventHandler.GetComponent<Collider>();
         _particleSystem = _cubeExplosion.GetComponent<ParticleSystem>();
 
         _view.Init(_damage.ToString());
@@ -59,20 +58,17 @@ public class Cube : MonoBehaviour
             .SetDelay(Delay);
 
         _cubeExplosion.Stopped += OnCubeExplosionStopped;
-        _colliderEventHandler.Collided += OnCollisionEnter;
     }
 
     private void OnDisable()
     {
         _cubeExplosion.Stopped -= OnCubeExplosionStopped;
-        _colliderEventHandler.Collided -= OnCollisionEnter;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollision(Projectile projectile)
     {
-        if (collision.gameObject.TryGetComponent<Projectile>(out Projectile projectile) && _collided == false)
+        if (_collided == false)
         {
-
             _collided = true;
             _rigidbody.DOKill();
 

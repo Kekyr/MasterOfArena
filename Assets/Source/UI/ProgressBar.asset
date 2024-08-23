@@ -16,6 +16,6 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 78f7436ea745448f48e4ef7cd0aa0f65, type: 3}
   _pointsCount: 5
   _pointsInterval: 0.2
-  _startSliderValue: 0
-  _endSliderValue: 0.2
-  _currentPointIndex: 0
+  _startSliderValue: 0.2
+  _endSliderValue: 0.4
+  _currentPointIndex: 1
