@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00c4c1befefd30f44b9f157551d3d6df, type: 3}
-  m_Name: Data
+  m_Script: {fileID: 11500000, guid: f1a0f831dd5a6d04f8a837967309a21a, type: 3}
+  m_Name: BuyFail
   m_EditorClassIdentifier: 
-  _skin: {fileID: 5927466161466357695, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
-  _score: 12
-  _scoreReward: 3
-  _coins: 100
-  _coinsReward: 300
+  _clips:
+  - {fileID: 8300000, guid: 4fe5ac85c3155413ca46eab2ad0551c4, type: 3}
+  _volume: 0
+  _canPitch: 0

@@ -79,7 +79,6 @@ MonoBehaviour:
   _meshRenderer: {fileID: 5504081690409457477}
   _startFlyPosition: {fileID: 1359739414927074679}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &3266248477267284570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 3
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
@@ -664,7 +662,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a715dbe72719c84bb40ad8e81bda426, type: 2}
+  - {fileID: 2100000, guid: 9dc7a34de6a6cc149a82b17c4e0bbcde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1985,8 +1983,6 @@ MonoBehaviour:
   _damageMarkColor: {r: 0.67058825, g: 0.10980393, b: 0.121568635, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
-  _data: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
-  _spawnChancesSO: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
 --- !u!114 &6359757700342896848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2026,7 +2022,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.2
 --- !u!114 &6047217676986392846
@@ -2279,7 +2274,6 @@ MonoBehaviour:
   _meshRenderer: {fileID: 4890923771125254862}
   _startFlyPosition: {fileID: 1543551786029919792}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &5985912104615924604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2292,7 +2286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 3
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
@@ -2929,7 +2922,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a715dbe72719c84bb40ad8e81bda426, type: 2}
+  - {fileID: 2100000, guid: 9dc7a34de6a6cc149a82b17c4e0bbcde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

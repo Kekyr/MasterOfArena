@@ -44,7 +44,7 @@ public class RewardedAd : MonoBehaviour
 
     private void OnRewardCallback()
     {
-        _coins.AddCoins();
+        _coins.Add();
         _playerData.AddScore();
         Rewarded?.Invoke(_playerData.Score);
         _saveLoader.Save();

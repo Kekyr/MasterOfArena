@@ -24,12 +24,12 @@ public class CoinsView : MonoBehaviour
         transform.DOScale(_startScale, Duration)
             .SetEase(Ease.InOutSine);
 
-        _coins.Added += OnCoinsAdded;
+        _coins.Changed += OnCoinsChanged;
     }
 
     private void OnDisable()
     {
-        _coins.Added -= OnCoinsAdded;
+        _coins.Changed -= OnCoinsChanged;
     }
 
     public void Init(Coins coins)
@@ -43,7 +43,7 @@ public class CoinsView : MonoBehaviour
         enabled = true;
     }
 
-    private void OnCoinsAdded(int coins)
+    private void OnCoinsChanged(int coins)
     {
         _textMeshPro.text = coins.ToString();
     }

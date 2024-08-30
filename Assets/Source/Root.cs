@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class Root : MonoBehaviour
 {
-    [SerializeField] private CharactersSO _characters;
+    [SerializeField] private EnemiesSO _enemies;
+    [SerializeField] private ProgressBarSO _progressBarData;
     [SerializeField] private ZonesSO _zones;
     [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private TutorialSO _tutorialData;
     [SerializeField] private SpawnChancesSO _spawnChancesSO;
+    [SerializeField] private SkinSO[] _skins;
 
     [SerializeField] private SaveLoader _saveLoader;
 
@@ -49,6 +51,7 @@ public class Root : MonoBehaviour
     [SerializeField] private CoinsView _coinsView;
 
     [SerializeField] private Shop _shop;
+    [SerializeField] private SFX _shopSFX;
     [SerializeField] private ShopPopup _shopPopup;
 
     private Sequence _order;
@@ -59,9 +62,14 @@ public class Root : MonoBehaviour
 
     private void Validate()
     {
-        if (_characters == null)
+        if (_enemies == null)
         {
-            throw new ArgumentNullException(nameof(_characters));
+            throw new ArgumentNullException(nameof(_enemies));
+        }
+
+        if (_progressBarData == null)
+        {
+            throw new ArgumentNullException(nameof(_progressBarData));
         }
 
         if (_zones == null)
@@ -84,6 +92,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_spawnChancesSO));
         }
 
+        if (_skins.Length == 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(_skins));
+        }
+
         if (_saveLoader == null)
         {
             throw new ArgumentNullException(nameof(_saveLoader));
@@ -91,7 +104,7 @@ public class Root : MonoBehaviour
 
         if (_playerSpawnPosition == null)
         {
-            throw new ArgumentNullException(nameof(_characters));
+            throw new ArgumentNullException(nameof(_playerSpawnPosition));
         }
 
         if (_enemySpawnPosition == null)
@@ -209,6 +222,11 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_shop));
         }
 
+        if (_shopSFX == null)
+        {
+            throw new ArgumentNullException(nameof(_shopSFX));
+        }
+
         if (_shopPopup == null)
         {
             throw new ArgumentNullException(nameof(_shopPopup));
@@ -222,6 +240,8 @@ public class Root : MonoBehaviour
 
         Validate();
 
+        _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, _skins, _tutorialData);
+
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
             _zoneSpawnPosition.transform);
@@ -233,13 +253,13 @@ public class Root : MonoBehaviour
 
         _targetGroup.AddMember(enemySide.transform, weight, radius);
 
-        Character player = _characters.GetRandomPlayerPrefab();
+        Character player = _playerData.Skin;
         player = Instantiate(player, _playerSpawnPosition.transform.position, player.transform.rotation,
             _playerSpawnPosition.transform);
 
         _virtualCamera.Follow = player.transform;
 
-        Character enemy = _characters.GetRandomEnemyPrefab();
+        Character enemy = _enemies.GetRandom();
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
@@ -249,13 +269,17 @@ public class Root : MonoBehaviour
         _coins.Init(_playerData);
         _progressBar.Init(_coins, _playerData);
 
-        _shop.Init(_playerData, _shopPopup);
-
         _inputRouter = player.GetComponent<PlayerInputRouter>();
         _playerHealth = player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
 
+        _shopPopup.Init(_playerHealth, _aiHealth);
+        _shop.Init(_playerData, _coins, _shopPopup, _skins);
+        _shopSFX.Init(_sfxButton, _audioSettings);
+
         _order = DOTween.Sequence();
+
+        _inputRouter.Init(_playerHealth, _aiHealth, _order);
 
         _musicButton.Init(_audioSettings);
         _sfxButton.Init(_audioSettings);
@@ -283,10 +307,10 @@ public class Root : MonoBehaviour
         _playerRoot.Init(_aiHealth);
         _aiRoot.Init(_playerHealth);
 
+        
+
         _focusTracker.Init(_tutorialHand);
         _tutorialHand.Init(_inputRouter, _mainButtons, _coinsView);
         _tutorial.Init(_tutorialData, _tutorialHand);
-
-        _inputRouter.Init(_playerHealth, _aiHealth, _order);
     }
 }

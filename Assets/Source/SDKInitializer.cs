@@ -7,15 +7,7 @@ using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
 
 public sealed class SDKInitializer : MonoBehaviour
 {
-    [SerializeField] private SaveLoader _saveLoader;
-
-    private void OnEnable()
-    {
-        if (_saveLoader == null)
-        {
-            throw new ArgumentNullException(nameof(_saveLoader));
-        }
-    }
+    private SaveLoader _saveLoader;
 
     private void Awake()
     {
@@ -31,6 +23,17 @@ public sealed class SDKInitializer : MonoBehaviour
 #else
         yield break;
 #endif
+    }
+
+    public void Init(SaveLoader saveLoader)
+    {
+        if (saveLoader == null)
+        {
+            throw new ArgumentNullException(nameof(saveLoader));
+        }
+
+        _saveLoader = saveLoader;
+        enabled = true;
     }
 
     private void OnInitialized()

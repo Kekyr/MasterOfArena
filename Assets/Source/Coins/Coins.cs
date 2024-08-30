@@ -5,11 +5,11 @@ public class Coins : MonoBehaviour
 {
     private PlayerDataSO _data;
 
-    public event Action<int> Added;
+    public event Action<int> Changed;
 
     private void OnEnable()
     {
-        Added?.Invoke(_data.Coins);
+        Changed?.Invoke(_data.Coins);
     }
 
     public void Init(PlayerDataSO data)
@@ -23,9 +23,20 @@ public class Coins : MonoBehaviour
         enabled = true;
     }
 
-    public void AddCoins()
+    public void Add()
     {
         _data.AddCoins();
-        Added?.Invoke(_data.Coins);
+        Changed?.Invoke(_data.Coins);
+    }
+
+    public bool TryRemove(int amount)
+    {
+        return _data.Coins - amount < 0;
+    }
+
+    public void Remove(int amount)
+    {
+        _data.RemoveCoins(amount);
+        Changed?.Invoke(_data.Coins);
     }
 }

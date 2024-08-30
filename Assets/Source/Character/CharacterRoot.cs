@@ -37,6 +37,7 @@ public class CharacterRoot : MonoBehaviour
     private CinemachineVirtualCamera _camera;
 
     public Popup Window => _popup;
+
     public IReadOnlyCollection<Projectile> Projectiles => _projectiles;
 
     public Targeting Aiming => _aiming;

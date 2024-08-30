@@ -12,16 +12,6 @@ public class PlayerInputRouter : MonoBehaviour
 
     public InputAction Aiming => _input.Player.Aiming;
 
-    private void Awake()
-    {
-        _input = new PlayerInput();
-    }
-
-    private void OnEnable()
-    {
-        _sequence.OnComplete(OnComplete);
-    }
-
     private void OnDisable()
     {
         _input.Disable();
@@ -53,7 +43,8 @@ public class PlayerInputRouter : MonoBehaviour
         _health.Died += OnDead;
         _enemyHealth.Died += OnDead;
 
-        enabled = true;
+        _input = new PlayerInput();
+        _sequence.OnComplete(OnComplete);
     }
 
     private void OnDead()

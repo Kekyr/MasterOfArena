@@ -147,12 +147,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 59161489}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba4005ded1f921541aee49227cb9dd63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _saveLoader: {fileID: 1761460120}
 --- !u!4 &59161491
 Transform:
   m_ObjectHideFlags: 0
@@ -163,6 +162,60 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 590.43494, y: 1091.1288, z: -41.47943}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1601085020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1601085022}
+  - component: {fileID: 1601085021}
+  m_Layer: 0
+  m_Name: _CompositeRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1601085021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601085020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0795a2b574091e14cbe7b5926d00e599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _progressBarData: {fileID: 11400000, guid: 383352bf1969c184a80c6c01fc83d4a3, type: 2}
+  _playerData: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
+  _zonesData: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
+  _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
+  _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
+  _skinsData:
+  - {fileID: 11400000, guid: 20cdff36fcecd1947a7005f3dfea0b74, type: 2}
+  - {fileID: 11400000, guid: 91565bb96721f1847bd9f804733bcd27, type: 2}
+  _sdkInitializer: {fileID: 59161490}
+  _saveLoader: {fileID: 1761460120}
+--- !u!4 &1601085022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601085020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 362.014, y: 1134.1711, z: -294.7251}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -197,11 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b31653e2f48dd40a17479b3f5239fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _progressBarData: {fileID: 11400000, guid: 383352bf1969c184a80c6c01fc83d4a3, type: 2}
-  _playerData: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
-  _zonesData: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
-  _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
-  _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
 --- !u!4 &1761460121
 Transform:
   m_ObjectHideFlags: 0
@@ -221,5 +269,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1601085022}
   - {fileID: 59161491}
   - {fileID: 1761460121}

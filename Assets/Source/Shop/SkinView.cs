@@ -21,6 +21,9 @@ public class SkinView : MonoBehaviour
     private Button _button;
 
     public event Action<SkinView> Selected;
+    public event Action<SkinView> TryBuy;
+
+    public SkinSO Data => _data;
 
     private void OnEnable()
     {
@@ -51,14 +54,17 @@ public class SkinView : MonoBehaviour
         _image.sprite = _data.Image;
         _costTextMesh.text = _data.Cost.ToString();
 
-        InitStatus();
-
         _button.onClick.AddListener(OnStatusChanged);
     }
 
     private void OnDisable()
     {
         _button.onClick.RemoveListener(OnStatusChanged);
+    }
+
+    private void Start()
+    {
+        InitStatus();
     }
 
     public void Init(SkinSO data)
@@ -84,19 +90,10 @@ public class SkinView : MonoBehaviour
         _data.DowngradeStatus();
     }
 
-    private void OnStatusChanged()
+    public void OnBuySuccess()
     {
-        switch (_data.Status)
-        {
-            case State.NotBought:
-                OnBought();
-                _data.UpgradeStatus();
-                break;
-
-            case State.Bought:
-                Selected?.Invoke(this);
-                break;
-        }
+        OnBought();
+        _data.UpgradeStatus();
     }
 
     private void InitStatus()
@@ -109,6 +106,20 @@ public class SkinView : MonoBehaviour
 
             case State.Selected:
                 OnBought();
+                Selected?.Invoke(this);
+                break;
+        }
+    }
+
+    private void OnStatusChanged()
+    {
+        switch (_data.Status)
+        {
+            case State.NotBought:
+                TryBuy?.Invoke(this);
+                break;
+
+            case State.Bought:
                 Selected?.Invoke(this);
                 break;
         }

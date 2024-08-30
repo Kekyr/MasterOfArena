@@ -13,7 +13,7 @@ public class MainPopup : Popup
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _blackout;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (_button == null)
         {
@@ -41,12 +41,12 @@ public class MainPopup : Popup
         _button.onClick.AddListener(Close);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _button.onClick.RemoveListener(Close);
     }
 
-    private void Close()
+    protected virtual void Close()
     {
         Time.timeScale = 1f;
         InputSystem.EnableDevice(Mouse.current);
