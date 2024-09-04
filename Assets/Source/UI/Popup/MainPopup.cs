@@ -13,7 +13,7 @@ public class MainPopup : Popup
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _blackout;
 
-    protected virtual void OnEnable()
+    private void OnEnable()
     {
         if (_button == null)
         {

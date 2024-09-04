@@ -31,7 +31,6 @@ public class Shop : MonoBehaviour
 
         _sfx = GetComponent<SFX>();
 
-        _shopPopup.Init(_skins, this);
         _shopPopup.Selected += OnSelected;
     }
 

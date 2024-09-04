@@ -23,7 +23,6 @@ public class SaveLoader : MonoBehaviour
         _spawnChancesData = spawnChancesData;
         _skinsData = skinsData;
         _tutorialData = tutorialData;
-        OnLoaded();
     }
 
     public void Save()
@@ -48,13 +47,11 @@ public class SaveLoader : MonoBehaviour
 
     public void OnLoaded()
     {
-        //int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         int firstElementIndex = 0;
         Player currentSkin;
 
-        //SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
-        SaveData saveData = null;
+        SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
 
         if (saveData == null)
         {
@@ -97,6 +94,6 @@ public class SaveLoader : MonoBehaviour
         _spawnChancesData.Init(saveData.SpawnChances);
         _tutorialData.Init(saveData.CanPlay);
 
-        //SceneManager.LoadScene(nextSceneIndex);
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }

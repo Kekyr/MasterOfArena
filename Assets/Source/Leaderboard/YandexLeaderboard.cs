@@ -14,7 +14,7 @@ public class YandexLeaderboard : MonoBehaviour
     [SerializeField] private LeaderboardView _leaderboardView;
 
     private Player _player;
-    private RewardedAd _rewardedAd;
+    private ResourceRewardedAd _resourceRewardedAd;
     private LeanTranslation _translation;
 
     private void OnEnable()
@@ -27,29 +27,29 @@ public class YandexLeaderboard : MonoBehaviour
         _translation = LeanLocalization.GetTranslation(TranslationName);
 
         _player.Victory += SetPlayerScore;
-        _rewardedAd.Rewarded += SetPlayerScore;
+        _resourceRewardedAd.Rewarded += SetPlayerScore;
     }
 
     private void OnDisable()
     {
         _player.Victory -= SetPlayerScore;
-        _rewardedAd.Rewarded -= SetPlayerScore;
+        _resourceRewardedAd.Rewarded -= SetPlayerScore;
     }
 
-    public void Init(Player player, RewardedAd rewardedAd)
+    public void Init(Player player, ResourceRewardedAd resourceRewardedAd)
     {
         if (player == null)
         {
             throw new ArgumentNullException(nameof(player));
         }
 
-        if (rewardedAd == null)
+        if (resourceRewardedAd == null)
         {
-            throw new ArgumentNullException(nameof(rewardedAd));
+            throw new ArgumentNullException(nameof(resourceRewardedAd));
         }
 
         _player = player;
-        _rewardedAd = rewardedAd;
+        _resourceRewardedAd = resourceRewardedAd;
         enabled = true;
     }
 

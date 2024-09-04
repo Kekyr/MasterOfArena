@@ -15,7 +15,7 @@ public class WinPopup : Popup
 
     private SaveLoader _saveLoader;
     private InterstitialAd _interstitialAd;
-    private RewardedAd _rewardedAd;
+    private ResourceRewardedAd _resourceRewardedAd;
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class WinPopup : Popup
         _rewardButton.onClick.AddListener(GetReward);
     }
 
-    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd, RewardedAd rewardedAd)
+    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd, ResourceRewardedAd resourceRewardedAd)
     {
         if (saveLoader == null)
         {
@@ -61,14 +61,14 @@ public class WinPopup : Popup
             throw new ArgumentNullException(nameof(interstitialAd));
         }
 
-        if (rewardedAd == null)
+        if (resourceRewardedAd == null)
         {
-            throw new ArgumentNullException(nameof(rewardedAd));
+            throw new ArgumentNullException(nameof(resourceRewardedAd));
         }
 
         _saveLoader = saveLoader;
         _interstitialAd = interstitialAd;
-        _rewardedAd = rewardedAd;
+        _resourceRewardedAd = resourceRewardedAd;
         enabled = true;
     }
 
@@ -86,7 +86,7 @@ public class WinPopup : Popup
     private void GetReward()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        _rewardedAd.Show();
+        _resourceRewardedAd.Show();
 #endif
         _rewardButton.interactable = false;
     }

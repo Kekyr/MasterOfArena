@@ -8,11 +8,11 @@
       "hash": "32d39130ea78dce0c3ea0ed83ec5f022efefde42"
     },
     "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.0.1",
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.1.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6c1dcfeb19d5b8ab6720dd36f9261149143c2578"
+      "hash": "3bdb25b6765d133a66c5032258d772a5ac5d58b8"
     },
     "com.bovinelabs.analyzers": {
       "version": "https://github.com/tertle/com.bovinelabs.analyzers.git",
@@ -181,9 +181,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

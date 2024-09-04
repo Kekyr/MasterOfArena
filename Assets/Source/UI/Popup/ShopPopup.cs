@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShopPopup : MainPopup
 {
-    [SerializeField] private SkinView _prefab;
-
     private GridLayoutGroup _content;
     private List<SkinView> _skinViewes;
     private SkinSO[] _skins;
     private Shop _shop;
+    private SkinRewardedAd _skinRewardedAd;
 
     private SkinView _startSkinView;
     private SkinView _currentSkinView;
@@ -23,16 +21,6 @@ public class ShopPopup : MainPopup
 
     public event Action<Player> Selected;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        if (_prefab == null)
-        {
-            throw new ArgumentNullException(nameof(_prefab));
-        }
-    }
-
     private void Awake()
     {
         _content = GetComponentInChildren<GridLayoutGroup>();
@@ -40,7 +28,7 @@ public class ShopPopup : MainPopup
 
         foreach (SkinSO skin in _skins)
         {
-            SkinView view = Instantiate(_prefab, _content.transform);
+            SkinView view = Instantiate(skin.View, _content.transform);
             view.Selected += OnSelected;
             view.TryBuy += OnTryBuy;
 
@@ -85,7 +73,7 @@ public class ShopPopup : MainPopup
         _enemyHealth.Died += OnDied;
     }
 
-    public void Init(SkinSO[] skins, Shop shop)
+    public void Init(SkinSO[] skins, Shop shop, SkinRewardedAd skinRewardedAd)
     {
         if (skins.Length == 0)
         {
@@ -97,8 +85,14 @@ public class ShopPopup : MainPopup
             throw new ArgumentNullException(nameof(shop));
         }
 
+        if (skinRewardedAd == null)
+        {
+            throw new ArgumentNullException(nameof(skinRewardedAd));
+        }
+
         _skins = skins;
         _shop = shop;
+        _skinRewardedAd = skinRewardedAd;
         enabled = true;
     }
 
@@ -131,6 +125,15 @@ public class ShopPopup : MainPopup
 
     private void OnTryBuy(SkinView skinView)
     {
-        _shop.TryBuy(skinView);
+        if (skinView.Data.Ad == true)
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            _skinRewardedAd.Show(skinView);
+#endif
+        }
+        else
+        {
+            _shop.TryBuy(skinView);
+        }
     }
 }

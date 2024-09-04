@@ -31,7 +31,8 @@ public class Root : MonoBehaviour
     [SerializeField] private AudioSettingsSO _audioSettings;
 
     [SerializeField] private InterstitialAd _interstitialAd;
-    [SerializeField] private RewardedAd _rewardedAd;
+    [SerializeField] private ResourceRewardedAd _resourceRewardedAd;
+    [SerializeField] private SkinRewardedAd _skinRewardedAd;
 
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
 
@@ -152,9 +153,14 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_interstitialAd));
         }
 
-        if (_rewardedAd == null)
+        if (_resourceRewardedAd == null)
         {
-            throw new ArgumentNullException(nameof(_rewardedAd));
+            throw new ArgumentNullException(nameof(_resourceRewardedAd));
+        }
+
+        if (_skinRewardedAd == null)
+        {
+            throw new ArgumentNullException(nameof(_skinRewardedAd));
         }
 
         if (_zoneText == null)
@@ -263,7 +269,7 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
-        _rewardedAd.Init(_playerData, _saveLoader, _coins);
+        _resourceRewardedAd.Init(_playerData, _saveLoader, _coins);
 
         _coinsView.Init(_coins);
         _coins.Init(_playerData);
@@ -273,6 +279,7 @@ public class Root : MonoBehaviour
         _playerHealth = player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
 
+        _shopPopup.Init(_skins, _shop, _skinRewardedAd);
         _shopPopup.Init(_playerHealth, _aiHealth);
         _shop.Init(_playerData, _coins, _shopPopup, _skins);
         _shopSFX.Init(_sfxButton, _audioSettings);
@@ -290,7 +297,7 @@ public class Root : MonoBehaviour
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
-        _playerRoot.Init(_rewardedAd, _saveLoader, _coins);
+        _playerRoot.Init(_resourceRewardedAd, _saveLoader, _coins);
         _playerRoot.Init(_playerData, _spawnChancesSO);
 
         _aiRoot.Init(_cubeSpawner);
@@ -307,7 +314,6 @@ public class Root : MonoBehaviour
         _playerRoot.Init(_aiHealth);
         _aiRoot.Init(_playerHealth);
 
-        
 
         _focusTracker.Init(_tutorialHand);
         _tutorialHand.Init(_inputRouter, _mainButtons, _coinsView);

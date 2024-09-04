@@ -11,7 +11,7 @@ public class PlayerRoot : CharacterRoot
     private YandexLeaderboard _leaderboard;
 
     private InterstitialAd _interstitialAd;
-    private RewardedAd _rewardedAd;
+    private ResourceRewardedAd _resourceRewardedAd;
     private Coins _coins;
 
     private PlayerDataSO _data;
@@ -33,7 +33,7 @@ public class PlayerRoot : CharacterRoot
         int radius = 1;
 
         WinPopup winPopup = (WinPopup)Window;
-        winPopup.Init(_saveLoader, _interstitialAd, _rewardedAd);
+        winPopup.Init(_saveLoader, _interstitialAd, _resourceRewardedAd);
 
         _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
 
@@ -43,7 +43,7 @@ public class PlayerRoot : CharacterRoot
         Player player = (Player)Person;
         player.Init(_data, _spawnChancesSO, _saveLoader);
 
-        _leaderboard.Init(player, _rewardedAd);
+        _leaderboard.Init(player, _resourceRewardedAd);
 
         base.Start();
     }
@@ -55,9 +55,9 @@ public class PlayerRoot : CharacterRoot
         _interstitialAd = interstitialAd;
     }
 
-    public void Init(RewardedAd rewardedAd, SaveLoader saveLoader, Coins coins)
+    public void Init(ResourceRewardedAd resourceRewardedAd, SaveLoader saveLoader, Coins coins)
     {
-        _rewardedAd = rewardedAd;
+        _resourceRewardedAd = resourceRewardedAd;
         _saveLoader = saveLoader;
         _coins = coins;
     }
