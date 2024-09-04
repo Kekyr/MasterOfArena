@@ -51,7 +51,10 @@ public class SaveLoader : MonoBehaviour
         int firstElementIndex = 0;
         Player currentSkin;
 
-        SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
+        string json = PlayerPrefs.GetString(key);
+        Debug.Log($"json: {json}\n");
+
+        SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
         Debug.Log($"Coins: {saveData.Coins}\n");
         Debug.Log($"Score: {saveData.Score}\n");
