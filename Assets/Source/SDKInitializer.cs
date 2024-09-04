@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Agava.YandexGames;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
 
 public sealed class SDKInitializer : MonoBehaviour
@@ -38,6 +39,11 @@ public sealed class SDKInitializer : MonoBehaviour
     private void OnInitialized()
     {
         YandexGamesSdk.GameReady();
-        PlayerPrefs.Load(_saveLoader.OnLoaded);
+        PlayerPrefs.Load(_saveLoader.OnLoaded, OnSaveLoadError);
+    }
+
+    private void OnSaveLoadError(string error)
+    {
+        Debug.Log(error);
     }
 }

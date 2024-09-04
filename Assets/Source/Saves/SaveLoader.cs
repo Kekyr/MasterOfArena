@@ -53,10 +53,32 @@ public class SaveLoader : MonoBehaviour
 
         SaveData saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
 
+        Debug.Log($"Coins: {saveData.Coins}\n");
+        Debug.Log($"Score: {saveData.Score}\n");
+        Debug.Log($"CanPlay: {saveData.CanPlay}\n");
+        Debug.Log($"CurrentSkin: {saveData.CurrentSkin}\n");
+        Debug.Log($"SkinsState: {saveData.SkinsState}\n");
+        Debug.Log($"SpawnChances: {saveData.SpawnChances}\n");
+        Debug.Log($"CurrentPointIndex: {saveData.CurrentPointIndex}\n");
+        Debug.Log($"CurrentZoneIndex: {saveData.CurrentZoneIndex}\n");
+        Debug.Log($"StartBarValue: {saveData.StartBarValue}\n");
+        Debug.Log($"EndBarValue: {saveData.EndBarValue}\n");
+
         if (saveData == null)
         {
             saveData = new SaveData();
         }
+
+        Debug.Log($"Coins: {saveData.Coins}\n");
+        Debug.Log($"Score: {saveData.Score}\n");
+        Debug.Log($"CanPlay: {saveData.CanPlay}\n");
+        Debug.Log($"CurrentSkin: {saveData.CurrentSkin}\n");
+        Debug.Log($"SkinsState: {saveData.SkinsState}\n");
+        Debug.Log($"SpawnChances: {saveData.SpawnChances}\n");
+        Debug.Log($"CurrentPointIndex: {saveData.CurrentPointIndex}\n");
+        Debug.Log($"CurrentZoneIndex: {saveData.CurrentZoneIndex}\n");
+        Debug.Log($"StartBarValue: {saveData.StartBarValue}\n");
+        Debug.Log($"EndBarValue: {saveData.EndBarValue}\n");
 
         if (saveData.SkinsState == null)
         {
@@ -79,6 +101,11 @@ public class SaveLoader : MonoBehaviour
             }
         }
 
+        foreach (SkinSO skin in _skinsData)
+        {
+            Debug.Log($"\nStatus: {skin.Status}");
+        }
+
         if (saveData.CurrentSkin == null)
         {
             currentSkin = _skinsData[firstElementIndex].Prefab;
@@ -87,6 +114,8 @@ public class SaveLoader : MonoBehaviour
         {
             currentSkin = saveData.CurrentSkin;
         }
+
+        Debug.Log($"CurrentSkin:{currentSkin}");
 
         _progressBarData.Init(saveData.CurrentPointIndex, saveData.StartBarValue, saveData.EndBarValue);
         _playerData.Init(saveData.Score, saveData.Coins, currentSkin);
