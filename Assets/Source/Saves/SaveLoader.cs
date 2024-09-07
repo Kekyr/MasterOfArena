@@ -11,11 +11,11 @@ public class SaveLoader : MonoBehaviour
     private PlayerDataSO _playerData;
     private ZonesSO _zonesData;
     private SpawnChancesSO _spawnChancesData;
-    private SkinSO[] _skinsData;
+    private SkinDataSO[] _skinsData;
     private TutorialSO _tutorialData;
 
     public void Init(ProgressBarSO progressBarData, PlayerDataSO playerData, ZonesSO zonesData,
-        SpawnChancesSO spawnChancesData, SkinSO[] skinsData, TutorialSO tutorialData)
+        SpawnChancesSO spawnChancesData, SkinDataSO[] skinsData, TutorialSO tutorialData)
     {
         _progressBarData = progressBarData;
         _playerData = playerData;
@@ -29,7 +29,7 @@ public class SaveLoader : MonoBehaviour
     {
         List<State> skinsState = new List<State>();
 
-        foreach (SkinSO skinData in _skinsData)
+        foreach (SkinDataSO skinData in _skinsData)
         {
             skinsState.Add(skinData.Status);
         }
@@ -37,7 +37,7 @@ public class SaveLoader : MonoBehaviour
         SaveData saveData = new SaveData(_progressBarData.CurrentPointIndex, _progressBarData.StartSliderValue,
             _progressBarData.EndSliderValue, _playerData.Score, _playerData.Coins, _zonesData.CurrentIndex,
             _spawnChancesData.SpawnChances,
-            skinsState, _playerData.Skin, _tutorialData.CanPlay);
+            skinsState, _playerData.CurrentSkinIndex, _tutorialData.CanPlay);
 
         string json = JsonUtility.ToJson(saveData);
 
@@ -47,41 +47,29 @@ public class SaveLoader : MonoBehaviour
 
     public void OnLoaded()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+#else
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex;
+#endif
+        
         int firstElementIndex = 0;
-        Player currentSkin;
+        SaveData saveData;
 
-        string json = PlayerPrefs.GetString(key);
-        Debug.Log($"json: {json}\n");
-
-        SaveData saveData = JsonUtility.FromJson<SaveData>(json);
-
-        Debug.Log($"Coins: {saveData.Coins}\n");
-        Debug.Log($"Score: {saveData.Score}\n");
-        Debug.Log($"CanPlay: {saveData.CanPlay}\n");
-        Debug.Log($"CurrentSkin: {saveData.CurrentSkin}\n");
-        Debug.Log($"SkinsState: {saveData.SkinsState}\n");
-        Debug.Log($"SpawnChances: {saveData.SpawnChances}\n");
-        Debug.Log($"CurrentPointIndex: {saveData.CurrentPointIndex}\n");
-        Debug.Log($"CurrentZoneIndex: {saveData.CurrentZoneIndex}\n");
-        Debug.Log($"StartBarValue: {saveData.StartBarValue}\n");
-        Debug.Log($"EndBarValue: {saveData.EndBarValue}\n");
-
-        if (saveData == null)
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (PlayerPrefs.HasKey(key))
         {
+            Debug.Log("Using old savedata");
+            saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
+        }
+        else
+        {
+            Debug.Log("Creating new savedata");
             saveData = new SaveData();
         }
-
-        Debug.Log($"Coins: {saveData.Coins}\n");
-        Debug.Log($"Score: {saveData.Score}\n");
-        Debug.Log($"CanPlay: {saveData.CanPlay}\n");
-        Debug.Log($"CurrentSkin: {saveData.CurrentSkin}\n");
-        Debug.Log($"SkinsState: {saveData.SkinsState}\n");
-        Debug.Log($"SpawnChances: {saveData.SpawnChances}\n");
-        Debug.Log($"CurrentPointIndex: {saveData.CurrentPointIndex}\n");
-        Debug.Log($"CurrentZoneIndex: {saveData.CurrentZoneIndex}\n");
-        Debug.Log($"StartBarValue: {saveData.StartBarValue}\n");
-        Debug.Log($"EndBarValue: {saveData.EndBarValue}\n");
+#else
+        saveData = new SaveData();
+#endif
 
         if (saveData.SkinsState == null)
         {
@@ -104,24 +92,8 @@ public class SaveLoader : MonoBehaviour
             }
         }
 
-        foreach (SkinSO skin in _skinsData)
-        {
-            Debug.Log($"\nStatus: {skin.Status}");
-        }
-
-        if (saveData.CurrentSkin == null)
-        {
-            currentSkin = _skinsData[firstElementIndex].Prefab;
-        }
-        else
-        {
-            currentSkin = saveData.CurrentSkin;
-        }
-
-        Debug.Log($"CurrentSkin:{currentSkin}");
-
         _progressBarData.Init(saveData.CurrentPointIndex, saveData.StartBarValue, saveData.EndBarValue);
-        _playerData.Init(saveData.Score, saveData.Coins, currentSkin);
+        _playerData.Init(saveData.Score, saveData.Coins, saveData.CurrentSkinIndex);
         _zonesData.Init(saveData.CurrentZoneIndex);
         _spawnChancesData.Init(saveData.SpawnChances);
         _tutorialData.Init(saveData.CanPlay);

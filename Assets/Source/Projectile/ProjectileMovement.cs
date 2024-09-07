@@ -22,12 +22,15 @@ public class ProjectileMovement : MonoBehaviour
     private Projectile _projectile;
     private Targeting _targeting;
 
+    private bool _isFlying;
     private float _acceleration;
     private Vector3 _flyDirection;
 
     public event Action<Vector3> Ricocheted;
 
     public bool IsReturning { get; private set; }
+
+    public bool IsFlying => _isFlying;
 
     private void OnEnable()
     {
@@ -51,6 +54,14 @@ public class ProjectileMovement : MonoBehaviour
         _projectile.Ricocheting -= OnRicocheting;
     }
 
+    private void FixedUpdate()
+    {
+        if (_isFlying == true)
+        {
+            _rigidbody.velocity = _acceleration * _flyDirection;
+        }
+    }
+
     public void Init(Projectile projectile)
     {
         if (projectile == null)
@@ -62,17 +73,15 @@ public class ProjectileMovement : MonoBehaviour
         enabled = true;
     }
 
-    public IEnumerator Fly(Vector3 startPosition)
+    public void StartFly(Vector3 startPosition)
     {
         _rigidbody.isKinematic = false;
+        _isFlying = true;
+    }
 
-        while (_projectile.IsFlying)
-        {
-            float distance = Vector3.Distance(startPosition, transform.position);
-            _rigidbody.velocity = _acceleration * _flyDirection;
-            yield return null;
-        }
-
+    public void StopFly()
+    {
+        _isFlying = false;
         _acceleration = FlySpeed;
         IsReturning = false;
         _rigidbody.velocity = Vector3.zero;

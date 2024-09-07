@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new PlayerDataSO", menuName = "PlayerDataSO/Create new PlayerDataSO")]
 public class PlayerDataSO : ScriptableObject
 {
-    [SerializeField] private Player _skin;
+    [SerializeField] private int _currentSkinIndex;
 
     [SerializeField] private int _score;
     [SerializeField] private int _scoreReward;
@@ -12,17 +12,17 @@ public class PlayerDataSO : ScriptableObject
     [SerializeField] private int _coins;
     [SerializeField] private int _coinsReward;
 
-    public Player Skin => _skin;
+    public int CurrentSkinIndex => _currentSkinIndex;
     public int Score => _score;
     public int ScoreReward => _scoreReward;
     public int Coins => _coins;
     public int CoinsReward => _coinsReward;
 
-    public void Init(int score, int coins, Player skin)
+    public void Init(int score, int coins, int skinIndex)
     {
         _score = score;
         _coins = coins;
-        _skin = skin;
+        _currentSkinIndex = skinIndex;
     }
 
     public void AddScore()
@@ -45,8 +45,8 @@ public class PlayerDataSO : ScriptableObject
         _coins -= amount;
     }
 
-    public void ChangeSkin(Player skin)
+    public void ChangeSkin(int skinIndex)
     {
-        _skin = skin;
+        _currentSkinIndex = skinIndex;
     }
 }

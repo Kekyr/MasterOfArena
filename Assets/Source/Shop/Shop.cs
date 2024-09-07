@@ -6,7 +6,6 @@ public class Shop : MonoBehaviour
     [SerializeField] private SFXSO _success;
     [SerializeField] private SFXSO _fail;
 
-    private SkinSO[] _skins;
     private SFX _sfx;
     private PlayerDataSO _playerData;
     private Coins _coins;
@@ -14,11 +13,6 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_skins.Length == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(_skins));
-        }
-
         if (_success == null)
         {
             throw new ArgumentNullException(nameof(_success));
@@ -39,7 +33,7 @@ public class Shop : MonoBehaviour
         _shopPopup.Selected -= OnSelected;
     }
 
-    public void Init(PlayerDataSO playerData, Coins coins, ShopPopup shopPopup, SkinSO[] skins)
+    public void Init(PlayerDataSO playerData, Coins coins, ShopPopup shopPopup)
     {
         if (playerData == null)
         {
@@ -56,15 +50,9 @@ public class Shop : MonoBehaviour
             throw new ArgumentNullException(nameof(shopPopup));
         }
 
-        if (skins.Length == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(skins));
-        }
-
         _playerData = playerData;
         _coins = coins;
         _shopPopup = shopPopup;
-        _skins = skins;
         enabled = true;
     }
 
@@ -81,8 +69,8 @@ public class Shop : MonoBehaviour
         _sfx.Play(_success);
     }
 
-    private void OnSelected(Player skin)
+    private void OnSelected(int skinIndex)
     {
-        _playerData.ChangeSkin(skin);
+        _playerData.ChangeSkin(skinIndex);
     }
 }

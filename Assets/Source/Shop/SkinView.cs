@@ -13,7 +13,7 @@ public class SkinView : MonoBehaviour
     [SerializeField] private RectTransform _visual;
     [SerializeField] private GameObject _cost;
     [SerializeField] private Image _image;
-    [SerializeField] private SkinSO _data;
+    [SerializeField] private SkinDataSO _data;
 
     private Image _background;
 
@@ -23,7 +23,7 @@ public class SkinView : MonoBehaviour
     public event Action<SkinView> Selected;
     public event Action<SkinView> TryBuy;
 
-    public SkinSO Data => _data;
+    public SkinDataSO Data => _data;
 
     private void OnEnable()
     {
@@ -67,7 +67,7 @@ public class SkinView : MonoBehaviour
         InitStatus();
     }
 
-    public void Init(SkinSO data)
+    public void Init(SkinDataSO data)
     {
         if (data == null)
         {

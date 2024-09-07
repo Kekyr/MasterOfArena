@@ -7,7 +7,7 @@ public class ShopPopup : MainPopup
 {
     private GridLayoutGroup _content;
     private List<SkinView> _skinViewes;
-    private SkinSO[] _skins;
+    private SkinDataSO[] _skinsData;
     private Shop _shop;
     private SkinRewardedAd _skinRewardedAd;
 
@@ -19,25 +19,25 @@ public class ShopPopup : MainPopup
 
     private bool _isLevelEnded;
 
-    public event Action<Player> Selected;
+    public event Action<int> Selected;
 
     private void Awake()
     {
         _content = GetComponentInChildren<GridLayoutGroup>();
         _skinViewes = new List<SkinView>();
 
-        foreach (SkinSO skin in _skins)
+        foreach (SkinDataSO skinData in _skinsData)
         {
-            SkinView view = Instantiate(skin.View, _content.transform);
+            SkinView view = Instantiate(skinData.View, _content.transform);
             view.Selected += OnSelected;
             view.TryBuy += OnTryBuy;
 
-            if (skin.Status == State.Selected)
+            if (skinData.Status == State.Selected)
             {
                 _startSkinView = view;
             }
 
-            view.Init(skin);
+            view.Init(skinData);
             _skinViewes.Add(view);
         }
     }
@@ -73,11 +73,11 @@ public class ShopPopup : MainPopup
         _enemyHealth.Died += OnDied;
     }
 
-    public void Init(SkinSO[] skins, Shop shop, SkinRewardedAd skinRewardedAd)
+    public void Init(SkinDataSO[] skinsData, Shop shop, SkinRewardedAd skinRewardedAd)
     {
-        if (skins.Length == 0)
+        if (skinsData.Length == 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(skins));
+            throw new ArgumentOutOfRangeException(nameof(skinsData));
         }
 
         if (shop == null)
@@ -90,7 +90,7 @@ public class ShopPopup : MainPopup
             throw new ArgumentNullException(nameof(skinRewardedAd));
         }
 
-        _skins = skins;
+        _skinsData = skinsData;
         _shop = shop;
         _skinRewardedAd = skinRewardedAd;
         enabled = true;
@@ -120,7 +120,7 @@ public class ShopPopup : MainPopup
 
         skinView.Select();
         _currentSkinView = skinView;
-        Selected?.Invoke(_currentSkinView.Data.Prefab);
+        Selected?.Invoke(_currentSkinView.Data.PrefabIndex);
     }
 
     private void OnTryBuy(SkinView skinView)

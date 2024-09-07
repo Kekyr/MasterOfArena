@@ -15,7 +15,7 @@ public class SaveData
 
     private readonly float[] defaultSpawnChancesValues = { 50, 50 };
     private readonly List<State> defaultSkinsState = null;
-    private readonly Player defaultSkin = null;
+    private readonly int defaultSkinIndex = 0;
     private readonly bool defaultCanPlay = true;
 
     public int CurrentPointIndex;
@@ -26,12 +26,12 @@ public class SaveData
     public int CurrentZoneIndex;
     public List<float> SpawnChances;
     public List<State> SkinsState;
-    public Player CurrentSkin;
+    public int CurrentSkinIndex;
     public bool CanPlay;
 
     public SaveData(int currentPointIndex, float startBarValue, float endBarValue, int score, int coins,
         int currentZoneIndex,
-        List<float> spawnChances, List<State> skinsState, Player currentSkin, bool canPlay)
+        List<float> spawnChances, List<State> skinsState, int currentSkinIndex, bool canPlay)
     {
         CurrentPointIndex = currentPointIndex;
         StartBarValue = startBarValue;
@@ -41,7 +41,7 @@ public class SaveData
         CurrentZoneIndex = currentZoneIndex;
         SpawnChances = spawnChances;
         SkinsState = skinsState;
-        CurrentSkin = currentSkin;
+        CurrentSkinIndex = currentSkinIndex;
         CanPlay = canPlay;
     }
 
@@ -55,7 +55,7 @@ public class SaveData
         CurrentZoneIndex = defaultCurrentZoneIndex;
         SpawnChances = defaultSpawnChancesValues.ToList();
         SkinsState = defaultSkinsState;
-        CurrentSkin = defaultSkin;
+        CurrentSkinIndex = defaultSkinIndex;
         CanPlay = defaultCanPlay;
     }
 }

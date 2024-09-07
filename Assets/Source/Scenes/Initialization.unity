@@ -298,11 +298,7 @@ MonoBehaviour:
   _zonesData: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
   _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
   _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
-  _skinsData:
-  - {fileID: 11400000, guid: 91565bb96721f1847bd9f804733bcd27, type: 2}
-  - {fileID: 11400000, guid: 20cdff36fcecd1947a7005f3dfea0b74, type: 2}
-  - {fileID: 11400000, guid: f85b298cd46fa1742a941ba41600b5cd, type: 2}
-  - {fileID: 11400000, guid: 2cc8b3158b3cff94185ff165cc76e3e1, type: 2}
+  _skins: {fileID: 11400000, guid: d5dd8e4811fd4f5499a6467ef9b2c705, type: 2}
   _sdkInitializer: {fileID: 59161490}
   _saveLoader: {fileID: 1761460120}
 --- !u!4 &1601085022

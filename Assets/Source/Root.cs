@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using Lean.Localization;
@@ -13,7 +14,7 @@ public class Root : MonoBehaviour
     [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private TutorialSO _tutorialData;
     [SerializeField] private SpawnChancesSO _spawnChancesSO;
-    [SerializeField] private SkinSO[] _skins;
+    [SerializeField] private SkinsSO _skins;
 
     [SerializeField] private SaveLoader _saveLoader;
 
@@ -93,9 +94,9 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_spawnChancesSO));
         }
 
-        if (_skins.Length == 0)
+        if (_skins == null)
         {
-            throw new ArgumentOutOfRangeException(nameof(_skins));
+            throw new ArgumentNullException(nameof(_skins));
         }
 
         if (_saveLoader == null)
@@ -246,7 +247,14 @@ public class Root : MonoBehaviour
 
         Validate();
 
-        _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, _skins, _tutorialData);
+        SkinDataSO[] skinsData = new SkinDataSO[_skins.Skins.Count];
+
+        for (int i = 0; i < _skins.Skins.Count; i++)
+        {
+            skinsData[i] = _skins.Skins[i].Data;
+        }
+
+        _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, skinsData, _tutorialData);
 
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
@@ -259,7 +267,7 @@ public class Root : MonoBehaviour
 
         _targetGroup.AddMember(enemySide.transform, weight, radius);
 
-        Character player = _playerData.Skin;
+        Character player = _skins.Skins[_playerData.CurrentSkinIndex].Prefab;
         player = Instantiate(player, _playerSpawnPosition.transform.position, player.transform.rotation,
             _playerSpawnPosition.transform);
 
@@ -279,9 +287,9 @@ public class Root : MonoBehaviour
         _playerHealth = player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
 
-        _shopPopup.Init(_skins, _shop, _skinRewardedAd);
+        _shopPopup.Init(skinsData, _shop, _skinRewardedAd);
         _shopPopup.Init(_playerHealth, _aiHealth);
-        _shop.Init(_playerData, _coins, _shopPopup, _skins);
+        _shop.Init(_playerData, _coins, _shopPopup);
         _shopSFX.Init(_sfxButton, _audioSettings);
 
         _order = DOTween.Sequence();

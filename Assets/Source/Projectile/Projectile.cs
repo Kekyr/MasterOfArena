@@ -42,8 +42,6 @@ public class Projectile : MonoBehaviour
     public event Action Ricocheting;
     public event Action<string> Throwing;
 
-    public bool IsFlying => transform.parent != _startParent;
-
     public bool IsReturning => _movement.IsReturning;
 
     public Character Character => _character;
@@ -130,13 +128,14 @@ public class Projectile : MonoBehaviour
 
         _animator.enabled = true;
 
-        StartCoroutine(_movement.Fly(transform.position));
+        _movement.StartFly(transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Character>(out Character catcher) && IsFlying)
+        if (other.gameObject.TryGetComponent<Character>(out Character catcher) && _movement.IsFlying == true)
         {
+            _movement.StopFly();
             _animator.enabled = false;
             transform.parent = _startParent;
             transform.localPosition = _startPosition;

@@ -10,10 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99330c841dd1a3b40ad14042c555ca74, type: 3}
-  m_Name: BusinessMan
+  m_Name: PoliceOfficer
   m_EditorClassIdentifier: 
-  _viewPrefab: {fileID: 6245053682745880682, guid: 5d79f187db0c38e4ca4435f998ebe727, type: 3}
-  _prefab: {fileID: 5927466161466357695, guid: 0268ff81b504fef4ab0d1485f4270d7a, type: 3}
-  _sprite: {fileID: 21300000, guid: 5dc30abe427950c41b01379ffa2933ee, type: 3}
-  _cost: 100
-  _state: 0
+  _data: {fileID: 11400000, guid: 40eb5a04f1fa6da4cadc04f9185a1f9e, type: 2}
+  _prefab: {fileID: 2032743788611245685, guid: 26bbc8c4a74d3fd44bfa0e44aa21ab28, type: 3}

@@ -9,13 +9,16 @@ public class SpawnChancesSO : ScriptableObject
 
     private int _firstElementIndex = 0;
     private int _secondElementIndex = 1;
-    private int _thirdElementIndex = 2;
+    private int _thirdElementIndex;
 
     public List<float> SpawnChances => _spawnChances;
 
     public void Init(List<float> spawnChances)
     {
         _spawnChances = spawnChances;
+        _firstElementIndex = 0;
+        _secondElementIndex = 1;
+        _thirdElementIndex = 0;
     }
 
     public Cube GetRandomCube(float randomValue)

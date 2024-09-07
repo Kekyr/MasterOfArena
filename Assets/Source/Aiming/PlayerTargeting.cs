@@ -11,19 +11,23 @@ public class PlayerTargeting : Targeting
     private PlayerInputRouter _inputRouter;
 
     private bool _canAim;
+    private ProjectileMovement _projectileMovement;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        _inputRouter.Aiming.performed += ctx => OnFindingStarted();
-        _inputRouter.Aiming.canceled += ctx => OnFindingCanceled();
+
+        _projectileMovement = Character.CurrentProjectile.GetComponent<ProjectileMovement>();
+
+        _inputRouter.Aiming.performed += OnFindingStarted;
+        _inputRouter.Aiming.canceled += OnFindingCanceled;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _inputRouter.Aiming.performed -= ctx => OnFindingStarted();
-        _inputRouter.Aiming.canceled -= ctx => OnFindingCanceled();
+        _inputRouter.Aiming.performed -= OnFindingStarted;
+        _inputRouter.Aiming.canceled -= OnFindingCanceled;
     }
 
     public void Init(PlayerInputRouter playerInputRouter)
@@ -65,9 +69,9 @@ public class PlayerTargeting : Targeting
         return throwDirection;
     }
 
-    private void OnFindingStarted()
+    private void OnFindingStarted(InputAction.CallbackContext context)
     {
-        if (Character.CurrentProjectile.IsFlying == false)
+        if (_projectileMovement.IsFlying == false)
         {
             InvokeAiming();
             _canAim = true;
@@ -75,7 +79,7 @@ public class PlayerTargeting : Targeting
         }
     }
 
-    private void OnFindingCanceled()
+    private void OnFindingCanceled(InputAction.CallbackContext context)
     {
         _canAim = false;
     }

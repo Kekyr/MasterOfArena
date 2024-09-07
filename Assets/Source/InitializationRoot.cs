@@ -8,7 +8,7 @@ public class InitializationRoot : MonoBehaviour
     [SerializeField] private ZonesSO _zonesData;
     [SerializeField] private SpawnChancesSO _spawnChancesData;
     [SerializeField] private TutorialSO _tutorialData;
-    [SerializeField] private SkinSO[] _skinsData;
+    [SerializeField] private SkinsSO _skins;
 
     [SerializeField] private SDKInitializer _sdkInitializer;
     [SerializeField] private SaveLoader _saveLoader;
@@ -40,9 +40,9 @@ public class InitializationRoot : MonoBehaviour
             throw new ArgumentNullException(nameof(_tutorialData));
         }
 
-        if (_skinsData.Length == 0)
+        if (_skins == null)
         {
-            throw new ArgumentNullException(nameof(_skinsData));
+            throw new ArgumentNullException(nameof(_skins));
         }
 
         if (_sdkInitializer == null)
@@ -60,7 +60,14 @@ public class InitializationRoot : MonoBehaviour
     {
         Validate();
 
-        _saveLoader.Init(_progressBarData, _playerData, _zonesData, _spawnChancesData, _skinsData, _tutorialData);
+        SkinDataSO[] skinsData = new SkinDataSO[_skins.Skins.Count];
+
+        for (int i = 0; i < _skins.Skins.Count; i++)
+        {
+            skinsData[i] = _skins.Skins[i].Data;
+        }
+
+        _saveLoader.Init(_progressBarData, _playerData, _zonesData, _spawnChancesData, skinsData, _tutorialData);
         _sdkInitializer.Init(_saveLoader);
     }
 }
