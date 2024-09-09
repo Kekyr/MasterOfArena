@@ -7,18 +7,22 @@ public class SpawnChancesSO : ScriptableObject
     [SerializeField] private List<float> _spawnChances;
     [SerializeField] private List<Cube> _cubePrefabs;
 
-    private int _firstElementIndex = 0;
-    private int _secondElementIndex = 1;
+    private int _firstElementIndex;
+    private int _secondElementIndex;
     private int _thirdElementIndex;
 
     public List<float> SpawnChances => _spawnChances;
 
-    public void Init(List<float> spawnChances)
+    public int FirstElementIndex => _firstElementIndex;
+    public int SecondElementIndex => _secondElementIndex;
+    public int ThirdElementIndex => _thirdElementIndex;
+
+    public void Init(List<float> spawnChances, int[] cubesIndex)
     {
         _spawnChances = spawnChances;
-        _firstElementIndex = 0;
-        _secondElementIndex = 1;
-        _thirdElementIndex = 0;
+        _firstElementIndex = cubesIndex[0];
+        _secondElementIndex = cubesIndex[1];
+        _thirdElementIndex = cubesIndex[2];
     }
 
     public Cube GetRandomCube(float randomValue)

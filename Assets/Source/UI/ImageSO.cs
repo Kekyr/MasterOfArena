@@ -9,6 +9,13 @@ public class ImageSO : ScriptableObject
 
     public Sprite CurrentSprite => _sprites[_currentIndex];
 
+    public int CurrentIndex => _currentIndex;
+
+    public void Init(int currentIndex)
+    {
+        _currentIndex = currentIndex;
+    }
+
     public Sprite Switch()
     {
         _currentIndex++;

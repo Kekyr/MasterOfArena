@@ -16,6 +16,13 @@ public sealed class SDKInitializer : MonoBehaviour
 #endif
     }
 
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        _saveLoader.OnLoaded();
+#endif
+    }
+
     private IEnumerator Start()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR

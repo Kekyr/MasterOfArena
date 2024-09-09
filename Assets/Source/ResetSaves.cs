@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_WEBGL && !UNITY_EDITOR
 using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
+#endif
 
 public class ResetSaves : MonoBehaviour
 {
@@ -26,12 +28,8 @@ public class ResetSaves : MonoBehaviour
 
     private void Reset()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        Debug.Log("Deleted all keys");
-#else
-        _saveLoader.OnLoaded();
-#endif
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

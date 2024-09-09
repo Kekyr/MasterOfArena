@@ -36,9 +36,9 @@ public class Player : Character
     {
         _data.AddScore();
         _spawnChancesSO.OnWin();
+        _saveLoader.Save();
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        _saveLoader.Save();
         Victory?.Invoke(_data.Score);
 #endif
 

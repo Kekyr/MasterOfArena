@@ -12,6 +12,8 @@ public class Music : MonoBehaviour
     private MusicButton _button;
     private AudioSettingsSO _audioSettings;
 
+    private float _volume;
+
     private void OnEnable()
     {
         if (_audioSource == null)
@@ -24,6 +26,7 @@ public class Music : MonoBehaviour
             throw new ArgumentNullException(nameof(_music));
         }
 
+        _volume = _audioSource.volume;
         _button.Switched += OnSwitch;
     }
 
@@ -70,6 +73,16 @@ public class Music : MonoBehaviour
         _enemyHealth.Died += OnDead;
 
         enabled = true;
+    }
+
+    public void Pause()
+    {
+        _audioSource.volume = 0f;
+    }
+
+    public void Continue()
+    {
+        _audioSource.volume = _volume;
     }
 
     private void Play(AudioClip clip)

@@ -30,12 +30,12 @@ public class PlayerDataSO : ScriptableObject
         _score += _scoreReward;
     }
 
-    public void AddCoins()
+    public void IncreaseCoins()
     {
         _coins += _coinsReward;
     }
 
-    public void RemoveCoins(int amount)
+    public void DecreaseCoins(int amount)
     {
         if (amount < 0)
         {

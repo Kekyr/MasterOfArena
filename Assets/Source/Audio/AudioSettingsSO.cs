@@ -9,6 +9,12 @@ public class AudioSettingsSO : ScriptableObject
     public bool IsMusicOn => _isMusicOn;
     public bool IsSFXOn => _isSFXOn;
 
+    public void Init(bool isMusicOn, bool isSFXOn)
+    {
+        _isMusicOn = isMusicOn;
+        _isSFXOn = isSFXOn;
+    }
+
     public void SwitchMusic()
     {
         _isMusicOn = !_isMusicOn;

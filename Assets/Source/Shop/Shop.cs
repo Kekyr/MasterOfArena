@@ -10,6 +10,7 @@ public class Shop : MonoBehaviour
     private PlayerDataSO _playerData;
     private Coins _coins;
     private ShopPopup _shopPopup;
+    private SaveLoader _saveLoader;
 
     private void OnEnable()
     {
@@ -33,44 +34,32 @@ public class Shop : MonoBehaviour
         _shopPopup.Selected -= OnSelected;
     }
 
-    public void Init(PlayerDataSO playerData, Coins coins, ShopPopup shopPopup)
+    public void Init(PlayerDataSO playerData, Coins coins, ShopPopup shopPopup, SaveLoader saveLoader)
     {
-        if (playerData == null)
-        {
-            throw new ArgumentNullException(nameof(playerData));
-        }
-
-        if (coins == null)
-        {
-            throw new ArgumentNullException(nameof(coins));
-        }
-
-        if (shopPopup == null)
-        {
-            throw new ArgumentNullException(nameof(shopPopup));
-        }
-
         _playerData = playerData;
         _coins = coins;
         _shopPopup = shopPopup;
+        _saveLoader = saveLoader;
         enabled = true;
     }
 
     public void TryBuy(SkinView skinView)
     {
-        if (_coins.TryRemove(skinView.Data.Cost))
+        if (_coins.TryDecrease(skinView.Data.Cost))
         {
             _sfx.Play(_fail);
             return;
         }
 
-        _coins.Remove(skinView.Data.Cost);
+        _coins.Decrease(skinView.Data.Cost);
         skinView.OnBuySuccess();
+        _saveLoader.Save();
         _sfx.Play(_success);
     }
 
     private void OnSelected(int skinIndex)
     {
         _playerData.ChangeSkin(skinIndex);
+        _saveLoader.Save();
     }
 }

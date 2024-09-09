@@ -299,6 +299,9 @@ MonoBehaviour:
   _spawnChancesData: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
   _tutorialData: {fileID: 11400000, guid: 58abd7f9d12902c43b9e1788ed0deba2, type: 2}
   _skins: {fileID: 11400000, guid: d5dd8e4811fd4f5499a6467ef9b2c705, type: 2}
+  _audioSettings: {fileID: 11400000, guid: 4d9f848ba012ac2458cd8a345c8f6497, type: 2}
+  _musicButtonData: {fileID: 11400000, guid: 33b1b4fc8a68d7a4c990d9d7fe96ecaf, type: 2}
+  _sfxButtonData: {fileID: 11400000, guid: 8a25873885e83b146a626cf69e9ae143, type: 2}
   _sdkInitializer: {fileID: 59161490}
   _saveLoader: {fileID: 1761460120}
 --- !u!4 &1601085022

@@ -154,7 +154,7 @@ public class ProgressBar : MonoBehaviour
                                     .SetEase(Ease.InBounce)
                                     .OnComplete(() =>
                                     {
-                                        _coins.Add();
+                                        _coins.Increase();
                                         _nextbutton.transform.DOScale(_startButtonScale, Duration)
                                             .SetEase(Ease.OutBounce);
                                         _rewardButton.transform.DOScale(_startButtonScale, Duration)

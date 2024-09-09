@@ -23,20 +23,20 @@ public class Coins : MonoBehaviour
         enabled = true;
     }
 
-    public void Add()
+    public void Increase()
     {
-        _data.AddCoins();
+        _data.IncreaseCoins();
         Changed?.Invoke(_data.Coins);
     }
 
-    public bool TryRemove(int amount)
+    public bool TryDecrease(int amount)
     {
         return _data.Coins - amount < 0;
     }
 
-    public void Remove(int amount)
+    public void Decrease(int amount)
     {
-        _data.RemoveCoins(amount);
+        _data.DecreaseCoins(amount);
         Changed?.Invoke(_data.Coins);
     }
 }

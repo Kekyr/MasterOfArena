@@ -34,16 +34,6 @@ public class SFX : MonoBehaviour
 
     public void Init(SFXButton button, AudioSettingsSO audioSettings)
     {
-        if (button == null)
-        {
-            throw new ArgumentNullException(nameof(button));
-        }
-
-        if (audioSettings == null)
-        {
-            throw new ArgumentNullException(nameof(audioSettings));
-        }
-
         _button = button;
         _audioSettings = audioSettings;
         enabled = true;

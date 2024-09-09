@@ -33,7 +33,9 @@ public class Root : MonoBehaviour
 
     [SerializeField] private InterstitialAd _interstitialAd;
     [SerializeField] private ResourceRewardedAd _resourceRewardedAd;
+    [SerializeField] private SFX _resourceRewardedAdSFX;
     [SerializeField] private SkinRewardedAd _skinRewardedAd;
+    [SerializeField] private SFX _skinRewardedAdSFX;
 
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
 
@@ -43,6 +45,8 @@ public class Root : MonoBehaviour
     [SerializeField] private MusicButton _musicButton;
     [SerializeField] private SFXButton _sfxButton;
     [SerializeField] private Button[] _mainButtons;
+    [SerializeField] private ImageSO _musicButtonData;
+    [SerializeField] private ImageSO _sfxButtonData;
 
     [SerializeField] private YandexLeaderboard _leaderboard;
     [SerializeField] private FocusTracker _focusTracker;
@@ -159,9 +163,19 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_resourceRewardedAd));
         }
 
+        if (_resourceRewardedAdSFX == null)
+        {
+            throw new ArgumentNullException(nameof(_resourceRewardedAdSFX));
+        }
+
         if (_skinRewardedAd == null)
         {
             throw new ArgumentNullException(nameof(_skinRewardedAd));
+        }
+
+        if (_skinRewardedAdSFX == null)
+        {
+            throw new ArgumentNullException(nameof(_skinRewardedAdSFX));
         }
 
         if (_zoneText == null)
@@ -177,6 +191,16 @@ public class Root : MonoBehaviour
         if (_sfxButton == null)
         {
             throw new ArgumentNullException(nameof(_sfxButton));
+        }
+
+        if (_musicButtonData == null)
+        {
+            throw new ArgumentNullException(nameof(_musicButtonData));
+        }
+
+        if (_sfxButtonData == null)
+        {
+            throw new ArgumentNullException(nameof(_sfxButtonData));
         }
 
         if (_mainButtons.Length == 0)
@@ -254,7 +278,9 @@ public class Root : MonoBehaviour
             skinsData[i] = _skins.Skins[i].Data;
         }
 
-        _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, skinsData, _tutorialData);
+        _saveLoader.Init(_musicButton, _sfxButton);
+        _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, skinsData, _tutorialData,
+            _audioSettings, _musicButtonData, _sfxButtonData);
 
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
@@ -277,7 +303,13 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
-        _resourceRewardedAd.Init(_playerData, _saveLoader, _coins);
+        _resourceRewardedAd.Init(_saveLoader);
+        _resourceRewardedAd.Init(_playerData, _coins);
+        _resourceRewardedAdSFX.Init(_sfxButton, _audioSettings);
+
+        _skinRewardedAd.Init(_saveLoader);
+        _skinRewardedAd.Init(_music);
+        _skinRewardedAdSFX.Init(_sfxButton, _audioSettings);
 
         _coinsView.Init(_coins);
         _coins.Init(_playerData);
@@ -289,7 +321,7 @@ public class Root : MonoBehaviour
 
         _shopPopup.Init(skinsData, _shop, _skinRewardedAd);
         _shopPopup.Init(_playerHealth, _aiHealth);
-        _shop.Init(_playerData, _coins, _shopPopup);
+        _shop.Init(_playerData, _coins, _shopPopup, _saveLoader);
         _shopSFX.Init(_sfxButton, _audioSettings);
 
         _order = DOTween.Sequence();
@@ -321,7 +353,6 @@ public class Root : MonoBehaviour
 
         _playerRoot.Init(_aiHealth);
         _aiRoot.Init(_playerHealth);
-
 
         _focusTracker.Init(_tutorialHand);
         _tutorialHand.Init(_inputRouter, _mainButtons, _coinsView);
