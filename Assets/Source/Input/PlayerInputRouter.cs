@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,21 +20,6 @@ public class PlayerInputRouter : MonoBehaviour
 
     public void Init(Health health, Health enemyHealth, Sequence sequence)
     {
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
-        if (sequence == null)
-        {
-            throw new ArgumentNullException(nameof(sequence));
-        }
-
         _health = health;
         _enemyHealth = enemyHealth;
         _sequence = sequence;

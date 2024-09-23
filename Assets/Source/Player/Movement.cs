@@ -27,6 +27,10 @@ public class Movement : MonoBehaviour
     private Animator _animator;
 
     private Quaternion _startRotation;
+    private bool _isRunning;
+    private float _distance;
+    private Vector3 _direction;
+    private Vector3 _endPosition;
 
     private void OnEnable()
     {
@@ -60,25 +64,25 @@ public class Movement : MonoBehaviour
         _startRotation = transform.rotation;
     }
 
+    private void FixedUpdate()
+    {
+        if (_isRunning == true)
+        {
+            _rigidbody.velocity = Acceleration * _direction;
+            _distance = Vector3.Distance(_endPosition, transform.position);
+
+            if (_distance <= MinDistance)
+            {
+                _isRunning = false;
+                _animator.SetBool(IsRunning, false);
+                _rigidbody.velocity = Vector3.zero;
+                transform.rotation = _startRotation;
+            }
+        }
+    }
+
     public void Init(Projectile[] projectiles, Health health, CinemachineVirtualCamera camera)
     {
-        int maxLength = 2;
-
-        if (projectiles.Length == 0 || projectiles.Length > maxLength)
-        {
-            throw new ArgumentOutOfRangeException(nameof(projectiles));
-        }
-
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
-        if (camera == null)
-        {
-            throw new ArgumentNullException(nameof(camera));
-        }
-
         _camera = camera;
         _projectiles = projectiles;
         _health = health;
@@ -88,24 +92,16 @@ public class Movement : MonoBehaviour
         enabled = true;
     }
 
-    private IEnumerator Move(Vector3 endPosition)
+    private void Move()
     {
-        float distance = 1;
-        Vector3 direction = (endPosition - transform.position).normalized;
+        //Debug.Log("I'm moving");
+        _distance = 1;
+        _direction = (_endPosition - transform.position).normalized;
 
-        transform.rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.LookRotation(_direction);
         _animator.SetBool(IsRunning, true);
 
-        while (distance > MinDistance)
-        {
-            _rigidbody.velocity = Acceleration * direction;
-            distance = Vector3.Distance(endPosition, transform.position);
-            yield return null;
-        }
-
-        _animator.SetBool(IsRunning, false);
-        _rigidbody.velocity = Vector3.zero;
-        transform.rotation = _startRotation;
+        _isRunning = true;
     }
 
     private void OnStep()
@@ -115,8 +111,8 @@ public class Movement : MonoBehaviour
 
     private void OnRicochet(Vector3 endPosition)
     {
-        endPosition = new Vector3(endPosition.x, transform.position.y, transform.position.z);
-        StartCoroutine(Move(endPosition));
+        _endPosition = new Vector3(endPosition.x, transform.position.y, transform.position.z);
+        Move();
     }
 
     private void OnDead()

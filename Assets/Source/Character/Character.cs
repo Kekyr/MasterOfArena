@@ -36,6 +36,7 @@ public class Character : MonoBehaviour
 
     public event Action<Cube> Attacking;
     public event Action<Transform> Throwed;
+    public event Action Won;
 
     public Projectile CurrentProjectile => _projectiles[_currentProjectileIndex];
     public Color DamageMarkColor => _damageMarkColor;
@@ -89,67 +90,27 @@ public class Character : MonoBehaviour
         _enemyHeath.Died -= OnEnemyDead;
     }
 
-
     public void Init(ParticleSystem confettiVFX, CinemachineVirtualCamera winCamera)
     {
-        if (confettiVFX == null)
-        {
-            throw new ArgumentNullException(nameof(confettiVFX));
-        }
-
-        if (winCamera == null)
-        {
-            throw new ArgumentNullException(nameof(winCamera));
-        }
-
         _confettiVFX = confettiVFX;
         _winCamera = winCamera;
     }
 
     public void Init(Health health, Sequence sequence)
     {
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
-        if (sequence == null)
-        {
-            throw new ArgumentNullException(nameof(sequence));
-        }
-
         _health = health;
         _sequence = sequence;
-
         _health.Died += OnDead;
     }
 
     public void Init(Health enemyHealth)
     {
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
         _enemyHeath = enemyHealth;
-
         _enemyHeath.Died += OnEnemyDead;
     }
 
     public void Init(Projectile[] projectiles, Popup popup)
     {
-        int maxLength = 2;
-
-        if (projectiles.Length == 0 || projectiles.Length > maxLength)
-        {
-            throw new ArgumentOutOfRangeException(nameof(projectiles));
-        }
-
-        if (popup == null)
-        {
-            throw new ArgumentNullException(nameof(popup));
-        }
-
         _projectiles = projectiles;
         _popup = popup;
         enabled = true;
@@ -210,6 +171,7 @@ public class Character : MonoBehaviour
     {
         _winCamera.gameObject.SetActive(true);
         _confettiVFX.Play();
+        Won?.Invoke();
         yield return _wait;
         _animator.SetBool(IsDancing, true);
         _sfx.Play(_win);

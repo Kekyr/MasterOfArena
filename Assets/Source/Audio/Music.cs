@@ -44,26 +44,6 @@ public class Music : MonoBehaviour
 
     public void Init(Health playerHealth, Health enemyHealth, MusicButton button, AudioSettingsSO audioSettings)
     {
-        if (playerHealth == null)
-        {
-            throw new ArgumentNullException(nameof(playerHealth));
-        }
-
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
-        if (button == null)
-        {
-            throw new ArgumentNullException(nameof(button));
-        }
-
-        if (audioSettings == null)
-        {
-            throw new ArgumentNullException(nameof(audioSettings));
-        }
-
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
         _button = button;

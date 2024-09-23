@@ -36,6 +36,8 @@ public class CharacterRoot : MonoBehaviour
     private Sequence _sequence;
     private CinemachineVirtualCamera _camera;
 
+    private CatchZone _catchZone;
+
     public Popup Window => _popup;
 
     public IReadOnlyCollection<Projectile> Projectiles => _projectiles;
@@ -76,7 +78,7 @@ public class CharacterRoot : MonoBehaviour
     {
         for (int i = 0; i < _projectiles.Length; i++)
         {
-            _projectiles[i].Init(_character, _helper);
+            _projectiles[i].Init(_character, _helper, _catchZone);
             _projectiles[i].GetComponent<SFX>().Init(_sfxButton, _audioSettings);
         }
 
@@ -116,10 +118,11 @@ public class CharacterRoot : MonoBehaviour
         _camera = camera;
     }
 
-    public void Init(Health health, ArenaSide side)
+    public void Init(Health health, ArenaSide side, CatchZone catchZone)
     {
         _health = health;
         _side = side;
+        _catchZone = catchZone;
 
         _character.Init(_health, _sequence);
     }

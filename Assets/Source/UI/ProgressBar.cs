@@ -22,7 +22,6 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Cup _cup;
     [SerializeField] private Coin _coin;
 
-    private Coins _coins;
     private PlayerDataSO _playerData;
 
     private TextMeshProUGUI _coinTextMesh;
@@ -36,23 +35,6 @@ public class ProgressBar : MonoBehaviour
     private int _currentPointIndex;
     private float _startSliderValue;
     private float _endSliderValue;
-
-    public void Init(Coins coins, PlayerDataSO playerData)
-    {
-        if (coins == null)
-        {
-            throw new ArgumentNullException(nameof(coins));
-        }
-
-        if (playerData == null)
-        {
-            throw new ArgumentNullException(nameof(playerData));
-        }
-
-        _coins = coins;
-        _playerData = playerData;
-        enabled = true;
-    }
 
     private void OnEnable()
     {
@@ -154,7 +136,6 @@ public class ProgressBar : MonoBehaviour
                                     .SetEase(Ease.InBounce)
                                     .OnComplete(() =>
                                     {
-                                        _coins.Increase();
                                         _nextbutton.transform.DOScale(_startButtonScale, Duration)
                                             .SetEase(Ease.OutBounce);
                                         _rewardButton.transform.DOScale(_startButtonScale, Duration)
@@ -163,5 +144,11 @@ public class ProgressBar : MonoBehaviour
                             });
                     });
             });
+    }
+
+    public void Init(PlayerDataSO playerData)
+    {
+        _playerData = playerData;
+        enabled = true;
     }
 }

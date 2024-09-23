@@ -1,4 +1,3 @@
-using System;
 using Agava.WebUtility;
 using UnityEngine;
 
@@ -27,21 +26,11 @@ public class FocusTracker : MonoBehaviour
 
     public void Init(TutorialHand tutorialHand)
     {
-        if (tutorialHand == null)
-        {
-            throw new ArgumentNullException(nameof(tutorialHand));
-        }
-
         _tutorialHand = tutorialHand;
     }
 
     public void Init(Music music)
     {
-        if (music == null)
-        {
-            throw new ArgumentNullException(nameof(music));
-        }
-
         _music = music.GetComponent<AudioSource>();
         enabled = true;
     }

@@ -52,16 +52,6 @@ public class CubeSpawner : MonoBehaviour
 
     public void Init(Health playerHealth, Health enemyHealth)
     {
-        if (playerHealth == null)
-        {
-            throw new ArgumentNullException(nameof(playerHealth));
-        }
-
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
 

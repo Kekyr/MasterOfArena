@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Tutorial : MonoBehaviour
@@ -8,16 +7,6 @@ public class Tutorial : MonoBehaviour
 
     public void Init(TutorialSO tutorialData, TutorialHand hand)
     {
-        if (tutorialData == null)
-        {
-            throw new ArgumentNullException(nameof(tutorialData));
-        }
-
-        if (hand == null)
-        {
-            throw new ArgumentNullException(nameof(hand));
-        }
-
         _tutorialData = tutorialData;
         _hand = hand;
 

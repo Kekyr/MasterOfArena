@@ -34,15 +34,8 @@ public class ArenaSide : MonoBehaviour
 
     public void Init(Health health)
     {
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
         _health = health;
-
         _health.Died += OnDead;
-
         enabled = true;
     }
 

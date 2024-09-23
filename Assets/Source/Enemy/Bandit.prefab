@@ -344,8 +344,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.22786666, y: 0.1423763, z: 0.63168794}
-  m_Center: {x: -0.00000020116568, y: 0.0052926987, z: 0.1110791}
+  m_Size: {x: 0.26898795, y: 0.1423763, z: 0.6955073}
+  m_Center: {x: 0.0034550885, y: 0.0052926852, z: 0.079169765}
 --- !u!1 &911788317442869811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1243,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3042131298994676135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3887346747524798212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7369189929785046541}
+  - component: {fileID: 3414104716308865209}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7369189929785046541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887346747524798212}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00013515934, y: 0.00019548171, z: -0.0015163891}
+  m_LocalScale: {x: 0.019999977, y: 0.019999994, z: 0.012872506}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 844875920426918575}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3414104716308865209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887346747524798212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.22786666, y: 0.1423763, z: 0.63168794}
+  m_Center: {x: -0.00000020116568, y: 0.0052926987, z: 0.1110791}
 --- !u!1 &4131938198963829017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,7 +1376,7 @@ GameObject:
   - component: {fileID: 9032706605481067672}
   - component: {fileID: 4865683536686283446}
   - component: {fileID: 10060189220031464}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bandit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1425,7 +1478,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.5
 --- !u!114 &3572135859559962986
@@ -1911,6 +1963,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3476455872178352872}
+  - {fileID: 7369189929785046541}
   m_Father: {fileID: 5013620232821132246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6546646692209824376
@@ -1951,7 +2004,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 6453804505712044393}
   _startFlyPosition: {fileID: 5819083405320568997}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
+  _catch: {fileID: 3414104716308865209}
 --- !u!114 &1386258694906289725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1964,11 +2017,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 3
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 3414104716308865209}
 --- !u!114 &2927719303404771071
 MonoBehaviour:
   m_ObjectHideFlags: 0

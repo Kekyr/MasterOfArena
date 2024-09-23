@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 7603082799779237054}
   - component: {fileID: 1327734674615828539}
   - component: {fileID: 1231911039982424753}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PoliceOfficer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,8 +266,6 @@ MonoBehaviour:
   _damageMarkColor: {r: 0, g: 0.29803923, b: 1, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
-  _data: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
-  _spawnChancesSO: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
 --- !u!114 &1981025831202173930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.2
 --- !u!114 &4145729810215862159
@@ -381,10 +378,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16120136
-  m_Height: 1.8760353
+  m_Radius: 0.48442587
+  m_Height: 2.1736212
   m_Direction: 1
-  m_Center: {x: 0.007020235, y: 0.9155819, z: 0.02704665}
+  m_Center: {x: 0.03252521, y: 0.968433, z: 0.02704665}
 --- !u!82 &1231911039982424753
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1672,6 +1669,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2887949175819737673}
+  - {fileID: 8775982431776020833}
   m_Father: {fileID: 2071424358168005894}
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!95 &9081751151074023656
@@ -1712,7 +1710,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 8775756865235009917}
   _startFlyPosition: {fileID: 8797488076410470580}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
+  _catch: {fileID: 5415123126142948963}
 --- !u!114 &4949715133207035798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,11 +1723,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 2.5
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 5415123126142948963}
 --- !u!114 &6197975635476785290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,6 +2638,59 @@ Transform:
   - {fileID: 4951890527587617159}
   m_Father: {fileID: 6901379471225699850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8232019129066352434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8775982431776020833}
+  - component: {fileID: 5415123126142948963}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8775982431776020833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232019129066352434}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000089406946, y: -0.00000014901158, z: -0.00000014901158, w: 1}
+  m_LocalPosition: {x: -0.009823147, y: -0.061282072, z: 0.088150546}
+  m_LocalScale: {x: 0.8333328, y: 0.83333313, z: 0.83333254}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3542439466597824414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5415123126142948963
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232019129066352434}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.077421725, y: 0.13249029, z: 0.3376154}
+  m_Center: {x: 0.0019648797, y: 0.09037102, z: -0.11717464}
 --- !u!1 &8283383679324761008
 GameObject:
   m_ObjectHideFlags: 0

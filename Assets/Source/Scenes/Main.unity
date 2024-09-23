@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58389857}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4069988, y: -0.046377465, z: 0.020696543, w: 0.9120158}
+  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1293,6 +1293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 210498240}
   - component: {fileID: 210498241}
+  - component: {fileID: 210498242}
   m_Layer: 5
   m_Name: CoinsView
   m_TagString: Untagged
@@ -1334,6 +1335,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textMeshPro: {fileID: 808598309}
+--- !u!225 &210498242
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210498239}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &224455258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,7 +2060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 501353259}
   - component: {fileID: 501353260}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3566,8 +3579,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820698191}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.25, y: 0.017643213, z: -2.0760007}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.25, y: 0.017643213, z: -2.0760005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3973,7 +3986,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4069988, y: -0.046377465, z: 0.020696543, w: 0.9120158}
+  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6351,7 +6364,7 @@ Transform:
   m_GameObject: {fileID: 1658553832}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00000023841858}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10265,7 +10278,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -2.3461456, y: 0, z: 0, w: 0}
+  m_margin: {x: -2.3461456, y: 0, z: -12.119019, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11380,6 +11393,6 @@ SceneRoots:
   - {fileID: 1167279481}
   - {fileID: 705507995}
   - {fileID: 576347434}
-  - {fileID: 1878710838}
   - {fileID: 820698192}
+  - {fileID: 1878710838}
   - {fileID: 567978784}

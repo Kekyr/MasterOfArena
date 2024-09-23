@@ -18,9 +18,6 @@ public class PlayerTargeting : Targeting
         base.OnEnable();
 
         _projectileMovement = Character.CurrentProjectile.GetComponent<ProjectileMovement>();
-
-        _inputRouter.Aiming.performed += OnFindingStarted;
-        _inputRouter.Aiming.canceled += OnFindingCanceled;
     }
 
     protected override void OnDisable()
@@ -32,12 +29,9 @@ public class PlayerTargeting : Targeting
 
     public void Init(PlayerInputRouter playerInputRouter)
     {
-        if (playerInputRouter == null)
-        {
-            throw new ArgumentNullException(nameof(playerInputRouter));
-        }
-
         _inputRouter = playerInputRouter;
+        _inputRouter.Aiming.performed += OnFindingStarted;
+        _inputRouter.Aiming.canceled += OnFindingCanceled;
     }
 
     private IEnumerator FindingTarget()

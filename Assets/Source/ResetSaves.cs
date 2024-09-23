@@ -30,6 +30,8 @@ public class ResetSaves : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+#if UNITY_EDITOR
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+#endif
     }
 }

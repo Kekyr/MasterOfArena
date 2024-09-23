@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3008950289519273916}
   - component: {fileID: 3744277769539776408}
   - component: {fileID: 4587514119812003975}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BusinessMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,8 +239,6 @@ MonoBehaviour:
   _damageMarkColor: {r: 0.32941177, g: 0, b: 0.83921576, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
-  _data: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
-  _spawnChancesSO: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
 --- !u!114 &4275142073179729564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.2
 --- !u!114 &3675315288785234205
@@ -354,10 +351,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16120136
+  m_Radius: 0.5325414
   m_Height: 1.8760353
   m_Direction: 1
-  m_Center: {x: 0.007020235, y: 0.9155819, z: 0.02704665}
+  m_Center: {x: 0.034890175, y: 0.9155819, z: 0.02704665}
 --- !u!82 &4587514119812003975
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1345,6 +1342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6945403563531511145}
+  - {fileID: 4744698511555457979}
   m_Father: {fileID: 6123563454127502577}
   m_LocalEulerAnglesHint: {x: 66.877, y: 214.283, z: -19.969}
 --- !u!95 &7290463682633828067
@@ -1385,7 +1383,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 6688116335733882049}
   _startFlyPosition: {fileID: 3446256271532933361}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
+  _catch: {fileID: 1852169303904023270}
 --- !u!114 &4581628711070326662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1398,11 +1396,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 2.5
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 1852169303904023270}
 --- !u!114 &4573767624156115143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2491,6 +2489,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxScale: 0.05
+--- !u!1 &7058096638463540534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4744698511555457979}
+  - component: {fileID: 1852169303904023270}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4744698511555457979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058096638463540534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.6730373, y: 0.21434467, z: -0.21838139, w: 0.67334}
+  m_LocalPosition: {x: -0.091, y: 0, z: -0.136}
+  m_LocalScale: {x: 0.6399998, y: 0.63999987, z: 0.6399999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7878277193097229417}
+  m_LocalEulerAnglesHint: {x: 89.672, y: -67.893, z: -103.528}
+--- !u!65 &1852169303904023270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058096638463540534}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.80065084, y: 0.6311606, z: 0.18094483}
+  m_Center: {x: 0.009801958, y: 0.31568253, z: 0.0041437573}
 --- !u!1 &7519184824830019650
 GameObject:
   m_ObjectHideFlags: 0

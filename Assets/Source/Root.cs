@@ -22,6 +22,7 @@ public class Root : MonoBehaviour
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
     [SerializeField] private ZoneSpawnPosition _zoneSpawnPosition;
 
+
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private CinemachineTargetGroup _targetGroup;
 
@@ -60,8 +61,12 @@ public class Root : MonoBehaviour
     [SerializeField] private SFX _shopSFX;
     [SerializeField] private ShopPopup _shopPopup;
 
+    private CatchZone _playerCatchZone;
+    private CatchZone _enemyCatchZone;
+
     private Sequence _order;
     private PlayerInputRouter _inputRouter;
+    private Character _player;
 
     private Health _playerHealth;
     private Health _aiHealth;
@@ -278,9 +283,10 @@ public class Root : MonoBehaviour
             skinsData[i] = _skins.Skins[i].Data;
         }
 
-        _saveLoader.Init(_musicButton, _sfxButton);
         _saveLoader.Init(_progressBarData, _playerData, _zones, _spawnChancesSO, skinsData, _tutorialData,
             _audioSettings, _musicButtonData, _sfxButtonData);
+        _musicButton.Init(_saveLoader);
+        _sfxButton.Init(_saveLoader);
 
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,
@@ -291,13 +297,16 @@ public class Root : MonoBehaviour
         ArenaSide playerSide = zone.PlayerSide;
         ArenaSide enemySide = zone.EnemySide;
 
+        _playerCatchZone = playerSide.GetComponentInChildren<CatchZone>();
+        _enemyCatchZone = enemySide.GetComponentInChildren<CatchZone>();
+
         _targetGroup.AddMember(enemySide.transform, weight, radius);
 
-        Character player = _skins.Skins[_playerData.CurrentSkinIndex].Prefab;
-        player = Instantiate(player, _playerSpawnPosition.transform.position, player.transform.rotation,
+        _player = _skins.Skins[_playerData.CurrentSkinIndex].Prefab;
+        _player = Instantiate(_player, _playerSpawnPosition.transform.position, _player.transform.rotation,
             _playerSpawnPosition.transform);
 
-        _virtualCamera.Follow = player.transform;
+        _virtualCamera.Follow = _player.transform;
 
         Character enemy = _enemies.GetRandom();
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
@@ -313,10 +322,10 @@ public class Root : MonoBehaviour
 
         _coinsView.Init(_coins);
         _coins.Init(_playerData);
-        _progressBar.Init(_coins, _playerData);
+        _progressBar.Init(_playerData);
 
-        _inputRouter = player.GetComponent<PlayerInputRouter>();
-        _playerHealth = player.GetComponent<Health>();
+        _inputRouter = _player.GetComponent<PlayerInputRouter>();
+        _playerHealth = _player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
 
         _shopPopup.Init(skinsData, _shop, _skinRewardedAd);
@@ -342,14 +351,14 @@ public class Root : MonoBehaviour
 
         _aiRoot.Init(_cubeSpawner);
 
-        _playerRoot.Init(player, enemy, _virtualCamera);
-        _aiRoot.Init(enemy, player, _virtualCamera);
+        _playerRoot.Init(_player, enemy, _virtualCamera);
+        _aiRoot.Init(enemy, _player, _virtualCamera);
 
         _playerRoot.Init(_order, _sfxButton, _audioSettings);
         _aiRoot.Init(_order, _sfxButton, _audioSettings);
 
-        _playerRoot.Init(_playerHealth, playerSide);
-        _aiRoot.Init(_aiHealth, enemySide);
+        _playerRoot.Init(_playerHealth, playerSide, _playerCatchZone);
+        _aiRoot.Init(_aiHealth, enemySide, _enemyCatchZone);
 
         _playerRoot.Init(_aiHealth);
         _aiRoot.Init(_playerHealth);

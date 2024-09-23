@@ -277,6 +277,59 @@ Transform:
   - {fileID: 4235006119493618365}
   m_Father: {fileID: 6478273474301176772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1018980883978145229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5142581130959158336}
+  - component: {fileID: 7806127956395346022}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5142581130959158336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018980883978145229}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00014, y: 0.0002, z: 0.00009}
+  m_LocalScale: {x: 0.019999977, y: 0.019999994, z: 0.012872506}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5053861963921415919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7806127956395346022
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018980883978145229}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.27434608, y: 0.10123627, z: 0.6690284}
+  m_Center: {x: 0.007496445, y: -0.0055203186, z: 0.09240879}
 --- !u!1 &1019277004581088903
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,6 +1011,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1176863606947494494}
+  - {fileID: 5142581130959158336}
   m_Father: {fileID: 132367536425629414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &133512434177450331
@@ -998,6 +1052,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 4881194461943811299}
   _startFlyPosition: {fileID: 6019014601173376192}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
+  _catch: {fileID: 7806127956395346022}
 --- !u!114 &2868146246574467595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,11 +1065,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 3
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 7806127956395346022}
 --- !u!114 &4673027725537442402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,7 +1839,7 @@ GameObject:
   - component: {fileID: 8893614772124901611}
   - component: {fileID: 2353289200546597147}
   - component: {fileID: 6674192251589059005}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bandit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1846,8 +1901,6 @@ MonoBehaviour:
   _damageMarkColor: {r: 1, g: 0.11764707, b: 0.34901962, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
   _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
-  _data: {fileID: 11400000, guid: 578e45caf83cf5549876c5606c9cea68, type: 2}
-  _spawnChancesSO: {fileID: 11400000, guid: aea1cf25b2fb67e48beb9ddd52bd2cc9, type: 2}
 --- !u!114 &6261451797153668742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1900,7 +1953,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.5
 --- !u!114 &7804799546687356615
@@ -1961,10 +2013,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16120136
-  m_Height: 1.8760353
+  m_Radius: 0.59466124
+  m_Height: 2.2128847
   m_Direction: 1
-  m_Center: {x: 0.007020235, y: 0.9155819, z: 0.02704665}
+  m_Center: {x: 0.040670037, y: 0.9397657, z: 0.02704665}
 --- !u!82 &6674192251589059005
 AudioSource:
   m_ObjectHideFlags: 0

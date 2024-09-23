@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55aa31adcfc80f8478d3ed5fcc714194, type: 3}
-  m_Name: Boxer
+  m_Name: PinkBusinessMan
   m_EditorClassIdentifier: 
   _viewPrefab: {fileID: 6245053682745880682, guid: 5d79f187db0c38e4ca4435f998ebe727, type: 3}
-  _prefabIndex: 1
-  _sprite: {fileID: 21300000, guid: 2a3c2e5a414d1c843882c875d4092b91, type: 3}
+  _prefabIndex: 3
+  _sprite: {fileID: 21300000, guid: f83086d8f0705a641aca7cb0f36972cc, type: 3}
   _cost: 300
   _ad: 0
   _state: 0

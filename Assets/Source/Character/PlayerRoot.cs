@@ -41,7 +41,7 @@ public class PlayerRoot : CharacterRoot
         targeting.Init(_inputRouter);
 
         Player player = (Player)Person;
-        player.Init(_data, _spawnChancesSO, _saveLoader);
+        player.Init(_data, _spawnChancesSO, _saveLoader, _coins);
 
         _leaderboard.Init(player, _resourceRewardedAd);
 

@@ -7,20 +7,22 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(SFX))]
 public class ProjectileMovement : MonoBehaviour
 {
-    private readonly float RayDistance = 7;
     private readonly float ReturnSpeed = 13;
     private readonly float FlySpeed = 6;
 
-    [SerializeField] private float _minRandomX;
-    [SerializeField] private float _maxRandomX;
-
     [SerializeField] private SFXSO _miss;
-    [SerializeField] private Vector3 _halfExtents;
+    [SerializeField] private Collider _catch;
 
     private SFX _sfx;
     private Rigidbody _rigidbody;
     private Projectile _projectile;
     private Targeting _targeting;
+
+    private CatchZone _catchZone;
+    private Collider _catchZoneCollider;
+
+    private float _minRandomX;
+    private float _maxRandomX;
 
     private bool _isFlying;
     private float _acceleration;
@@ -39,10 +41,19 @@ public class ProjectileMovement : MonoBehaviour
             throw new ArgumentNullException(nameof(_miss));
         }
 
+        if (_catch == null)
+        {
+            throw new ArgumentNullException(nameof(_catch));
+        }
+
         _acceleration = FlySpeed;
         _targeting = _projectile.Character.GetComponent<Targeting>();
         _rigidbody = GetComponent<Rigidbody>();
         _sfx = GetComponent<SFX>();
+        _catchZoneCollider = _catchZone.GetComponent<Collider>();
+
+        _minRandomX = _catchZoneCollider.bounds.min.x;
+        _maxRandomX = _catchZoneCollider.bounds.max.x;
 
         _targeting.Aimed += OnAimed;
         _projectile.Ricocheting += OnRicocheting;
@@ -64,13 +75,13 @@ public class ProjectileMovement : MonoBehaviour
 
     public void Init(Projectile projectile)
     {
-        if (projectile == null)
-        {
-            throw new ArgumentNullException(nameof(projectile));
-        }
-
         _projectile = projectile;
         enabled = true;
+    }
+
+    public void Init(CatchZone catchZone)
+    {
+        _catchZone = catchZone;
     }
 
     public void StartFly(Vector3 startPosition)
@@ -97,19 +108,22 @@ public class ProjectileMovement : MonoBehaviour
 
     private Vector3 GenerateNewDirection()
     {
-        if (IsReturning == false)
-        {
-            Return();
-        }
+        float endPointY = 0.5f;
 
-        _flyDirection.x = Random.Range(_minRandomX, _maxRandomX);
+        float randomX = Random.Range(_minRandomX, _maxRandomX);
+        Vector3 endPoint = new Vector3(randomX, endPointY, _catchZoneCollider.transform.position.z);
+        _flyDirection = (endPoint - transform.position).normalized;
         Rotate();
 
-        return _flyDirection;
+        _catch.enabled = true;
+        IsReturning = true;
+
+        return endPoint;
     }
 
     private void Return()
     {
+        _catch.enabled = true;
         _flyDirection = -_flyDirection;
         IsReturning = true;
     }
@@ -130,21 +144,7 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnRicocheting()
     {
-        bool canRicochet = false;
-        RaycastHit hit = default(RaycastHit);
-
-        do
-        {
-            Vector3 direction = GenerateNewDirection();
-            Physics.BoxCast(transform.position, _halfExtents, direction, out hit, transform.rotation, RayDistance);
-
-            if (hit.point != Vector3.zero &&
-                hit.collider.gameObject.TryGetComponent<CatchZone>(out CatchZone catchZone))
-            {
-                canRicochet = true;
-            }
-        } while (canRicochet == false);
-
-        Ricocheted?.Invoke(hit.point);
+        Vector3 endPoint = GenerateNewDirection();
+        Ricocheted?.Invoke(endPoint);
     }
 }

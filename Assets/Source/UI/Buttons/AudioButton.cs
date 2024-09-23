@@ -8,6 +8,8 @@ public class AudioButton : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private ImageSO _imageSO;
 
+    private SaveLoader _saveLoader;
+
     public Action Switched;
 
     private void OnEnable()
@@ -36,9 +38,15 @@ public class AudioButton : MonoBehaviour
         _button.onClick.RemoveListener(Switch);
     }
 
+    public void Init(SaveLoader saveLoader)
+    {
+        _saveLoader = saveLoader;
+    }
+
     protected virtual void Switch()
     {
         _image.sprite = _imageSO.Switch();
+        _saveLoader.Save();
         Switched?.Invoke();
     }
 }

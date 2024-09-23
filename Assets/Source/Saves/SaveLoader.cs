@@ -23,12 +23,6 @@ public class SaveLoader : MonoBehaviour
     private ImageSO _musicButtonData;
     private ImageSO _sfxButtonData;
 
-    private void OnDisable()
-    {
-        _musicButton.Switched -= Save;
-        _sfxButton.Switched -= Save;
-    }
-
     public void Init(ProgressBarSO progressBarData, PlayerDataSO playerData, ZonesSO zonesData,
         SpawnChancesSO spawnChancesData, SkinDataSO[] skinsData, TutorialSO tutorialData, AudioSettingsSO audioSettings,
         ImageSO musicButtonData, ImageSO sfxButtonData)
@@ -42,14 +36,6 @@ public class SaveLoader : MonoBehaviour
         _audioSettings = audioSettings;
         _musicButtonData = musicButtonData;
         _sfxButtonData = sfxButtonData;
-    }
-
-    public void Init(MusicButton musicButton, SFXButton sfxButton)
-    {
-        _musicButton = musicButton;
-        _sfxButton = sfxButton;
-        _musicButton.Switched += Save;
-        _sfxButton.Switched += Save;
     }
 
     public void Save()
@@ -88,12 +74,10 @@ public class SaveLoader : MonoBehaviour
 
         if (PlayerPrefs.HasKey(key))
         {
-            Debug.Log("Using old savedata");
             saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
         }
         else
         {
-            Debug.Log("Creating new savedata");
             saveData = new SaveData();
         }
 
@@ -116,11 +100,6 @@ public class SaveLoader : MonoBehaviour
             {
                 _skinsData[i].Init(saveData.SkinsState[i]);
             }
-        }
-
-        for (int i = 0; i < saveData.CubesIndex.Length; i++)
-        {
-            Debug.Log(saveData.CubesIndex[i]);
         }
 
         _progressBarData.Init(saveData.CurrentPointIndex, saveData.StartBarValue, saveData.EndBarValue);

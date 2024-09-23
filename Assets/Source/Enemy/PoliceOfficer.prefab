@@ -1071,8 +1071,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.077421725, y: 0.13249029, z: 0.3376154}
-  m_Center: {x: 0.0019648797, y: 0.09037102, z: -0.11717464}
+  m_Size: {x: 0.077421725, y: 0.29094902, z: 0.409743}
+  m_Center: {x: 0.0019648857, y: 0.04043967, z: -0.11753128}
 --- !u!1 &2126487283285616481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1589,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1421347949061301832}
+  - {fileID: 330050218189385573}
   m_Father: {fileID: 2717411415948051666}
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!95 &7176263244867348872
@@ -1629,7 +1630,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 7972262015789642922}
   _startFlyPosition: {fileID: 2456628581594019473}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
+  _catch: {fileID: 4289490740182370953}
 --- !u!114 &5348793979589891567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,11 +1643,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 2.5
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 4289490740182370953}
 --- !u!114 &3327442106389116571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,6 +2224,59 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00000035762787, y: 0.9992908, z: -0.022728108}
     m_Extent: {x: 0.5517026, y: 0.31829122, z: 0.24037516}
   m_DirtyAABB: 0
+--- !u!1 &5055312304727456330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330050218189385573}
+  - component: {fileID: 4289490740182370953}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &330050218189385573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055312304727456330}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000089406946, y: -0.00000014901158, z: -0.00000014901158, w: 1}
+  m_LocalPosition: {x: -0.009823147, y: -0.061282072, z: 0.088150546}
+  m_LocalScale: {x: 0.8333328, y: 0.83333313, z: 0.83333254}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8328612567115375684}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4289490740182370953
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055312304727456330}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.077421725, y: 0.28713623, z: 0.44592768}
+  m_Center: {x: 0.0019648795, y: 0.03858969, z: -0.14040697}
 --- !u!1 &5332527513048419826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2772,7 @@ GameObject:
   - component: {fileID: 5914487444095376328}
   - component: {fileID: 7159851729012700703}
   - component: {fileID: 8752445037033665758}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PoliceOfficer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2807,7 +2861,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.2
 --- !u!114 &7762660051720610036
@@ -2881,10 +2934,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16120136
-  m_Height: 1.8760353
+  m_Radius: 0.48780987
+  m_Height: 2.3264475
   m_Direction: 1
-  m_Center: {x: 0.007020235, y: 0.9155819, z: 0.02704665}
+  m_Center: {x: 0.05608175, y: 0.9812647, z: 0.02704667}
 --- !u!82 &8752445037033665758
 AudioSource:
   m_ObjectHideFlags: 0

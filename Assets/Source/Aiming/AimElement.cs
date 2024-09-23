@@ -23,32 +23,19 @@ public class AimElement : MonoBehaviour
     protected virtual void OnDisable()
     {
         _character.Throwed -= DecreaseScale;
+        _character.Won -= DecreaseScale;
         _targeting.Aiming -= IncreaseScale;
         _health.Died -= DecreaseScale;
     }
 
     public void Init(Character character, Targeting targeting, Health health)
     {
-        if (character == null)
-        {
-            throw new ArgumentNullException(nameof(character));
-        }
-
-        if (targeting == null)
-        {
-            throw new ArgumentNullException(nameof(targeting));
-        }
-
-        if (health == null)
-        {
-            throw new ArgumentNullException(nameof(health));
-        }
-
         _character = character;
         _targeting = targeting;
         _health = health;
 
         _health.Died += DecreaseScale;
+        _character.Won += DecreaseScale;
 
         enabled = true;
     }

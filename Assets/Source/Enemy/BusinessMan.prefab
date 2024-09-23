@@ -757,6 +757,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6917459371469199523}
+  - {fileID: 7094596498626206442}
   m_Father: {fileID: 8993711149224456150}
   m_LocalEulerAnglesHint: {x: 66.877, y: 214.283, z: -19.969}
 --- !u!95 &6670357067448955545
@@ -797,7 +798,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 1400698037070810876}
   _startFlyPosition: {fileID: 4876222966912324720}
   _punch: {fileID: 11400000, guid: e81004136efbafb4fb0c2f2cd8952b16, type: 2}
-  NewColor: {r: 1, g: 1, b: 1, a: 0}
+  _catch: {fileID: 8434780882848722680}
 --- !u!114 &5901599511174318755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,11 +811,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flySpeed: 2.5
   _minRandomX: -0.5
   _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
   _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
+  _catch: {fileID: 8434780882848722680}
 --- !u!114 &3697392536043070689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1848,6 +1849,59 @@ Transform:
   - {fileID: 2319860417785018111}
   m_Father: {fileID: 6361461851829068780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5683788851497819044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7094596498626206442}
+  - component: {fileID: 8434780882848722680}
+  m_Layer: 9
+  m_Name: CatchCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7094596498626206442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5683788851497819044}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.6730373, y: 0.21434467, z: -0.21838139, w: 0.67334}
+  m_LocalPosition: {x: -0.091, y: 0, z: -0.136}
+  m_LocalScale: {x: 0.6399998, y: 0.63999987, z: 0.6399999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2319860417785018111}
+  m_LocalEulerAnglesHint: {x: 89.672, y: -67.893, z: -103.528}
+--- !u!65 &8434780882848722680
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5683788851497819044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.80065084, y: 0.6311606, z: 0.18094483}
+  m_Center: {x: 0.009801958, y: 0.31568253, z: 0.0041437573}
 --- !u!1 &5797463092236475307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1983,7 @@ GameObject:
   - component: {fileID: 8516792495616614466}
   - component: {fileID: 8586057062559751623}
   - component: {fileID: 2890434150479164730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BusinessMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2018,7 +2072,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footsteps: {fileID: 11400000, guid: 2a9aa4b7e4854624a822c7ebfa516af2, type: 2}
-  _acceleration: 2.7
   _yModifier: 10
   _duration: 0.2
 --- !u!114 &3460006786753076828
@@ -2092,10 +2145,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16120136
+  m_Radius: 0.4303645
   m_Height: 1.8760353
   m_Direction: 1
-  m_Center: {x: 0.007020235, y: 0.9155819, z: 0.02704665}
+  m_Center: {x: 0.022383466, y: 0.9155819, z: 0.027046701}
 --- !u!82 &2890434150479164730
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 [RequireComponent(typeof(ProjectileModifier))]
 [RequireComponent(typeof(ProjectileMovement))]
@@ -20,6 +21,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private StartFlyPosition _startFlyPosition;
 
     [SerializeField] private SFXSO _punch;
+    [SerializeField] private Collider _catch;
 
     private Character _character;
     private Animator _animator;
@@ -37,12 +39,11 @@ public class Projectile : MonoBehaviour
     private Quaternion _startRotation;
     private Vector3 _startScale;
     private Transform _startParent;
+    private CatchZone _catchZone;
 
     public event Action Catched;
     public event Action Ricocheting;
     public event Action<string> Throwing;
-
-    public bool IsReturning => _movement.IsReturning;
 
     public Character Character => _character;
 
@@ -70,6 +71,11 @@ public class Projectile : MonoBehaviour
             throw new ArgumentNullException(nameof(_punch));
         }
 
+        if (_catch == null)
+        {
+            throw new ArgumentNullException(nameof(_catch));
+        }
+
         _targeting = _character.GetComponent<Targeting>();
         _modifier = GetComponent<ProjectileModifier>();
         _movement = GetComponent<ProjectileMovement>();
@@ -78,6 +84,7 @@ public class Projectile : MonoBehaviour
         _impulseSource = GetComponent<CinemachineImpulseSource>();
         _sfx = GetComponent<SFX>();
 
+        _movement.Init(_catchZone);
         _movement.Init(this);
 
         _targeting.Aimed += OnAimed;
@@ -95,20 +102,11 @@ public class Projectile : MonoBehaviour
         _modifier.enabled = false;
     }
 
-    public void Init(Character character, Helper helper)
+    public void Init(Character character, Helper helper, CatchZone catchZone)
     {
-        if (character == null)
-        {
-            throw new ArgumentNullException(nameof(character));
-        }
-
-        if (helper == null)
-        {
-            throw new ArgumentNullException(nameof(helper));
-        }
-
         _character = character;
         _helper = helper;
+        _catchZone = catchZone;
         enabled = true;
     }
 
@@ -137,6 +135,7 @@ public class Projectile : MonoBehaviour
         {
             _movement.StopFly();
             _animator.enabled = false;
+            _catch.enabled = false;
             transform.parent = _startParent;
             transform.localPosition = _startPosition;
             transform.localRotation = _startRotation;
@@ -147,22 +146,24 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_movement.IsReturning == true)
+        if (collision.gameObject.TryGetComponent<BombPlatform>(out BombPlatform bombPlatform))
         {
+            OnRicocheting();
             return;
         }
 
-        if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone))
-        {
-            _movement.Miss();
-            return;
-        }
-
-        OnRicocheting();
-
-        if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube))
+        if (collision.gameObject.transform.TryGetComponent<Cube>(out Cube cube)
+            && _movement.IsReturning == false)
         {
             cube.OnCollision(this);
+            OnRicocheting();
+            return;
+        }
+
+        if (collision.gameObject.TryGetComponent<ReturnZone>(out ReturnZone returnZone)
+            && _movement.IsReturning == false)
+        {
+            _movement.Miss();
         }
     }
 

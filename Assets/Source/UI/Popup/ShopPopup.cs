@@ -56,16 +56,6 @@ public class ShopPopup : MainPopup
 
     public void Init(Health playerHealth, Health enemyHealth)
     {
-        if (playerHealth == null)
-        {
-            throw new ArgumentNullException(nameof(playerHealth));
-        }
-
-        if (enemyHealth == null)
-        {
-            throw new ArgumentNullException(nameof(enemyHealth));
-        }
-
         _playerHealth = playerHealth;
         _enemyHealth = enemyHealth;
 
@@ -75,21 +65,6 @@ public class ShopPopup : MainPopup
 
     public void Init(SkinDataSO[] skinsData, Shop shop, SkinRewardedAd skinRewardedAd)
     {
-        if (skinsData.Length == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(skinsData));
-        }
-
-        if (shop == null)
-        {
-            throw new ArgumentNullException(nameof(shop));
-        }
-
-        if (skinRewardedAd == null)
-        {
-            throw new ArgumentNullException(nameof(skinRewardedAd));
-        }
-
         _skinsData = skinsData;
         _shop = shop;
         _skinRewardedAd = skinRewardedAd;
