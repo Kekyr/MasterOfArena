@@ -17,8 +17,10 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
   - 50
-  - 50
+  - 25
+  - 25
   _cubePrefabs:
   - {fileID: 1535271192868560719, guid: a5c90b7b68b66e547a5b3a96408d61c1, type: 3}
   - {fileID: 1446710126809515456, guid: 1f9dccd4654180a49b2b3ad6bc56e805, type: 3}
@@ -28,3 +30,6 @@ MonoBehaviour:
   - {fileID: 4396223751738554444, guid: e3f34bc1400234047901490642f9720d, type: 3}
   - {fileID: 2743619511052618449, guid: fa785f4fedb2d17468f923af4e0167d7, type: 3}
   - {fileID: 274967860432286676, guid: 1cb0a2d9f60c4074fb3ba8b7f461f795, type: 3}
+  _firstElementIndex: 5
+  _secondElementIndex: 6
+  _thirdElementIndex: 7

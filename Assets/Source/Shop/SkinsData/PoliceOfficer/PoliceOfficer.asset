@@ -15,6 +15,6 @@ MonoBehaviour:
   _viewPrefab: {fileID: 6245053682745880682, guid: 5d79f187db0c38e4ca4435f998ebe727, type: 3}
   _prefabIndex: 2
   _sprite: {fileID: 21300000, guid: 33c983350a34d8a4aaaca149299f0746, type: 3}
-  _cost: 300
+  _cost: 100
   _ad: 0
   _state: 0

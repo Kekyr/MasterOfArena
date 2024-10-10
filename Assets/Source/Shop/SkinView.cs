@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class SkinView : MonoBehaviour
 {
     private readonly float NewPositionY = -50f;
-    private readonly float Duration = 1f;
+    private readonly float MoveDuration = 1f;
     private readonly float NewScale = 1.3f;
 
     [SerializeField] private GameObject _focus;
@@ -19,6 +20,8 @@ public class SkinView : MonoBehaviour
 
     private TextMeshProUGUI _costTextMesh;
     private Button _button;
+
+    private float _boughtYPosition;
 
     public event Action<SkinView> Selected;
     public event Action<SkinView> TryBuy;
@@ -64,6 +67,7 @@ public class SkinView : MonoBehaviour
 
     private void Start()
     {
+        _boughtYPosition = _visual.localPosition.y + NewPositionY;
         InitStatus();
     }
 
@@ -129,7 +133,7 @@ public class SkinView : MonoBehaviour
     {
         _cost.SetActive(false);
         _background.color = Color.white;
-        _visual.localPosition = new Vector3(_visual.localPosition.x, _visual.localPosition.y + NewPositionY,
+        _visual.localPosition = new Vector3(_visual.localPosition.x, _boughtYPosition,
             _visual.localPosition.z);
         _visual.localScale = new Vector3(NewScale, NewScale, NewScale);
     }

@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 66.42
     OrthographicSize: 10
-    NearClipPlane: 0.1
+    NearClipPlane: 2.85
     FarClipPlane: 1200
     Dutch: 0
     ModeOverride: 0
@@ -984,7 +984,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.53336376}
-  m_AnchoredPosition: {x: 137, y: -224.07935}
+  m_AnchoredPosition: {x: 84, y: -224.07935}
   m_SizeDelta: {x: 101.12842, y: 559.7948}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &150763883
@@ -3223,7 +3223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &786613051
 Transform:
   m_ObjectHideFlags: 0
@@ -3321,7 +3321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28244638, y: 0.5}
   m_AnchorMax: {x: 0.28244638, y: 0.5}
-  m_AnchoredPosition: {x: 13.3, y: -0.18189}
+  m_AnchoredPosition: {x: 32.5, y: -0.18189}
   m_SizeDelta: {x: 67.9046, y: 30.867}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787769305
@@ -3344,7 +3344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +100
+  m_text: +10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a2157e1f9c4c4d38841fbb92558f587, type: 2}
   m_sharedMaterial: {fileID: -6360588970910393389, guid: 9a2157e1f9c4c4d38841fbb92558f587, type: 2}
@@ -3407,7 +3407,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.07318306, z: 0.20146942, w: -0.27101994}
+  m_margin: {x: 0, y: 0.07318306, z: 20.219719, w: -0.27101994}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3958,7 +3958,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 2.85
   far clip plane: 1200
   field of view: 66.42
   orthographic: 0
@@ -4204,7 +4204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1061833416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5551,7 +5551,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438761825}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66bfc9a0cef373b49bd11ad3eab03cd6, type: 3}
   m_Name: 
@@ -5572,7 +5572,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11343,8 +11343,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: -4.260895}
-  m_SizeDelta: {x: 0, y: 8.5217}
+  m_AnchoredPosition: {x: 0, y: -4.2608}
+  m_SizeDelta: {x: 0, y: 8.5218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8995852232864297596
 GameObject:

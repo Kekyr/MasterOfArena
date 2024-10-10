@@ -14,7 +14,7 @@ public class Music : MonoBehaviour
 
     private float _volume;
 
-    private void OnEnable()
+    private void Awake()
     {
         if (_audioSource == null)
         {
@@ -27,7 +27,7 @@ public class Music : MonoBehaviour
         }
 
         _volume = _audioSource.volume;
-        _button.Switched += OnSwitch;
+        Play(_music.GetRandomClip());
     }
 
     private void OnDisable()
@@ -35,11 +35,6 @@ public class Music : MonoBehaviour
         _button.Switched -= OnSwitch;
         _playerHealth.Died -= OnDead;
         _enemyHealth.Died -= OnDead;
-    }
-
-    private void Start()
-    {
-        Play(_music.GetRandomClip());
     }
 
     public void Init(Health playerHealth, Health enemyHealth, MusicButton button, AudioSettingsSO audioSettings)
@@ -52,7 +47,7 @@ public class Music : MonoBehaviour
         _playerHealth.Died += OnDead;
         _enemyHealth.Died += OnDead;
 
-        enabled = true;
+        _button.Switched += OnSwitch;
     }
 
     public void Pause()

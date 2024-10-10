@@ -7,9 +7,9 @@ public class SpawnChancesSO : ScriptableObject
     [SerializeField] private List<float> _spawnChances;
     [SerializeField] private List<Cube> _cubePrefabs;
 
-    private int _firstElementIndex;
-    private int _secondElementIndex;
-    private int _thirdElementIndex;
+    [SerializeField] private int _firstElementIndex;
+    [SerializeField] private int _secondElementIndex;
+    [SerializeField] private int _thirdElementIndex;
 
     public List<float> SpawnChances => _spawnChances;
 
@@ -34,11 +34,16 @@ public class SpawnChancesSO : ScriptableObject
             int startChance = 50;
             int firstElementIndex = 0;
             int secondElementIndex = 1;
+            int thirdElementIndex = 2;
 
             _spawnChances.RemoveRange(index, count);
 
-            _spawnChances[firstElementIndex] = startChance;
-            _spawnChances[secondElementIndex] = startChance;
+            _firstElementIndex = firstElementIndex;
+            _secondElementIndex = secondElementIndex;
+            _thirdElementIndex = thirdElementIndex;
+
+            _spawnChances[_firstElementIndex] = startChance;
+            _spawnChances[_secondElementIndex] = startChance;
         }
 
         float minValue = 0;
