@@ -1,0 +1,39 @@
+{
+    "idSave": 1,
+    "isFirstSession": true,
+    "language": "ru",
+    "promptDone": false,
+    "CurrentPointIndex": 0,
+    "StartBarValue": 0.0,
+    "EndBarValue": 0.20000000298023225,
+    "Score": 0,
+    "Coins": 0,
+    "CurrentZoneIndex": 0,
+    "SpawnChances": [
+        50.0,
+        50.0
+    ],
+    "CubesIndex": [
+        0,
+        1,
+        0
+    ],
+    "SkinsState": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "CurrentSkinIndex": 0,
+    "CanPlay": false,
+    "IsMusicOn": true,
+    "MusicSpriteIndex": 0,
+    "IsSFXOn": true,
+    "SFXSpriteIndex": 0
+}

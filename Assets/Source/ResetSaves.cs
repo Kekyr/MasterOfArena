@@ -1,10 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-#if UNITY_WEBGL && !UNITY_EDITOR
-using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
-#endif
+using YG;
 
 public class ResetSaves : MonoBehaviour
 {
@@ -28,10 +25,7 @@ public class ResetSaves : MonoBehaviour
 
     private void Reset()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-#if UNITY_EDITOR
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-#endif
+        YandexGame.ResetSaveProgress();
+        YandexGame.SaveProgress();
     }
 }

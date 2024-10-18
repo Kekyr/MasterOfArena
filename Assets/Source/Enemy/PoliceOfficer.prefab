@@ -1643,10 +1643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a678ef0a891572d4c85aabd7bcc51ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minRandomX: -0.5
-  _maxRandomX: 0.5
   _miss: {fileID: 11400000, guid: f725a9131f448ad47bff00c9344c39d0, type: 2}
-  _halfExtents: {x: 0.05, y: 0.05, z: 0.05}
   _catch: {fileID: 4289490740182370953}
 --- !u!114 &3327442106389116571
 MonoBehaviour:
@@ -2833,7 +2830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damageMarkColor: {r: 0, g: 0.29803923, b: 1, a: 1}
   _throw: {fileID: 11400000, guid: c5e1860ab5e02a34ea3e4b79c43b73e8, type: 2}
-  _win: {fileID: 11400000, guid: 28a392e2c16390f4dadaad1497d8a562, type: 2}
+  _win: {fileID: 11400000, guid: 09f258a1412c164479ecf99e8195afc2, type: 2}
 --- !u!114 &3720165560719553791
 MonoBehaviour:
   m_ObjectHideFlags: 0

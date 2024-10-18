@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Agava.YandexGames;
+//using Agava.YandexGames;
 using UnityEngine;
+using YG;
+using YG.Utils.LB;
 
 public class LeaderboardView : MonoBehaviour
 {
@@ -37,29 +39,24 @@ public class LeaderboardView : MonoBehaviour
     {
         ClearLeaderboard();
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-        Leaderboard.GetPlayerEntry(YandexLeaderboard.LeaderboardName, (result) =>
+        string playerId = YandexGame.playerId;
+        int length = Size > leaderboardPlayers.Count ? leaderboardPlayers.Count : Size;
+
+        for (int i = 0; i < length; i++)
         {
-            string playerId = result.player.uniqueID;
-            int length = Size > leaderboardPlayers.Count ? leaderboardPlayers.Count : Size;
-
-            for (int i = 0; i < length; i++)
+            if (leaderboardPlayers[i].Id == playerId)
             {
-                if (leaderboardPlayers[i].Id == playerId)
-                {
-                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i],
-                        _playerScoreContainer);
-                    SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i], _container);
-                }
-                else
-                {
-                    SpawnLeaderboardElement(_leaderboardElementPrefab, leaderboardPlayers[i], _container);
-                }
+                SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i],
+                    _playerScoreContainer);
+                SpawnLeaderboardElement(_playerLeaderboardElementPrefab, leaderboardPlayers[i], _container);
             }
+            else
+            {
+                SpawnLeaderboardElement(_leaderboardElementPrefab, leaderboardPlayers[i], _container);
+            }
+        }
 
-            gameObject.SetActive(true);
-        });
-#endif
+        gameObject.SetActive(true);
     }
 
     private void SpawnLeaderboardElement(LeaderboardElement prefab, LeaderboardPlayer player, Transform container)

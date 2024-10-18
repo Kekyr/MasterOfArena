@@ -1,6 +1,6 @@
-using Agava.YandexGames;
 using Lean.Localization;
 using UnityEngine;
+using YG;
 
 [RequireComponent(typeof(LeanLocalization))]
 public class Localization : MonoBehaviour
@@ -18,15 +18,12 @@ public class Localization : MonoBehaviour
     private void Awake()
     {
         _leanLocalization = GetComponent<LeanLocalization>();
-
-#if UNITY_WEBGL && !UNITY_EDITOR
         ChangeLanguage();
-#endif
     }
 
     private void ChangeLanguage()
     {
-        string languageCode = YandexGamesSdk.Environment.i18n.lang;
+        string languageCode = YandexGame.lang;
 
         switch (languageCode)
         {

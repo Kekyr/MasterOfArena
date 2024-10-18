@@ -1,15 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if UNITY_WEBGL && !UNITY_EDITOR
-using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
-#endif
+using YG;
 
 public class SaveLoader : MonoBehaviour
 {
-    private readonly string key = "Save";
-
     private ProgressBarSO _progressBarData;
     private PlayerDataSO _playerData;
     private ZonesSO _zonesData;
@@ -53,35 +48,26 @@ public class SaveLoader : MonoBehaviour
             skinsState.Add(skinData.Status);
         }
 
-        SaveData saveData = new SaveData(_progressBarData.CurrentPointIndex, _progressBarData.StartSliderValue,
+        SavesYG saveData = new SavesYG(_progressBarData.CurrentPointIndex, _progressBarData.StartSliderValue,
             _progressBarData.EndSliderValue, _playerData.Score, _playerData.Coins, _zonesData.CurrentIndex,
             _spawnChancesData.SpawnChances, cubesIndex,
             skinsState, _playerData.CurrentSkinIndex, _tutorialData.CanPlay, _audioSettings.IsMusicOn,
             _musicButtonData.CurrentIndex,
             _audioSettings.IsSFXOn, _sfxButtonData.CurrentIndex);
 
-        string json = JsonUtility.ToJson(saveData);
-
-        PlayerPrefs.SetString(key, json);
-        PlayerPrefs.Save();
+        YandexGame.savesData = saveData;
+        YandexGame.SaveProgress();
     }
 
     public void OnLoaded()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         int firstElementIndex = 0;
-        SaveData saveData;
+        SavesYG saveData;
 
-        if (PlayerPrefs.HasKey(key))
-        {
-            saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(key));
-        }
-        else
-        {
-            saveData = new SaveData();
-        }
+        saveData = YandexGame.savesData;
 
-        if (saveData.SkinsState == null)
+        if (saveData.SkinsState.Count == 0)
         {
             for (int i = 0; i < _skinsData.Length; i++)
             {

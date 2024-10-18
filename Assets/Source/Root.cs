@@ -33,10 +33,8 @@ public class Root : MonoBehaviour
     [SerializeField] private AudioSettingsSO _audioSettings;
 
     [SerializeField] private InterstitialAd _interstitialAd;
-    [SerializeField] private ResourceRewardedAd _resourceRewardedAd;
-    [SerializeField] private SFX _resourceRewardedAdSFX;
-    [SerializeField] private SkinRewardedAd _skinRewardedAd;
-    [SerializeField] private SFX _skinRewardedAdSFX;
+    [SerializeField] private RewardedAd _rewardedAd;
+    [SerializeField] private SFX _rewardedAdSFX;
 
     [SerializeField] private LeanLocalizedTextMeshProUGUI _zoneText;
 
@@ -163,24 +161,14 @@ public class Root : MonoBehaviour
             throw new ArgumentNullException(nameof(_interstitialAd));
         }
 
-        if (_resourceRewardedAd == null)
+        if (_rewardedAd == null)
         {
-            throw new ArgumentNullException(nameof(_resourceRewardedAd));
+            throw new ArgumentNullException(nameof(_rewardedAd));
         }
 
-        if (_resourceRewardedAdSFX == null)
+        if (_rewardedAdSFX == null)
         {
-            throw new ArgumentNullException(nameof(_resourceRewardedAdSFX));
-        }
-
-        if (_skinRewardedAd == null)
-        {
-            throw new ArgumentNullException(nameof(_skinRewardedAd));
-        }
-
-        if (_skinRewardedAdSFX == null)
-        {
-            throw new ArgumentNullException(nameof(_skinRewardedAdSFX));
+            throw new ArgumentNullException(nameof(_rewardedAdSFX));
         }
 
         if (_zoneText == null)
@@ -312,13 +300,8 @@ public class Root : MonoBehaviour
         enemy = Instantiate(enemy, _enemySpawnPosition.transform.position, enemy.transform.rotation,
             _enemySpawnPosition.transform);
 
-        _resourceRewardedAd.Init(_saveLoader);
-        _resourceRewardedAd.Init(_playerData, _coins);
-        _resourceRewardedAdSFX.Init(_sfxButton, _audioSettings);
-
-        _skinRewardedAd.Init(_saveLoader);
-        _skinRewardedAd.Init(_music);
-        _skinRewardedAdSFX.Init(_sfxButton, _audioSettings);
+        _rewardedAd.Init(_saveLoader, _music, _playerData, _coins);
+        _rewardedAdSFX.Init(_sfxButton, _audioSettings);
 
         _coinsView.Init(_coins);
         _coins.Init(_playerData);
@@ -328,7 +311,7 @@ public class Root : MonoBehaviour
         _playerHealth = _player.GetComponent<Health>();
         _aiHealth = enemy.GetComponent<Health>();
 
-        _shopPopup.Init(skinsData, _shop, _skinRewardedAd);
+        _shopPopup.Init(skinsData, _shop, _rewardedAd);
         _shopPopup.Init(_playerHealth, _aiHealth);
         _shop.Init(_playerData, _coins, _shopPopup, _saveLoader);
         _shopSFX.Init(_sfxButton, _audioSettings);
@@ -346,7 +329,7 @@ public class Root : MonoBehaviour
         _cubeSpawner.Init(_playerHealth, _aiHealth);
 
         _playerRoot.Init(_inputRouter, _leaderboard, _interstitialAd);
-        _playerRoot.Init(_resourceRewardedAd, _saveLoader, _coins);
+        _playerRoot.Init(_rewardedAd, _saveLoader, _coins);
         _playerRoot.Init(_playerData, _spawnChancesSO);
 
         _aiRoot.Init(_cubeSpawner);

@@ -1,0 +1,2 @@
+Build path: E:/Разное/UnityProjects/ProjectHC/Build
+Build number: 13

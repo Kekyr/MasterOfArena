@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Agava.YandexGames;
 using Lean.Localization;
 using UnityEngine;
+using YG;
+using YG.Utils.LB;
 
 public class YandexLeaderboard : MonoBehaviour
 {
-    public const string LeaderboardName = "NewNewLeaderboard";
+    public const string LeaderboardName = "FinalLeaderboard";
     private const string TranslationName = "AnonymPhrase";
 
     private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
@@ -14,8 +15,11 @@ public class YandexLeaderboard : MonoBehaviour
     [SerializeField] private LeaderboardView _leaderboardView;
 
     private Player _player;
-    private ResourceRewardedAd _resourceRewardedAd;
+    private RewardedAd _rewardedAd;
     private LeanTranslation _translation;
+    private PlayerDataSO _playerData;
+
+    private bool _isButtonClicked;
 
     private void OnEnable()
     {
@@ -27,79 +31,90 @@ public class YandexLeaderboard : MonoBehaviour
         _translation = LeanLocalization.GetTranslation(TranslationName);
 
         _player.Victory += SetPlayerScore;
-        _resourceRewardedAd.Rewarded += SetPlayerScore;
+        _rewardedAd.Rewarded += SetPlayerScore;
+        YandexGame.onGetLeaderboard += OnGet;
     }
 
     private void OnDisable()
     {
         _player.Victory -= SetPlayerScore;
-        _resourceRewardedAd.Rewarded -= SetPlayerScore;
+        _rewardedAd.Rewarded -= SetPlayerScore;
+        YandexGame.onGetLeaderboard -= OnGet;
     }
 
-    public void Init(Player player, ResourceRewardedAd resourceRewardedAd)
+    public void Init(Player player, RewardedAd rewardedAd, PlayerDataSO playerData)
     {
-        if (player == null)
-        {
-            throw new ArgumentNullException(nameof(player));
-        }
-
-        if (resourceRewardedAd == null)
-        {
-            throw new ArgumentNullException(nameof(resourceRewardedAd));
-        }
-
         _player = player;
-        _resourceRewardedAd = resourceRewardedAd;
+        _rewardedAd = rewardedAd;
+        _playerData = playerData;
         enabled = true;
     }
 
-    public void SetPlayerScore(int score)
+    public void SetPlayerScore()
     {
-        if (PlayerAccount.IsAuthorized == false)
+        if (YandexGame.auth == false)
         {
             return;
         }
 
-        Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
-        {
-            if (result == null || result.score < score)
-            {
-                Leaderboard.SetScore(LeaderboardName, score);
-            }
-        });
+        YandexGame.GetLeaderboard(LeaderboardName, 10, 3, 3, "medium");
     }
 
     public void Fill()
     {
-        if (PlayerAccount.IsAuthorized == false)
+        if (YandexGame.auth == false)
         {
             return;
         }
 
         _leaderboardPlayers.Clear();
-
-        Leaderboard.GetEntries(LeaderboardName, LoadData);
+        _isButtonClicked = true;
+        YandexGame.GetLeaderboard(LeaderboardName, 10, 3, 3, "medium");
     }
 
-    private void LoadData(LeaderboardGetEntriesResponse result)
+    private void OnGet(LBData lb)
     {
-        foreach (var entry in result.entries)
+        if (lb.technoName != LeaderboardName)
         {
-            string id = entry.player.uniqueID;
-            string avatar = entry.player.profilePicture;
-            string name = entry.player.publicName;
+            return;
+        }
+
+        TryChangeScore(lb);
+
+        if (_isButtonClicked == true)
+        {
+            CreateLeaderboard(lb);
+            _isButtonClicked = false;
+        }
+    }
+
+    private void CreateLeaderboard(LBData lb)
+    {
+        foreach (var playerData in lb.players)
+        {
+            string id = playerData.uniqueID;
+            string avatar = playerData.photo;
+            string name = playerData.name;
 
             if (string.IsNullOrEmpty(name))
             {
                 name = (string)_translation.Data;
             }
 
-            int rank = entry.rank;
-            int score = entry.score;
+            int rank = playerData.rank;
+            int score = playerData.score;
 
             _leaderboardPlayers.Add(new LeaderboardPlayer(id, avatar, name, rank, score));
         }
 
         _leaderboardView.ConstructLeaderboard(_leaderboardPlayers);
+    }
+
+    private void TryChangeScore(LBData lb)
+    {
+        if (lb.thisPlayer.score < _playerData.Score)
+        {
+            YandexGame.NewLeaderboardScores(LeaderboardName, _playerData.Score);
+        }
     }
 }

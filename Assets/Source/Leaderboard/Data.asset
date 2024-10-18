@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c4c1befefd30f44b9f157551d3d6df, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  _currentSkinIndex: 7
-  _score: 15
+  _currentSkinIndex: 5
+  _score: 5
   _scoreReward: 1
-  _coins: 600
+  _coins: 50
   _coinsReward: 10

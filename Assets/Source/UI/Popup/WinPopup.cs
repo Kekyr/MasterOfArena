@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinPopup : Popup
@@ -15,7 +14,7 @@ public class WinPopup : Popup
 
     private SaveLoader _saveLoader;
     private InterstitialAd _interstitialAd;
-    private ResourceRewardedAd _resourceRewardedAd;
+    private RewardedAd _rewardedAd;
 
     private void OnEnable()
     {
@@ -49,45 +48,22 @@ public class WinPopup : Popup
         _rewardButton.onClick.AddListener(GetReward);
     }
 
-    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd, ResourceRewardedAd resourceRewardedAd)
+    public void Init(SaveLoader saveLoader, InterstitialAd interstitialAd, RewardedAd rewardedAd)
     {
-        if (saveLoader == null)
-        {
-            throw new ArgumentNullException(nameof(saveLoader));
-        }
-
-        if (interstitialAd == null)
-        {
-            throw new ArgumentNullException(nameof(interstitialAd));
-        }
-
-        if (resourceRewardedAd == null)
-        {
-            throw new ArgumentNullException(nameof(resourceRewardedAd));
-        }
-
         _saveLoader = saveLoader;
         _interstitialAd = interstitialAd;
-        _resourceRewardedAd = resourceRewardedAd;
+        _rewardedAd = rewardedAd;
         enabled = true;
     }
 
     private void Next()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
         _interstitialAd.Show();
-#endif
-
-#if UNITY_EDITOR
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-#endif
     }
 
     private void GetReward()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        _resourceRewardedAd.Show();
-#endif
+        _rewardedAd.Show((int)Reward.Resources);
         _rewardButton.interactable = false;
     }
 }

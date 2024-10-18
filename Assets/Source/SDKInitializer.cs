@@ -1,35 +1,19 @@
 using System;
-using System.Collections;
-using Agava.YandexGames;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using PlayerPrefs = Agava.YandexGames.Utility.PlayerPrefs;
+using YG;
 
 public sealed class SDKInitializer : MonoBehaviour
 {
     private SaveLoader _saveLoader;
 
-    private void Awake()
-    {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        YandexGamesSdk.CallbackLogging = true;
-#endif
-    }
-
     private void OnEnable()
     {
-#if UNITY_EDITOR
-        _saveLoader.OnLoaded();
-#endif
+        YandexGame.GetDataEvent += OnInitialized;
     }
 
-    private IEnumerator Start()
+    private void OnDisable()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        yield return YandexGamesSdk.Initialize(OnInitialized);
-#else
-        yield break;
-#endif
+        YandexGame.GetDataEvent -= OnInitialized;
     }
 
     public void Init(SaveLoader saveLoader)
@@ -45,12 +29,7 @@ public sealed class SDKInitializer : MonoBehaviour
 
     private void OnInitialized()
     {
-        YandexGamesSdk.GameReady();
-        PlayerPrefs.Load(_saveLoader.OnLoaded, OnSaveLoadError);
-    }
-
-    private void OnSaveLoadError(string error)
-    {
-        Debug.Log(error);
+        YandexGame.GameReadyAPI();
+        _saveLoader.OnLoaded();
     }
 }

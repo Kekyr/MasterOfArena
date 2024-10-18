@@ -1,27 +1,28 @@
-using Agava.WebUtility;
 using UnityEngine;
+using YG;
 
 public class FocusTracker : MonoBehaviour
 {
-    private readonly float PlayVolume = 0.1f;
     private readonly float PauseVolume = 0f;
-
-    private readonly float PlayTimeScale = 1f;
     private readonly float PauseTimeScale = 0;
 
     private AudioSource _music;
     private TutorialHand _tutorialHand;
 
+    private float _currentVolume;
+    private float _currentTimeScale;
+
+
     private void OnEnable()
     {
-        Application.focusChanged += OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
+        YandexGame.onShowWindowGame += OnShowWindow;
+        YandexGame.onHideWindowGame += OnHideWindow;
     }
 
     private void OnDisable()
     {
-        Application.focusChanged -= OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
+        YandexGame.onShowWindowGame -= OnShowWindow;
+        YandexGame.onHideWindowGame -= OnHideWindow;
     }
 
     public void Init(TutorialHand tutorialHand)
@@ -35,27 +36,17 @@ public class FocusTracker : MonoBehaviour
         enabled = true;
     }
 
-
-    private void OnInBackgroundChangeApp(bool inApp)
+    private void OnShowWindow()
     {
-        MuteAudio(!inApp);
-        PauseGame(!inApp);
+        _music.volume = _currentVolume;
+        Time.timeScale = _currentTimeScale;
     }
 
-    private void OnInBackgroundChangeWeb(bool isBackground)
+    private void OnHideWindow()
     {
-        MuteAudio(isBackground);
-        PauseGame(isBackground);
-    }
-
-    private void MuteAudio(bool value)
-    {
-        _music.volume = value ? PauseVolume : PlayVolume;
-    }
-
-    private void PauseGame(bool value)
-    {
-        float playTimeScale = _tutorialHand.gameObject.activeSelf ? _tutorialHand.TutorialTimeScale : PlayTimeScale;
-        Time.timeScale = value ? PauseTimeScale : playTimeScale;
+        _currentVolume = _music.volume;
+        _currentTimeScale = Time.timeScale;
+        _music.volume = PauseVolume;
+        Time.timeScale = PauseTimeScale;
     }
 }

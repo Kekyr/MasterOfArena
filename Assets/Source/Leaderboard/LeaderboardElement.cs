@@ -1,5 +1,5 @@
 using System;
-using Agava.YandexGames;
+//using Agava.YandexGames;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,8 +56,8 @@ public class LeaderboardElement : MonoBehaviour
 
     public void Initialize(string avatar, string name, int rank, int score)
     {
-        RemoteImage image = new RemoteImage(avatar);
-        image.Download(OnSuccessCallback, OnErrorCallback);
+        //RemoteImage image = new RemoteImage(avatar);
+        //image.Download(OnSuccessCallback, OnErrorCallback);
 
         _playerName.text = name;
         _playerScore.text = score.ToString();

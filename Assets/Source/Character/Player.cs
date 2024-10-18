@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEngine;
 
 public class Player : Character
 {
@@ -9,7 +8,7 @@ public class Player : Character
     private SaveLoader _saveLoader;
     private Coins _coins;
 
-    public event Action<int> Victory;
+    public event Action Victory;
 
     public void Init(PlayerDataSO data, SpawnChancesSO spawnChancesSO, SaveLoader saveLoader, Coins coins)
     {
@@ -25,11 +24,7 @@ public class Player : Character
         _data.AddScore();
         _spawnChancesSO.OnWin();
         _saveLoader.Save();
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-        Victory?.Invoke(_data.Score);
-#endif
-
+        Victory?.Invoke();
         StartCoroutine(base.Win());
         yield return null;
     }
