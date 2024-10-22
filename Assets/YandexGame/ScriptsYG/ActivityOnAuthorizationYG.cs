@@ -14,6 +14,7 @@ namespace YG
             public UnityEvent authorizationTrue;
             public UnityEvent authorizationFalse;
         }
+
         public Events events;
 
         private void OnEnable()
@@ -23,6 +24,7 @@ namespace YG
             if (YandexGame.SDKEnabled)
                 DetermineAuthorization();
         }
+
         private void OnDisable() => YandexGame.GetDataEvent -= DetermineAuthorization;
 
         private void DetermineAuthorization()

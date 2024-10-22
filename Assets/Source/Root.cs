@@ -22,7 +22,6 @@ public class Root : MonoBehaviour
     [SerializeField] private EnemySpawnPosition _enemySpawnPosition;
     [SerializeField] private ZoneSpawnPosition _zoneSpawnPosition;
 
-
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private CinemachineTargetGroup _targetGroup;
 
@@ -58,6 +57,8 @@ public class Root : MonoBehaviour
     [SerializeField] private Shop _shop;
     [SerializeField] private SFX _shopSFX;
     [SerializeField] private ShopPopup _shopPopup;
+
+    [SerializeField] private AuthorizationPopup _authorizationPopup;
 
     private CatchZone _playerCatchZone;
     private CatchZone _enemyCatchZone;
@@ -255,6 +256,11 @@ public class Root : MonoBehaviour
         {
             throw new ArgumentNullException(nameof(_shopPopup));
         }
+
+        if (_authorizationPopup == null)
+        {
+            throw new ArgumentNullException(nameof(_authorizationPopup));
+        }
     }
 
     private void Awake()
@@ -275,6 +281,7 @@ public class Root : MonoBehaviour
             _audioSettings, _musicButtonData, _sfxButtonData);
         _musicButton.Init(_saveLoader);
         _sfxButton.Init(_saveLoader);
+        _authorizationPopup.Init(_leaderboard);
 
         Zone zone = _zones.Current.Prefab;
         zone = Instantiate(zone, _zoneSpawnPosition.transform.position, _zoneSpawnPosition.transform.rotation,

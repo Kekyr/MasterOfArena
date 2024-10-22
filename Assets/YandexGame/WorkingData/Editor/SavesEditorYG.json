@@ -1,6 +1,6 @@
 {
-    "idSave": 1,
-    "isFirstSession": true,
+    "idSave": 5,
+    "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
     "CurrentPointIndex": 0,
@@ -18,20 +18,9 @@
         1,
         0
     ],
-    "SkinsState": [
-        2,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1
-    ],
+    "SkinsState": [],
     "CurrentSkinIndex": 0,
-    "CanPlay": false,
+    "CanPlay": true,
     "IsMusicOn": true,
     "MusicSpriteIndex": 0,
     "IsSFXOn": true,

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-//using Agava.YandexGames;
 using UnityEngine;
 using YG;
-using YG.Utils.LB;
 
 public class LeaderboardView : MonoBehaviour
 {

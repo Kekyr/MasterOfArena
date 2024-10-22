@@ -10,14 +10,14 @@ public class MainPopup : Popup
     private readonly float Duration = 0.2f;
     private readonly float NewAlpha = 1f;
 
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _closeButton;
     [SerializeField] private CanvasGroup _blackout;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
-        if (_button == null)
+        if (_closeButton == null)
         {
-            throw new ArgumentNullException(nameof(_button));
+            throw new ArgumentNullException(nameof(_closeButton));
         }
 
         if (_blackout == null)
@@ -38,12 +38,12 @@ public class MainPopup : Popup
         _blackout.DOFade(NewAlpha, Duration)
             .SetEase(Ease.InOutSine);
 
-        _button.onClick.AddListener(Close);
+        _closeButton.onClick.AddListener(Close);
     }
 
     protected virtual void OnDisable()
     {
-        _button.onClick.RemoveListener(Close);
+        _closeButton.onClick.RemoveListener(Close);
     }
 
     protected virtual void Close()
