@@ -7,7 +7,7 @@ using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SFX))]
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IAttacker
 {
     private readonly float _duration = 0.02f;
     private readonly float _delay = 0.05f;
@@ -34,7 +34,7 @@ public class Character : MonoBehaviour
     private int _currentProjectileIndex;
     private Vector3 _startScale;
 
-    public event Action<Cube> Attacking;
+    public event Action<Vector3, uint> Attacked;
     public event Action<Transform> Throwed;
     public event Action Aimed;
     public event Action Won;
@@ -119,7 +119,10 @@ public class Character : MonoBehaviour
 
     public void Attack(Cube cube)
     {
-        Attacking?.Invoke(cube);
+        if (_health.IsDead == false)
+        {
+            Attacked?.Invoke(cube.transform.position, cube.Damage);
+        }
     }
 
     private void OnThrowing(string animationTrigger)

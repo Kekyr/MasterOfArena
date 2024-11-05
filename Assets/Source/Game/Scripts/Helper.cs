@@ -2,7 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-public class Helper : MonoBehaviour
+public class Helper : MonoBehaviour, IMeshChanger
 {
     public void ChangeMeshColor(MeshRenderer meshRenderer, Color tempColor, float duration)
     {

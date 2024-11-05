@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58389857}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4069988, y: -0.04637746, z: 0.02069654, w: 0.9120158}
+  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3969,7 +3969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4069988, y: -0.04637746, z: 0.02069654, w: 0.9120158}
+  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9470,10 +9470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505a0c7456f0fe747a9bec1d03ca9c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextButton: {fileID: 3171110611313556204}
   _upperPart: {fileID: 407546748}
   _lowerPart: {fileID: 1646859447}
   Duration: 1
-  _nextButton: {fileID: 3171110611313556204}
 --- !u!1 &2965076990430607669
 GameObject:
   m_ObjectHideFlags: 0
@@ -10180,8 +10180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7a930b8487fdb4faa4722bfbf24c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upperPart: {fileID: 180214452}
   _nextButton: {fileID: 5606656510173719522}
+  _upperPart: {fileID: 180214452}
   _rewardButton: {fileID: 1441751334}
 --- !u!224 &4107124345016654687
 RectTransform:

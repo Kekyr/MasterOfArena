@@ -15,12 +15,12 @@ public class HealthView : MonoBehaviour
             throw new ArgumentNullException(nameof(_textMesh));
         }
 
-        _health.HealthChanged += OnHealthChanged;
+        _health.ValueChanged += OnValueChanged;
     }
 
     private void OnDisable()
     {
-        _health.HealthChanged -= OnHealthChanged;
+        _health.ValueChanged -= OnValueChanged;
     }
 
     public void Init(Health health)
@@ -29,7 +29,7 @@ public class HealthView : MonoBehaviour
         enabled = true;
     }
 
-    private void OnHealthChanged(float health)
+    private void OnValueChanged(float health)
     {
         _textMesh.text = health.ToString();
     }

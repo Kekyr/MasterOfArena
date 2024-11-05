@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IValueGiver
 {
     [SerializeField] private uint _start;
 
@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
 
     private BombPlatform _platform;
 
-    public event Action<float> HealthChanged;
+    public event Action<float> ValueChanged;
 
     public event Action Died;
 
@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
     private void OnEnable()
     {
         _current = _start;
-        HealthChanged?.Invoke(_current);
+        ValueChanged?.Invoke(_current);
 
         _platform.Attacked += OnAttacked;
     }
@@ -38,7 +38,7 @@ public class Health : MonoBehaviour
     {
         _current -= damage;
 
-        HealthChanged?.Invoke(_current);
+        ValueChanged?.Invoke(_current);
 
         if (IsDead)
         {

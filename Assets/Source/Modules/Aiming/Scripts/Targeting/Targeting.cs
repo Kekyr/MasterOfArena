@@ -17,13 +17,10 @@ public abstract class Targeting : MonoBehaviour
     private Health _enemyHealth;
 
     public event Action<Vector3> Aimed;
-
     public event Action Aiming;
 
     protected Character Character => _character;
-
     public Arrow Arrow => _arrow;
-
     public Circle Circle => _circle;
 
     protected virtual void OnEnable()

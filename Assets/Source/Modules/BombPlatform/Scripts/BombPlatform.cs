@@ -17,16 +17,15 @@ public class BombPlatform : MonoBehaviour
 
     [SerializeField] private Transform _platform;
     [SerializeField] private Transform _bomb;
-    [SerializeField] private HealthView _view;
 
     [SerializeField] private ParticleSystem _lightningTrail;
     [SerializeField] private ParticleSystem _fuse;
 
+    private IValueGiver _valueGiver;
+    private IAttacker _attacker;
+    private IMeshChanger _helper;
+
     private Sequence _sequence;
-    private Health _health;
-    private Health _enemyHealth;
-    private Character _enemy;
-    private Helper _helper;
     private MeshRenderer _bombMeshRenderer;
 
     private float _startPlatformScaleY;
@@ -47,11 +46,6 @@ public class BombPlatform : MonoBehaviour
             throw new ArgumentNullException(nameof(_bomb));
         }
 
-        if (_view == null)
-        {
-            throw new ArgumentNullException(nameof(_view));
-        }
-
         if (_lightningTrail == null)
         {
             throw new ArgumentNullException(nameof(_lightningTrail));
@@ -62,7 +56,6 @@ public class BombPlatform : MonoBehaviour
             throw new ArgumentNullException(nameof(_fuse));
         }
 
-        _enemyHealth = _enemy.GetComponent<Health>();
         _bombMeshRenderer = _bomb.GetComponentInChildren<MeshRenderer>();
 
         _startPlatformScaleY = _platform.localScale.y;
@@ -73,26 +66,26 @@ public class BombPlatform : MonoBehaviour
         _sequence.Append(transform.DOScale(_newScale, _scaleDuration)
             .SetEase(Ease.InOutSine));
 
-        _health.HealthChanged += OnHealthChanged;
-        _enemy.Attacking += OnAttacking;
+        _valueGiver.ValueChanged += OnValueChanged;
+        _attacker.Attacked += OnAttacked;
     }
 
     private void OnDisable()
     {
-        _health.HealthChanged -= OnHealthChanged;
-        _enemy.Attacking -= OnAttacking;
+        _valueGiver.ValueChanged -= OnValueChanged;
+        _attacker.Attacked -= OnAttacked;
     }
 
-    public void Init(Sequence sequence, Health health, Character enemy, Helper helper)
+    public void Init(Sequence sequence, IValueGiver valueGiver, IAttacker attacker, IMeshChanger helper)
     {
         _helper = helper;
         _sequence = sequence;
-        _health = health;
-        _enemy = enemy;
+        _valueGiver = valueGiver;
+        _attacker = attacker;
         enabled = true;
     }
 
-    private void OnHealthChanged(float value)
+    private void OnValueChanged(float value)
     {
         float maxPercent = 100;
         float percent = value / maxPercent;
@@ -121,18 +114,15 @@ public class BombPlatform : MonoBehaviour
             });
     }
 
-    private void OnAttacking(Cube cube)
+    private void OnAttacked(Vector3 position, uint damage)
     {
-        _lightningTrail.transform.position = cube.transform.position;
+        _lightningTrail.transform.position = position;
         _lightningTrail.Play();
         _lightningTrail.transform.DOMove(transform.position, _lightningMoveDuration)
             .SetEase(Ease.InOutSine)
             .OnComplete(() =>
             {
-                if (_enemyHealth.IsDead == false)
-                {
-                    Attacked?.Invoke(cube.Damage);
-                }
+                Attacked?.Invoke(damage);
             });
     }
 }
