@@ -1,12 +1,15 @@
+using ProgressBarFeature;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new ZonesSO", menuName = "ZonesSO/Create new ZonesSO")]
-public class ZonesSO : ScriptableObject
+public class ZonesSO : ScriptableObject, IBiomesData
 {
     [SerializeField] private ZoneSO[] _zones;
     [SerializeField] private int _currentIndex;
 
     public ZoneSO Current => _zones[_currentIndex];
+
+    public Sprite CurrentIcon => _zones[_currentIndex].Icon;
 
     public int CurrentIndex => _currentIndex;
 
@@ -24,6 +27,9 @@ public class ZonesSO : ScriptableObject
             return _zones[index];
         }
     }
+
+    public Sprite NextIcon => Next.Icon;
+
 
     public void Init(int currentIndex)
     {

@@ -3,22 +3,23 @@
     "isFirstSession": true,
     "language": "ru",
     "promptDone": false,
-    "CurrentPointIndex": 2,
-    "StartBarValue": 0.4000000059604645,
-    "EndBarValue": 0.6000000238418579,
-    "Score": 22,
-    "Coins": 220,
+    "CurrentPointIndex": 3,
+    "StartBarValue": 0.6000000238418579,
+    "EndBarValue": 0.800000011920929,
+    "Score": 25,
+    "Coins": 250,
     "CurrentZoneIndex": 1,
     "SpawnChances": [
         0.0,
         0.0,
         50.0,
-        50.0
+        30.0,
+        20.0
     ],
     "CubesIndex": [
-        1,
         2,
-        3
+        3,
+        4
     ],
     "SkinsState": [
         2,

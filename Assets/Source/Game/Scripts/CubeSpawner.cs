@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Aiming;
+using CubeFeature;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CubeSpawner : MonoBehaviour
+public class CubeSpawner : MonoBehaviour, ISpawner
 {
     [SerializeField] private List<Transform> _spawnPositions = new List<Transform>();
 
@@ -61,15 +63,14 @@ public class CubeSpawner : MonoBehaviour
         enabled = true;
     }
 
-    public Vector3 GetRandomCubePosition()
+    public Vector3 GetRandomPosition()
     {
         int randomPositionIndex;
 
         do
         {
             randomPositionIndex = Random.Range(0, _spawnPositions.Count);
-        }
-        while (_spawnPositions[randomPositionIndex].childCount == 0);
+        } while (_spawnPositions[randomPositionIndex].childCount == 0);
 
         return _spawnPositions[randomPositionIndex].position;
     }

@@ -1,8 +1,9 @@
+using Aiming;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputRouter : MonoBehaviour
+public class PlayerInputRouter : MonoBehaviour, IInputRouter
 {
     private PlayerInput _input;
     private Health _health;

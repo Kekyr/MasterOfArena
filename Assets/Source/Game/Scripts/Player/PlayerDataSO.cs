@@ -1,8 +1,10 @@
 using System;
+using LeaderboardBase;
+using ProgressBarFeature;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new PlayerDataSO", menuName = "PlayerDataSO/Create new PlayerDataSO")]
-public class PlayerDataSO : ScriptableObject
+public class PlayerDataSO : ScriptableObject, ILeaderboardData, IRewardsData
 {
     [SerializeField] private int _currentSkinIndex;
 

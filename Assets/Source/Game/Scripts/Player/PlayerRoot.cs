@@ -1,5 +1,7 @@
 using System;
+using Aiming;
 using Cinemachine;
+using LeaderboardBase;
 using UnityEngine;
 
 public class PlayerRoot : CharacterRoot
@@ -8,7 +10,7 @@ public class PlayerRoot : CharacterRoot
 
     private SaveLoader _saveLoader;
     private PlayerInputRouter _inputRouter;
-    private YandexLeaderboard _leaderboard;
+    private Leaderboard _leaderboard;
 
     private InterstitialAd _interstitialAd;
     private RewardedAd _rewardedAd;
@@ -38,7 +40,7 @@ public class PlayerRoot : CharacterRoot
         _targetGroup.AddMember(PlatformWithBomb.transform, weight, radius);
 
         PlayerTargeting targeting = (PlayerTargeting)Aiming;
-        targeting.Init(_inputRouter);
+        targeting.Init(_inputRouter, Person);
 
         Player player = (Player)Person;
         player.Init(_data, _spawnChancesSO, _saveLoader, _coins);
@@ -48,7 +50,7 @@ public class PlayerRoot : CharacterRoot
         base.Start();
     }
 
-    public void Init(PlayerInputRouter inputRouter, YandexLeaderboard leaderboard, InterstitialAd interstitialAd)
+    public void Init(PlayerInputRouter inputRouter, Leaderboard leaderboard, InterstitialAd interstitialAd)
     {
         _inputRouter = inputRouter;
         _leaderboard = leaderboard;

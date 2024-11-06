@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
+using Audio;
 using Cinemachine;
 using DG.Tweening;
+using LeaderboardBase;
 using Lean.Localization;
+using ProgressBarFeature;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,7 +50,7 @@ public class Root : MonoBehaviour
     [SerializeField] private ImageSO _musicButtonData;
     [SerializeField] private ImageSO _sfxButtonData;
 
-    [SerializeField] private YandexLeaderboard _leaderboard;
+    [SerializeField] private Leaderboard _leaderboard;
     [SerializeField] private FocusTracker _focusTracker;
     [SerializeField] private ProgressBar _progressBar;
 
@@ -328,7 +332,7 @@ public class Root : MonoBehaviour
 
         _coinsView.Init(_coins);
         _coins.Init(_playerData);
-        _progressBar.Init(_playerData);
+        _progressBar.Init(_playerData, _zones);
 
         _inputRouter = _player.GetComponent<PlayerInputRouter>();
         _playerHealth = _player.GetComponent<Health>();
@@ -343,7 +347,11 @@ public class Root : MonoBehaviour
 
         _inputRouter.Init(_playerHealth, _aiHealth, _order);
 
-        _music.Init(_playerHealth, _aiHealth, _musicButton, _musicOptions);
+        List<Audio.IMortal> mortals = new List<Audio.IMortal>();
+        mortals.Add(_playerHealth);
+        mortals.Add(_aiHealth);
+
+        _music.Init(mortals, _musicButton, _musicOptions);
         _focusTracker.Init(_music);
 
         _cubeSpawner.Init(_playerHealth, _aiHealth);

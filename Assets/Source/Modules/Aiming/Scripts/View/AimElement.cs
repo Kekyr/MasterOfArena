@@ -1,57 +1,60 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class AimElement : MonoBehaviour
+namespace Aiming
 {
-    private readonly float _duration = 0.05f;
-    private readonly float _minScale = 0f;
-
-    [SerializeField] private float _maxScale;
-
-    private Health _health;
-    private Character _character;
-    private Targeting _targeting;
-
-    protected virtual void OnEnable()
+    public class AimElement : MonoBehaviour
     {
-        transform.localScale = Vector3.zero;
-        _character.Aimed += DecreaseScale;
-        _targeting.Aiming += IncreaseScale;
-    }
+        private readonly float _duration = 0.05f;
+        private readonly float _minScale = 0f;
 
-    protected virtual void OnDisable()
-    {
-        _character.Aimed -= DecreaseScale;
-        _character.Won -= DecreaseScale;
-        _targeting.Aiming -= IncreaseScale;
-        _health.Died -= DecreaseScale;
-    }
+        [SerializeField] private float _maxScale;
 
-    public void Init(Character character, Targeting targeting, Health health)
-    {
-        _character = character;
-        _targeting = targeting;
-        _health = health;
+        private IMortal _mortal;
+        private IThrower _thrower;
+        private Targeting _targeting;
 
-        _health.Died += DecreaseScale;
-        _character.Won += DecreaseScale;
+        protected virtual void OnEnable()
+        {
+            transform.localScale = Vector3.zero;
+            _thrower.Aimed += DecreaseScale;
+            _targeting.Aiming += IncreaseScale;
+        }
 
-        enabled = true;
-    }
+        protected virtual void OnDisable()
+        {
+            _thrower.Aimed -= DecreaseScale;
+            _thrower.Won -= DecreaseScale;
+            _targeting.Aiming -= IncreaseScale;
+            _mortal.Died -= DecreaseScale;
+        }
 
-    protected void IncreaseScale()
-    {
-        ChangeScale(_maxScale);
-    }
+        public void Init(IThrower thrower, Targeting targeting, IMortal mortal)
+        {
+            _thrower = thrower;
+            _targeting = targeting;
+            _mortal = mortal;
 
-    private void DecreaseScale()
-    {
-        ChangeScale(_minScale);
-    }
+            _mortal.Died += DecreaseScale;
+            _thrower.Won += DecreaseScale;
 
-    private void ChangeScale(float endValue)
-    {
-        transform.DOScale(endValue, _duration)
-            .SetEase(Ease.InOutSine);
+            enabled = true;
+        }
+
+        protected void IncreaseScale()
+        {
+            ChangeScale(_maxScale);
+        }
+
+        private void DecreaseScale()
+        {
+            ChangeScale(_minScale);
+        }
+
+        private void ChangeScale(float endValue)
+        {
+            transform.DOScale(endValue, _duration)
+                .SetEase(Ease.InOutSine);
+        }
     }
 }

@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
+using Aiming;
+using Audio;
+using BombPlatformFeature;
 using Cinemachine;
+using CubeFeature;
 using DG.Tweening;
 using UnityEngine;
 using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SFX))]
-public class Character : MonoBehaviour, IAttacker
+public class Character : MonoBehaviour, BombPlatformFeature.IAttacker, CubeFeature.IAttacker, IManager, IThrower
 {
     private readonly float _duration = 0.02f;
     private readonly float _delay = 0.05f;
@@ -39,7 +43,7 @@ public class Character : MonoBehaviour, IAttacker
     public event Action Aimed;
     public event Action Won;
 
-    public Projectile CurrentProjectile => _projectiles[_currentProjectileIndex];
+    public IMovable Current => _projectiles[_currentProjectileIndex].GetComponent<ProjectileMovement>();
     public Color DamageMarkColor => _damageMarkColor;
 
     protected virtual void OnEnable()

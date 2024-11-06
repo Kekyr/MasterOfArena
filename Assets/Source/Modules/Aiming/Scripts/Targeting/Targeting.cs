@@ -1,85 +1,84 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Character))]
-public abstract class Targeting : MonoBehaviour
+namespace Aiming
 {
-    private readonly float _newScale = 0.02f;
-    private readonly float _duration = 0.02f;
-
-    [SerializeField] private Arrow _arrow;
-    [SerializeField] private Circle _circle;
-
-    private Character _character;
-    private Sequence _sequence;
-    private Health _health;
-    private Health _enemyHealth;
-
-    public event Action<Vector3> Aimed;
-    public event Action Aiming;
-
-    protected Character Character => _character;
-    public Arrow Arrow => _arrow;
-    public Circle Circle => _circle;
-
-    protected virtual void OnEnable()
+    public abstract class Targeting : MonoBehaviour
     {
-        if (_arrow == null)
+        private readonly float _newScale = 0.02f;
+        private readonly float _duration = 0.02f;
+
+        [SerializeField] private Arrow _arrow;
+        [SerializeField] private Circle _circle;
+
+        private Sequence _sequence;
+        private IReadOnlyCollection<IMortal> _mortals;
+
+        public event Action<Vector3> Aimed;
+        public event Action Aiming;
+
+        protected virtual void OnEnable()
         {
-            throw new ArgumentNullException(nameof(_arrow));
+            if (_arrow == null)
+            {
+                throw new ArgumentNullException(nameof(_arrow));
+            }
+
+            if (_circle == null)
+            {
+                throw new ArgumentNullException(nameof(_circle));
+            }
+
+            _circle.transform.localScale = Vector3.zero;
+
+            _sequence.Append(_circle.transform.DOScale(_newScale, _duration)
+                .SetEase(Ease.InBounce));
         }
 
-        if (_circle == null)
+        protected virtual void OnDisable()
         {
-            throw new ArgumentNullException(nameof(_circle));
+            foreach (IMortal mortal in _mortals)
+            {
+                mortal.Died -= OnDead;
+            }
         }
 
-        _character = GetComponent<Character>();
-        _circle.transform.localScale = Vector3.zero;
+        public void Init(Sequence sequence, IReadOnlyCollection<IMortal> mortals)
+        {
+            _mortals = mortals;
+            _sequence = sequence;
 
-        _sequence.Append(_circle.transform.DOScale(_newScale, _duration)
-            .SetEase(Ease.InBounce));
-    }
+            foreach (IMortal mortal in _mortals)
+            {
+                mortal.Died += OnDead;
+            }
 
-    protected virtual void OnDisable()
-    {
-        _health.Died -= OnDead;
-        _enemyHealth.Died -= OnDead;
-    }
+            enabled = true;
+        }
 
-    public void Init(Sequence sequence, Health health, Health enemyHealth)
-    {
-        _health = health;
-        _enemyHealth = enemyHealth;
-        _sequence = sequence;
+        protected void RotateTo(Vector3 direction)
+        {
+            direction.y = 0;
+            Quaternion newRotation = Quaternion.LookRotation(direction);
+            transform.rotation = newRotation;
+            _arrow.RotateTo(newRotation);
+        }
 
-        _health.Died += OnDead;
-        _enemyHealth.Died += OnDead;
+        protected void InvokeAimed(Vector3 value)
+        {
+            Aimed?.Invoke(value);
+        }
 
-        enabled = true;
-    }
+        protected void InvokeAiming()
+        {
+            Aiming?.Invoke();
+        }
 
-    protected void RotateTo(Vector3 direction)
-    {
-        direction.y = 0;
-        Quaternion newRotation = Quaternion.LookRotation(direction);
-        transform.rotation = newRotation;
-        _arrow.RotateTo(newRotation);
-    }
-
-    protected void InvokeAimed(Vector3 value)
-    {
-        Aimed?.Invoke(value);
-    }
-
-    protected void InvokeAiming()
-    {
-        Aiming?.Invoke();
-    }
-
-    private void OnDead()
-    {
-        enabled = false;
+        private void OnDead()
+        {
+            enabled = false;
+        }
     }
 }

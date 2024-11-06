@@ -2,58 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AITargeting : Targeting
+namespace Aiming
 {
-    private readonly float _delay = 2f;
-
-    private IReadOnlyCollection<Projectile> _projectiles;
-    private CubeSpawner _cubeSpawner;
-    private WaitForSeconds _waitForSeconds;
-
-    protected override void OnEnable()
+    public class AITargeting : Targeting
     {
-        base.OnEnable();
+        private readonly float _delay = 2f;
 
-        foreach (Projectile projectile in _projectiles)
+        private IReadOnlyCollection<ICatchable> _projectiles;
+        private ISpawner _spawner;
+        private WaitForSeconds _waitForSeconds;
+
+        protected override void OnEnable()
         {
-            projectile.Catched += OnCatch;
+            base.OnEnable();
+
+            foreach (ICatchable projectile in _projectiles)
+            {
+                projectile.Catched += OnCatch;
+            }
         }
-    }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        foreach (Projectile projectile in _projectiles)
+        protected override void OnDisable()
         {
-            projectile.Catched -= OnCatch;
+            base.OnDisable();
+
+            foreach (ICatchable projectile in _projectiles)
+            {
+                projectile.Catched -= OnCatch;
+            }
         }
-    }
 
-    private void Start()
-    {
-        _waitForSeconds = new WaitForSeconds(_delay);
-        OnCatch();
-    }
+        private void Start()
+        {
+            _waitForSeconds = new WaitForSeconds(_delay);
+            OnCatch();
+        }
 
-    public void Init(CubeSpawner cubeSpawner, IReadOnlyCollection<Projectile> projectiles)
-    {
-        _cubeSpawner = cubeSpawner;
-        _projectiles = projectiles;
-    }
+        public void Init(ISpawner spawner, IReadOnlyCollection<ICatchable> projectiles)
+        {
+            _spawner = spawner;
+            _projectiles = projectiles;
+        }
 
-    private IEnumerator FindingTarget()
-    {
-        InvokeAiming();
-        yield return _waitForSeconds;
+        private IEnumerator FindingTarget()
+        {
+            InvokeAiming();
+            yield return _waitForSeconds;
 
-        Vector3 throwDirection = (_cubeSpawner.GetRandomCubePosition() - transform.position).normalized;
-        RotateTo(throwDirection);
-        InvokeAimed(throwDirection);
-    }
+            Vector3 throwDirection = (_spawner.GetRandomPosition() - transform.position).normalized;
+            RotateTo(throwDirection);
+            InvokeAimed(throwDirection);
+        }
 
-    private void OnCatch()
-    {
-        StartCoroutine(FindingTarget());
+        private void OnCatch()
+        {
+            StartCoroutine(FindingTarget());
+        }
     }
 }

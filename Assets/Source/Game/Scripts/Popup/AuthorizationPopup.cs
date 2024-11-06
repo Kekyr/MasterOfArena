@@ -1,4 +1,5 @@
 using System;
+using LeaderboardBase;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -7,7 +8,7 @@ public class AuthorizationPopup : MainPopup
 {
     [SerializeField] private Button _button;
 
-    private YandexLeaderboard _leaderboard;
+    private Leaderboard _leaderboard;
 
     protected override void OnEnable()
     {
@@ -27,7 +28,7 @@ public class AuthorizationPopup : MainPopup
         _button.onClick.RemoveListener(SignIn);
     }
 
-    public void Init(YandexLeaderboard leaderboard)
+    public void Init(Leaderboard leaderboard)
     {
         _leaderboard = leaderboard;
     }

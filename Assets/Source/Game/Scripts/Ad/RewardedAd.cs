@@ -1,9 +1,11 @@
 using System;
+using Audio;
+using LeaderboardBase;
 using UnityEngine;
 using YG;
 
 [RequireComponent(typeof(SFX))]
-public class RewardedAd : MonoBehaviour
+public class RewardedAd : MonoBehaviour, IRewarder
 {
     [SerializeField] private SFXSO _success;
 

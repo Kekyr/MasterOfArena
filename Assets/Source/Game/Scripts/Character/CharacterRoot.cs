@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Aiming;
+using Audio;
+using BombPlatformFeature;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using IMortal = Aiming.IMortal;
 
 public class CharacterRoot : MonoBehaviour
 {
@@ -97,7 +101,11 @@ public class CharacterRoot : MonoBehaviour
 
         _platformWithBomb.Init(_sequence, _health, _enemyCharacter, _helper);
 
-        _aiming.Init(_sequence, _health, _enemyHealth);
+        List<IMortal> mortals = new List<IMortal>();
+        mortals.Add(_health);
+        mortals.Add(_enemyHealth);
+
+        _aiming.Init(_sequence, mortals);
         _arrow.Init(_character, _aiming, _health);
 
         _circle.Init(_projectiles);

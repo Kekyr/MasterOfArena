@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Audio;
+using ProgressBarFeature;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YG;
 
-public class SaveLoader : MonoBehaviour
+public class SaveLoader : MonoBehaviour, ISaver
 {
     private ProgressBarSO _progressBarData;
     private PlayerDataSO _playerData;

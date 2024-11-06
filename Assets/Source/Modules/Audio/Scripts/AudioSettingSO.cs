@@ -1,19 +1,22 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new AudioSettingSO", menuName = "AudioSettingSO/Create new AudioSettingSO")]
-public class AudioSettingSO : ScriptableObject
+namespace Audio
 {
-    [SerializeField] private bool _isOn;
-
-    public bool IsOn => _isOn;
-
-    public void Init(bool isOn)
+    [CreateAssetMenu(fileName = "new AudioSettingSO", menuName = "AudioSettingSO/Create new AudioSettingSO")]
+    public class AudioSettingSO : ScriptableObject
     {
-        _isOn = isOn;
-    }
+        [SerializeField] private bool _isOn;
 
-    public void Switch()
-    {
-        _isOn = !_isOn;
+        public bool IsOn => _isOn;
+
+        public void Init(bool isOn)
+        {
+            _isOn = isOn;
+        }
+
+        public void Switch()
+        {
+            _isOn = !_isOn;
+        }
     }
 }

@@ -1,3 +1,5 @@
+using Aiming;
+
 public class AIRoot : CharacterRoot
 {
     private CubeSpawner _cubeSpawner;

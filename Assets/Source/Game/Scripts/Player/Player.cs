@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
+using LeaderboardBase;
 
-public class Player : Character
+public class Player : Character, IWinner
 {
     private PlayerDataSO _data;
     private SpawnChancesSO _spawnChancesSO;

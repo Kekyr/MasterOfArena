@@ -1,29 +1,32 @@
-public class Circle : AimElement
+namespace Aiming
 {
-    private Projectile[] _projectiles;
-
-    protected override void OnEnable()
+    public class Circle : AimElement
     {
-        base.OnEnable();
+        private ICatchable[] _projectiles;
 
-        foreach (Projectile projectile in _projectiles)
+        protected override void OnEnable()
         {
-            projectile.Catched += IncreaseScale;
+            base.OnEnable();
+
+            foreach (ICatchable projectile in _projectiles)
+            {
+                projectile.Catched += IncreaseScale;
+            }
         }
-    }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        foreach (Projectile projectile in _projectiles)
+        protected override void OnDisable()
         {
-            projectile.Catched -= IncreaseScale;
-        }
-    }
+            base.OnDisable();
 
-    public void Init(Projectile[] projectiles)
-    {
-        _projectiles = projectiles;
+            foreach (ICatchable projectile in _projectiles)
+            {
+                projectile.Catched -= IncreaseScale;
+            }
+        }
+
+        public void Init(ICatchable[] projectiles)
+        {
+            _projectiles = projectiles;
+        }
     }
 }

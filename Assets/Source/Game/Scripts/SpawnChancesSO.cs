@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CubeFeature;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new SpawnChanceSO", menuName = "SpawnChanceSO/Create new SpawnChanceSO")]
