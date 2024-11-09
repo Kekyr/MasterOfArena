@@ -1,30 +1,34 @@
 using System;
+using SaveSystem;
 using UnityEngine;
 using YG;
 
-public sealed class SDKInitializer : MonoBehaviour
+namespace Game
 {
-    private SaveLoader _saveLoader;
-
-    private void OnEnable()
+    public sealed class SDKInitializer : MonoBehaviour
     {
-        YandexGame.GetDataEvent += OnInitialized;
-    }
+        private SaveLoader _saveLoader;
 
-    private void OnDisable()
-    {
-        YandexGame.GetDataEvent -= OnInitialized;
-    }
+        private void OnEnable()
+        {
+            YandexGame.GetDataEvent += OnInitialized;
+        }
 
-    public void Init(SaveLoader saveLoader)
-    {
-        _saveLoader = saveLoader;
-        enabled = true;
-    }
+        private void OnDisable()
+        {
+            YandexGame.GetDataEvent -= OnInitialized;
+        }
 
-    private void OnInitialized()
-    {
-        YandexGame.GameReadyAPI();
-        _saveLoader.OnLoaded();
+        public void Init(SaveLoader saveLoader)
+        {
+            _saveLoader = saveLoader;
+            enabled = true;
+        }
+
+        private void OnInitialized()
+        {
+            YandexGame.GameReadyAPI();
+            _saveLoader.OnLoaded();
+        }
     }
 }

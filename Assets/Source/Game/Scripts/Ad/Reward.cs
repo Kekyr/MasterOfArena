@@ -1,5 +1,8 @@
-public enum Reward
+namespace Ad
 {
-    Resources,
-    Skin,
+    public enum Reward
+    {
+        Resources,
+        Skin,
+    }
 }

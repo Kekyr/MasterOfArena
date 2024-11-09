@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class VFXBackLoader : MonoBehaviour
+namespace Game
 {
-    private void Start()
+    public class VFXBackLoader : MonoBehaviour
     {
-        gameObject.SetActive(false);
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

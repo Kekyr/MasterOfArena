@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58389857}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
+  m_LocalRotation: {x: 0.4069988, y: -0.04637746, z: 0.02069654, w: 0.9120158}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3969,7 +3969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40699878, y: -0.046377428, z: 0.020696523, w: 0.91201586}
+  m_LocalRotation: {x: 0.4069988, y: -0.04637746, z: 0.02069654, w: 0.9120158}
   m_LocalPosition: {x: 0.44500017, y: 5.961643, z: -9.660001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6291,11 +6291,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1621930908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96ea6a68f59df344891d1cf53c18d8ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 67bd28bb51e368241bae23bea29af1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newScale: 0.9
   _popup: {fileID: 2112744513}
+  _newScale: 0.9
 --- !u!1001 &1644190991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7052,9 +7052,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1263fb2e7a6f3448844133694d0d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _popup: {fileID: 6010138086896609641}
   _newScale: 2
   _leaderboard: {fileID: 1853565775}
-  _popup: {fileID: 6010138086896609641}
 --- !u!114 &1737229109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7210,7 +7210,7 @@ GameObject:
   - component: {fileID: 1759439082}
   - component: {fileID: 1759439081}
   - component: {fileID: 1759439080}
-  - component: {fileID: 1759439083}
+  - component: {fileID: 1759439085}
   - component: {fileID: 1759439084}
   m_Layer: 5
   m_Name: Button
@@ -7320,20 +7320,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759439078}
   m_CullTransparentMesh: 1
---- !u!114 &1759439083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759439078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f580e56d1d61a8b41b53906a03343471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _newScale: 0.9
-  _popup: {fileID: 3284195244990192477}
 --- !u!114 &1759439084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7348,6 +7334,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1.02
+--- !u!114 &1759439085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759439078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67bd28bb51e368241bae23bea29af1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _popup: {fileID: 3284195244990192477}
+  _newScale: 0.9
 --- !u!114 &1793622043 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4686425410283749966, guid: 2b7d61e30f6006d498d52eb43dcca85c, type: 3}
@@ -10393,7 +10393,6 @@ MonoBehaviour:
   _currentZone: {fileID: 2602117454987395150}
   _nextZone: {fileID: 2038348411}
   _data: {fileID: 11400000, guid: 383352bf1969c184a80c6c01fc83d4a3, type: 2}
-  _zones: {fileID: 11400000, guid: e045454442f80e547a35110bcb72ff18, type: 2}
   _nextbutton: {fileID: 4713052080682287358}
   _rewardButton: {fileID: 1441751332}
   _cup: {fileID: 646188208}

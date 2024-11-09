@@ -3,48 +3,51 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class CoinsView : MonoBehaviour
+namespace Money
 {
-    private readonly float _duration = 1f;
-
-    [SerializeField] private TextMeshProUGUI _textMeshPro;
-
-    private float _startScale;
-    private Coins _coins;
-
-    private void OnEnable()
+    public class CoinsView : MonoBehaviour
     {
-        if (_textMeshPro == null)
+        private readonly float _duration = 1f;
+
+        [SerializeField] private TextMeshProUGUI _textMeshPro;
+
+        private float _startScale;
+        private Coins _coins;
+
+        private void OnEnable()
         {
-            throw new ArgumentNullException(nameof(_textMeshPro));
+            if (_textMeshPro == null)
+            {
+                throw new ArgumentNullException(nameof(_textMeshPro));
+            }
+
+            _startScale = transform.localScale.x;
+            transform.localScale = Vector3.zero;
+            transform.DOScale(_startScale, _duration)
+                .SetEase(Ease.InOutSine);
+
+            _coins.Changed += OnCoinsChanged;
         }
 
-        _startScale = transform.localScale.x;
-        transform.localScale = Vector3.zero;
-        transform.DOScale(_startScale, _duration)
-            .SetEase(Ease.InOutSine);
-
-        _coins.Changed += OnCoinsChanged;
-    }
-
-    private void OnDisable()
-    {
-        _coins.Changed -= OnCoinsChanged;
-    }
-
-    public void Init(Coins coins)
-    {
-        if (coins == null)
+        private void OnDisable()
         {
-            throw new ArgumentNullException(nameof(coins));
+            _coins.Changed -= OnCoinsChanged;
         }
 
-        _coins = coins;
-        enabled = true;
-    }
+        public void Init(Coins coins)
+        {
+            if (coins == null)
+            {
+                throw new ArgumentNullException(nameof(coins));
+            }
 
-    private void OnCoinsChanged(int coins)
-    {
-        _textMeshPro.text = coins.ToString();
+            _coins = coins;
+            enabled = true;
+        }
+
+        private void OnCoinsChanged(int coins)
+        {
+            _textMeshPro.text = coins.ToString();
+        }
     }
 }

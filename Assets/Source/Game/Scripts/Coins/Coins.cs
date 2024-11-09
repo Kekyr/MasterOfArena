@@ -1,42 +1,46 @@
 using System;
+using PlayerBase;
 using UnityEngine;
 
-public class Coins : MonoBehaviour
+namespace Money
 {
-    private PlayerDataSO _data;
-
-    public event Action<int> Changed;
-
-    private void OnEnable()
+    public class Coins : MonoBehaviour
     {
-        Changed?.Invoke(_data.Coins);
-    }
+        private PlayerDataSO _data;
 
-    public void Init(PlayerDataSO data)
-    {
-        if (data == null)
+        public event Action<int> Changed;
+
+        private void OnEnable()
         {
-            throw new ArgumentNullException(nameof(data));
+            Changed?.Invoke(_data.Coins);
         }
 
-        _data = data;
-        enabled = true;
-    }
+        public void Init(PlayerDataSO data)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-    public void Increase()
-    {
-        _data.IncreaseCoins();
-        Changed?.Invoke(_data.Coins);
-    }
+            _data = data;
+            enabled = true;
+        }
 
-    public bool TryDecrease(int amount)
-    {
-        return _data.Coins - amount < 0;
-    }
+        public void Increase()
+        {
+            _data.IncreaseCoins();
+            Changed?.Invoke(_data.Coins);
+        }
 
-    public void Decrease(int amount)
-    {
-        _data.DecreaseCoins(amount);
-        Changed?.Invoke(_data.Coins);
+        public bool TryDecrease(int amount)
+        {
+            return _data.Coins - amount < 0;
+        }
+
+        public void Decrease(int amount)
+        {
+            _data.DecreaseCoins(amount);
+            Changed?.Invoke(_data.Coins);
+        }
     }
 }

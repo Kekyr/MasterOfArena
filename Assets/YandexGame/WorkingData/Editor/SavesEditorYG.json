@@ -6,15 +6,15 @@
     "CurrentPointIndex": 3,
     "StartBarValue": 0.6000000238418579,
     "EndBarValue": 0.800000011920929,
-    "Score": 25,
-    "Coins": 250,
+    "Score": 26,
+    "Coins": 260,
     "CurrentZoneIndex": 1,
     "SpawnChances": [
         0.0,
         0.0,
         50.0,
-        30.0,
-        20.0
+        25.0,
+        25.0
     ],
     "CubesIndex": [
         2,

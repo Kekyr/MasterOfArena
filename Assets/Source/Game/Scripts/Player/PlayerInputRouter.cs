@@ -1,44 +1,48 @@
 using Aiming;
 using DG.Tweening;
+using HealthSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputRouter : MonoBehaviour, IInputRouter
+namespace PlayerBase
 {
-    private PlayerInput _input;
-    private Health _health;
-    private Health _enemyHealth;
-    private Sequence _sequence;
-
-    public InputAction Aiming => _input.Player.Aiming;
-
-    private void OnDisable()
+    public class PlayerInputRouter : MonoBehaviour, IInputRouter, TutorialFeature.IInputRouter
     {
-        _input.Disable();
-        _health.Died -= OnDead;
-        _enemyHealth.Died -= OnDead;
-    }
+        private PlayerInput _input;
+        private Health _health;
+        private Health _enemyHealth;
+        private Sequence _sequence;
 
-    public void Init(Health health, Health enemyHealth, Sequence sequence)
-    {
-        _health = health;
-        _enemyHealth = enemyHealth;
-        _sequence = sequence;
+        public InputAction Aiming => _input.Player.Aiming;
 
-        _health.Died += OnDead;
-        _enemyHealth.Died += OnDead;
+        private void OnDisable()
+        {
+            _input.Disable();
+            _health.Died -= OnDead;
+            _enemyHealth.Died -= OnDead;
+        }
 
-        _input = new PlayerInput();
-        _sequence.OnComplete(OnComplete);
-    }
+        public void Init(Health health, Health enemyHealth, Sequence sequence)
+        {
+            _health = health;
+            _enemyHealth = enemyHealth;
+            _sequence = sequence;
 
-    private void OnDead()
-    {
-        _input.Disable();
-    }
+            _health.Died += OnDead;
+            _enemyHealth.Died += OnDead;
 
-    private void OnComplete()
-    {
-        _input.Enable();
+            _input = new PlayerInput();
+            _sequence.OnComplete(OnComplete);
+        }
+
+        private void OnDead()
+        {
+            _input.Disable();
+        }
+
+        private void OnComplete()
+        {
+            _input.Enable();
+        }
     }
 }

@@ -3,29 +3,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-public class ResetSaves : MonoBehaviour
+namespace SaveSystem
 {
-    [SerializeField] private Button _button;
-    [SerializeField] private SaveLoader _saveLoader;
-
-    private void OnEnable()
+    public class ResetSaves : MonoBehaviour
     {
-        if (_button == null)
+        [SerializeField] private Button _button;
+        [SerializeField] private SaveLoader _saveLoader;
+
+        private void OnEnable()
         {
-            throw new ArgumentNullException(nameof(_button));
+            if (_button == null)
+            {
+                throw new ArgumentNullException(nameof(_button));
+            }
+
+            if (_saveLoader == null)
+            {
+                throw new ArgumentNullException(nameof(_saveLoader));
+            }
+
+            _button.onClick.AddListener(Reset);
         }
 
-        if (_saveLoader == null)
+        private void Reset()
         {
-            throw new ArgumentNullException(nameof(_saveLoader));
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
         }
-
-        _button.onClick.AddListener(Reset);
-    }
-
-    private void Reset()
-    {
-        YandexGame.ResetSaveProgress();
-        YandexGame.SaveProgress();
     }
 }
