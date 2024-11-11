@@ -6,24 +6,24 @@
     "CurrentPointIndex": 3,
     "StartBarValue": 0.6000000238418579,
     "EndBarValue": 0.800000011920929,
-    "Score": 26,
-    "Coins": 260,
-    "CurrentZoneIndex": 1,
+    "Score": 35,
+    "Coins": 250,
+    "CurrentZoneIndex": 2,
     "SpawnChances": [
         0.0,
         0.0,
+        0.0,
         50.0,
-        25.0,
-        25.0
+        50.0
     ],
     "CubesIndex": [
-        2,
         3,
+        4,
         4
     ],
     "SkinsState": [
+        1,
         2,
-        0,
         0,
         0,
         0,
@@ -33,7 +33,7 @@
         0,
         0
     ],
-    "CurrentSkinIndex": 0,
+    "CurrentSkinIndex": 1,
     "CanPlay": false,
     "IsMusicOn": true,
     "MusicSpriteIndex": 0,

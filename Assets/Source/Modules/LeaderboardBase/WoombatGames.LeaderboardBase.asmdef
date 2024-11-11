@@ -1,9 +1,10 @@
 {
-    "name": "WoombatGames.MasterOfArena.Game",
+    "name": "WoombatGames.LeaderboardBase",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:4f720732c9dd027479ea57011908b9cd"
+        "GUID:4f720732c9dd027479ea57011908b9cd",
+        "GUID:218c8d088c76f5f45b9b3de347da2c05",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

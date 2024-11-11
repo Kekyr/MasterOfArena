@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 namespace ShopSystem
 {

@@ -291,6 +291,8 @@ namespace Game
 
             Validate();
 
+            _progressBarData.Init(_zones);
+
             SkinDataSO[] skinsData = new SkinDataSO[_skins.Skins.Count];
 
             for (int i = 0; i < _skins.Skins.Count; i++)

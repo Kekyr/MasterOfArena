@@ -7,7 +7,6 @@ namespace ProgressBarFeature
     {
         private readonly int _sliderMaxValue = 1;
 
-        [SerializeField] private IBiomesData _biomesData;
         [SerializeField] private Sprite _sprite;
 
         [SerializeField] private int _pointsCount;
@@ -17,11 +16,18 @@ namespace ProgressBarFeature
         [SerializeField] private float _endSliderValue;
         [SerializeField] private int _currentPointIndex;
 
+        private IBiomesData _biomesData;
+
         public int PointsCount => _pointsCount;
         public Sprite Sprite => _sprite;
         public float StartSliderValue => _startSliderValue;
         public float EndSliderValue => _endSliderValue;
         public int CurrentPointIndex => _currentPointIndex;
+
+        public void Init(IBiomesData biomesData)
+        {
+            _biomesData = biomesData;
+        }
 
         public void Init(int currentPointIndex, float startSliderValue, float endSliderValue)
         {

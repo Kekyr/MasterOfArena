@@ -1,4 +1,4 @@
-namespace ShopSystem
+namespace YG
 {
     public enum State
     {
